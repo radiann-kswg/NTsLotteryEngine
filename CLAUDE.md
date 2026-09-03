@@ -8,6 +8,7 @@
 
 - 設定の追加・変更は必ず `AGENTS.md` に対して行ってください。本ファイルには設定内容を直接書かないでください。
 - **ブランチ運用（`AGENTS.md` 2章）を厳守**: 作業は常に `develop` で行い、`main` へは直接コミットしないこと。
+- **git の書き込みはサンドボックスから行わない**（`AGENTS.md` 2章）。`Unity_RunCommand` → `GitTools.RunGit(...)` / `GitTools.CommitAll()`。
 - シーンはコード生成（`Tools > NTsLoto > Build Loto Scene`）。配置変更はビルダーを直して再実行する（`AGENTS.md` 3章）。
 - 確率の正本は `Assets/Scripts/LotoRules.cs`。変更後は `Tools > NTsLoto > Self Check` を通す（`AGENTS.md` 5章）。
 
