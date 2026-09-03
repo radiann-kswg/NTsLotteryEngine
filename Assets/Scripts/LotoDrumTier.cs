@@ -15,15 +15,14 @@ namespace NTsLotoEngine
         [Header("References (built by LotoSceneBuilder)")]
         public Rotator floor;
         public BallTrigger port;          // 排出口の外にある通過検知
-        public Transform portPull;        // 当選球を引き寄せる目標点（排出口の外側）
         public Transform spawnCenter;     // 球の投入位置（床中央の少し上）
         public float spawnRadius = 0.3f;
 
         [Header("Tuning")]
         public float stirRpm = 40f;       // 攪拌回転数（実機 夢ロトくんは 55rpm）
-        public float drawRpm = 8f;        // 取り出し時の低速回転
+        public float drawRpm = 5f;        // 取り出し時の低速回転
         public float stirSeconds = 6f;
-        public float pullAccel = 4f;      // 当選球への引き寄せ加速度 [m/s^2]
+        public float pullAccel = 6f;      // 当選球への引き寄せ加速度 [m/s^2]。壁は摩擦ゼロ（Slick）でないと壁に張り付く
         public float timeout = 30f;       // これを超えたら引き寄せを 3 倍、2 倍超で強制排出
 
         public readonly List<NumberBall> balls = new List<NumberBall>();
@@ -60,18 +59,25 @@ namespace NTsLotoEngine
             port.Entered += handler;
             ball.gameObject.layer = LotoLayers.ChosenBall;
 
-            float t = 0f;
+            float t = 0f, nextLog = 5f;
+            bool forced = false;
             while (!exited)
             {
                 t += Time.fixedDeltaTime;
-                var to = portPull.position - rb.position; to.y = 0f;
+                var to = port.transform.position - rb.position; to.y = 0f;   // 排出口の外の通過検知へ引く（出た後も下り方向）
                 float k = t > timeout ? 3f : 1f;
                 rb.AddForce(to.normalized * pullAccel * k, ForceMode.Acceleration);
-                if (t > timeout * 2f)
+                if (t > nextLog)
                 {
-                    // ponytail: 最終手段。物理で出せなければ排出口へ置く（ログに残す）
+                    var lp = transform.InverseTransformPoint(rb.position);
+                    Debug.Log($"[{name}] ball {number} t={t:F0}s r={new Vector2(lp.x, lp.z).magnitude:F2} deg={Mathf.Atan2(lp.x, lp.z) * Mathf.Rad2Deg:F0} y={lp.y:F2} v={rb.linearVelocity.magnitude:F2}");
+                    nextLog += 5f;
+                }
+                if (t > timeout * 2f && !forced)
+                {
+                    // ponytail: 最終手段。物理で出せなければ通過検知の位置へ置く（ログに残す）
                     Debug.LogWarning($"[{name}] ball {number} forced out after {t:F0}s");
-                    rb.position = portPull.position;
+                    rb.position = port.transform.position; rb.linearVelocity = Vector3.zero; forced = true;
                 }
                 yield return new WaitForFixedUpdate();
             }
