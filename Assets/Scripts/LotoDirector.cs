@@ -26,6 +26,7 @@ namespace NTsLotoEngine
         public float speed = 1f;
         public bool quitWhenDone = false;
         public float pauseBetween = 1.5f;
+        public bool skipDrums = false;   // デバッグ用: ロトマシーンを飛ばして塔から始める
 
         public LotoResult Result { get; private set; }
         readonly List<string> lines = new List<string>();
@@ -64,23 +65,26 @@ namespace NTsLotoEngine
 
         IEnumerator Run()
         {
-            Look(camMachine);
-            stage = "1-11";
-            lower.Stir(); // 下段も先に回しておくと絵が寂しくない
-            yield return upper.Draw(Result.single, b => lines.Add($"1-11 : {b.number}"));
-            upper.Stop();
-            yield return new WaitForSeconds(pauseBetween);
-
-            stage = "12-99";
-            var drawn = new List<int>();
-            foreach (int n in Result.six)
+            if (!skipDrums)
             {
-                yield return lower.Draw(n, b => { drawn.Add(b.number); });
-                lines.RemoveAll(l => l.StartsWith("12-99"));
-                lines.Add($"12-99: {string.Join(" ", drawn)}");
+                Look(camMachine);
+                stage = "1-11";
+                lower.Stir(); // 下段も先に回しておくと絵が寂しくない
+                yield return upper.Draw(Result.single, b => lines.Add($"1-11 : {b.number}"));
+                upper.Stop();
                 yield return new WaitForSeconds(pauseBetween);
+
+                stage = "12-99";
+                var drawn = new List<int>();
+                foreach (int n in Result.six)
+                {
+                    yield return lower.Draw(n, b => { drawn.Add(b.number); });
+                    lines.RemoveAll(l => l.StartsWith("12-99"));
+                    lines.Add($"12-99: {string.Join(" ", drawn)}");
+                    yield return new WaitForSeconds(pauseBetween);
+                }
+                lower.Stop();
             }
-            lower.Stop();
 
             for (int i = 0; i < towers.Length; i++)
             {

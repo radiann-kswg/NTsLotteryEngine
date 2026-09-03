@@ -92,5 +92,43 @@ namespace NTsLotoEngine
             }
             return b.Build("Disc");
         }
+
+        /// <summary>
+        /// クルーンのボウル（RSC TowerD_Kuruun の形を回転体で再現）。外周壁 → コーン → 穴リング（扇形の穴 holes 個）→ 中央ドーム。
+        /// 片面（内側向き）。球は上からしか来ないので厚みは持たせない。底面 y=0。
+        /// </summary>
+        public static Mesh Bowl(float rimRadius, float rimHeight, float coneTopHeight, float ringOuterRadius, float ringHeight,
+                                float ringInnerRadius, float domeHeight, int holes, float holeAngleDeg, int segments)
+        {
+            var b = new B();
+            // 断面（外→内）。ring=true の区間は穴の扇形を抜く
+            var prof = new[] {
+                (r0: rimRadius, h0: rimHeight, r1: rimRadius, h1: coneTopHeight, ring: false),         // 外周壁
+                (r0: rimRadius, h0: coneTopHeight, r1: ringOuterRadius, h1: ringHeight, ring: false),  // コーン
+                (r0: ringOuterRadius, h0: ringHeight, r1: ringInnerRadius, h1: ringHeight, ring: true),// 穴リング
+                (r0: ringInnerRadius, h0: ringHeight, r1: 0.0001f, h1: domeHeight, ring: false),      // 中央ドーム
+            };
+            Vector3 P(float deg, float r, float h) { float a = deg * Mathf.Deg2Rad; return new Vector3(Mathf.Sin(a) * r, h, Mathf.Cos(a) * r); }
+            float holePitch = 360f / Mathf.Max(1, holes);
+            for (int i = 0; i < segments; i++)
+            {
+                float d0 = 360f * i / segments, d1 = 360f * (i + 1) / segments, dm = (d0 + d1) * 0.5f;
+                foreach (var q in prof)
+                {
+                    if (q.ring && holes > 0)
+                    {
+                        float off = Mathf.Repeat(dm, holePitch);                       // 穴は各ピッチの先頭に置く
+                        if (off < holeAngleDeg) continue;
+                    }
+                    var a0 = P(d0, q.r0, q.h0); var a1 = P(d1, q.r0, q.h0); var c1 = P(d1, q.r1, q.h1); var c0 = P(d0, q.r1, q.h1);
+                    // 表面が内側（上＋軸向き）を向くように巻き方向をそろえる
+                    var n = Vector3.Cross(a1 - a0, c1 - a0);
+                    var center = (a0 + a1 + c1 + c0) * 0.25f; var radial = new Vector3(center.x, 0, center.z).normalized;
+                    var want = Vector3.up - radial * 0.7f;
+                    if (Vector3.Dot(n, want) < 0) b.Quad(a0, c0, c1, a1); else b.Quad(a0, a1, c1, c0);   // Cross(b-a,c-a) が表面の法線（レイキャストで確認済み）
+                }
+            }
+            return b.Build("Bowl");
+        }
     }
 }

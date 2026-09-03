@@ -29,6 +29,8 @@ namespace NTsLotoEngine
 
         [Header("Tuning")]
         public float dropJitter = 0.03f;    // 投入ジッタ（RSC 罠15/18）
+        public Vector3 dropVelocity = new Vector3(-0.57f, 0, -0.57f);   // 投入点（ボウル軸から角度 135°）での接線速度 0.8（コーン面を螺旋で下る）
+        public float angularDamping = 1.0f, linearDamping = 0.3f;    // 転がり抵抗の代用（漏斗の喉で周回し続けない）
         public float timeout = 25f;         // 落ちないときは喉へ強制移動（警告ログ）
         public float settleSeconds = 2.5f;  // 最終落下を見せる時間
         public float camAhead = 0.35f;      // カメラ高さ = 球 + camAhead
@@ -39,11 +41,12 @@ namespace NTsLotoEngine
         public IEnumerator Run(NumberBall ball, int wins, int max, Camera cam, Action<int, bool> onRound)
         {
             var rb = BallUtil.Prepare(ball);
+            rb.angularDamping = angularDamping; rb.linearDamping = linearDamping;
             var j = UnityEngine.Random.insideUnitCircle * dropJitter;
-            rb.isKinematic = true;
+            // isKinematic を切り替えない（切り替えると CCD が Discrete に落ち、高速落下でボウルを突き抜ける）
             rb.position = dropPoint.position + new Vector3(j.x, 0, j.y);
+            rb.linearVelocity = dropVelocity; rb.angularVelocity = Vector3.zero;
             yield return new WaitForFixedUpdate();
-            rb.isKinematic = false; rb.linearVelocity = Vector3.zero; rb.angularVelocity = Vector3.zero;
 
             int n = Mathf.Min(max, levels.Length);
             for (int i = 0; i < n; i++)
@@ -56,15 +59,16 @@ namespace NTsLotoEngine
                 Action<NumberBall> onPass = b => { if (b == ball) passed = true; };
                 Action<NumberBall> onExit = b => { if (b == ball) exited = true; };
                 L.passTrigger.Entered += onPass; L.exitTrigger.Entered += onExit;
-                float t = 0f, nextLog = 3f;
+                float t = 0f, nextLog = 5f;
                 while (!passed && !exited)
                 {
                     t += Time.fixedDeltaTime;
                     if (t > nextLog)
                     {
                         var lp = rb.position - L.bowl.position;
-                        Debug.Log($"[{name}] level {i} t={t:F0}s r={new Vector2(lp.x, lp.z).magnitude:F2} y={rb.position.y:F2} (bowl@{L.bowl.position.y:F2}) v={rb.linearVelocity.magnitude:F2}");
-                        nextLog += 3f;
+                        var touching = Physics.OverlapSphere(rb.position, 0.06f, ~0, QueryTriggerInteraction.Ignore);
+                        Debug.Log($"[{name}] level {i} t={t:F0}s r={new Vector2(lp.x, lp.z).magnitude:F2} y={rb.position.y:F2} (bowl@{L.bowl.position.y:F2}) v={rb.linearVelocity.magnitude:F2} touching={string.Join("/", System.Array.ConvertAll(touching, c => c.name))}");
+                        nextLog += 5f;
                     }
                     if (t > timeout)
                     {

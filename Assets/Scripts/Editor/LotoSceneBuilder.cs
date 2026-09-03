@@ -16,13 +16,12 @@ namespace NTsLotoEngine.EditorTools
     {
         const string ScenePath = "Assets/Scenes/LotoScene.unity";
         const string BallPrefabPath = "Packages/net.numbertales-radiann.lotteryballkit/Prefabs/NumberBall.prefab";
-        const string BowlPath = "Assets/RouletteSphereChaser/Models/TowerD_Kuruun.fbx";
         const string MatDir = "Assets/Materials/Generated";
 
         // ---- 寸法 ----
         const float RailZ = -1.10f, RailY = 0.05f, RailLen = 2.0f;
         const float TowerZ = 3.0f, TowerPitch = 2.4f, TowerBaseY = 0.9f;   // 最下段ボウル底の高さ（完走トレイ＋通過トリガー分）
-        const float FunnelH = 0.20f, LevelGap = 0.70f;                        // 段ピッチ = ボウル高 + LevelGap（シュートが下段の縁を越える分）
+        const float FunnelH = 0.28f, LevelGap = 0.86f, Stagger = 0.195f;   // 千鳥オフセット（対角 (±S,±S)。喉→下段コーン面 r=0.55。X/Z 軸上はメッシュの継ぎ目で突き抜けるので対角に置く）                       // 段ピッチ = ボウル高 + LevelGap（シュートが下段の縁を越える分）
 
         [MenuItem("Tools/NTsLoto/Build Loto Scene")]
         public static void Build()
@@ -67,9 +66,8 @@ namespace NTsLotoEngine.EditorTools
 
             // ---- 別ボール 7 塔（縦連クルーン）----
             var towers = new KuruunTower[LotoRules.Streaks.Length];
-            var bowlPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(BowlPath);
             for (int i = 0; i < towers.Length; i++)
-                towers[i] = BuildTower(root, i, (i - (towers.Length - 1) / 2f) * TowerPitch, bowlPrefab, bowlMat, frame, rail, glass);
+                towers[i] = BuildTower(root, i, (i - (towers.Length - 1) / 2f) * TowerPitch, bowlMat, frame, rail, glass);
 
             // ---- カメラ・照明・進行役 ----
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
@@ -95,7 +93,7 @@ namespace NTsLotoEngine.EditorTools
             foreach (var col in root.GetComponentsInChildren<Collider>())
             {
                 string nm = col.name;
-                if (nm == "Wall" || nm == "Sill" || nm == "SideL" || nm == "SideR" || nm == "DropTubeU" || nm == "Plate" || nm.StartsWith("Funnel") || nm.StartsWith("Channel"))
+                if (nm == "Wall" || nm == "Sill" || nm == "SideL" || nm == "SideR" || nm == "DropTubeU" || nm.StartsWith("Plate") || nm.StartsWith("Channel"))   // 漏斗は摩擦あり（周回減衰）
                     col.sharedMaterial = slick;
             }
 
@@ -150,7 +148,7 @@ namespace NTsLotoEngine.EditorTools
             return t;
         }
 
-        static KuruunTower BuildTower(Transform parent, int index, float x, GameObject bowlPrefab, Material bowlMat, Material frame, Material rail, Material glass)
+        static KuruunTower BuildTower(Transform parent, int index, float x, Material bowlMat, Material frame, Material rail, Material glass)
         {
             var s = LotoRules.Streaks[index];
             int n = s.max;
@@ -159,37 +157,46 @@ namespace NTsLotoEngine.EditorTools
             var k = root.gameObject.AddComponent<KuruunTower>();
             var c = root.position;
 
-            // ボウルを 1 個置いて寸法を測る（根の localScale=100 罠は bounds で吸収）
-            var first = PlaceBowl(root, bowlPrefab, bowlMat, 0f, out var bb);
+            // ボウルを 1 個置いて寸法を測る（KuruunBowl の既定寸法 = RSC TowerD_Kuruun）
+            var first = PlaceBowl(root, bowlMat, 0f, 0f, 0f, out var bb);
             float H = bb.size.y, R = Mathf.Max(bb.extents.x, bb.extents.z), pitch = H + LevelGap;
-            float Lc = R + 0.25f;                       // 排出シュート長（下段ボウルの縁の外まで）
-            float zEnd = -(0.09f + Lc * Mathf.Cos(6f * Mathf.Deg2Rad));
+            float zEnd = -(0.18f + (R + 0.25f));        // 落下チャンネル入口（全段共通・塔の中心線 x=0）
             float zCh = zEnd - 0.13f;                   // 落下チャンネル中心
 
             k.levels = new KuruunTower.Level[n];
             for (int i = 0; i < n; i++)
             {
                 float y = TowerBaseY + (n - 1 - i) * pitch;      // この段のボウル底
+                float xi = (i % 2 == 0 ? -1f : 1f) * Stagger, zi = xi;    // 千鳥（対角）: 上段の喉が下段コーン面（r=2√2·Stagger）に落ちる
                 var L = new KuruunTower.Level();
-                L.bowl = (i == 0 ? first : PlaceBowl(root, bowlPrefab, bowlMat, y, out _)).transform;
-                if (i == 0) first.transform.position += Vector3.up * y;
+                if (i == 0) { first.transform.localPosition = new Vector3(xi, y, zi); L.bowl = first.transform; }
+                else L.bowl = PlaceBowl(root, bowlMat, xi, zi, y, out _).transform;
 
-                Tube(root, $"Funnel{i}", new Vector3(0, y - 0.02f - FunnelH, 0), 0.08f, 0.5f, 0.02f, FunnelH, glass, 40);
-                L.throat = Anchor(root, $"Throat{i}", c + new Vector3(0, y - 0.20f, 0), null);
+                Tube(root, $"Funnel{i}", new Vector3(xi, y - 0.02f - FunnelH, zi), 0.12f, 0.40f, 0.02f, FunnelH, glass, 40);   // 45° 漏斗・喉 2.4d（狭い喉だと球が縁を周回して落ちない）
+                L.throat = Anchor(root, $"Throat{i}", c + new Vector3(xi, y - 0.28f, zi), null);
 
-                float yf = y - 0.30f;                              // フラップ軸（喉の 0.08 下）
-                var flap = new GameObject($"Flap{i}").transform; flap.SetParent(root, false); flap.localPosition = new Vector3(0, yf, 0.10f);
-                Box(flap, "Plate", new Vector3(0, 0, -0.10f), new Vector3(0.24f, 0.02f, 0.20f), frame);
+                // 排出シュートは各段の軸から塔中心線上のチャンネル入口へ向ける（6° 下り）
+                var origin = new Vector3(xi, 0, zi); var mouth = new Vector3(0, 0, zEnd);
+                var dir = (mouth - origin).normalized;                 // 水平
+                float Lc = Vector3.Distance(origin, mouth) - 0.18f;
+                var yaw = Quaternion.LookRotation(-dir);              // フラップの局所 -Z = シュート方向
+
+                float yf = y - 0.38f;                              // フラップ軸（喉の 0.08 下）
+                var pivot = new GameObject($"FlapPivot{i}").transform; pivot.SetParent(root, false);
+                pivot.localPosition = origin + new Vector3(0, yf, 0) - dir * 0.15f; pivot.localRotation = yaw;
+                var flap = new GameObject("Flap").transform; flap.SetParent(pivot, false);
+                Box(flap, "Plate", new Vector3(0, 0, -0.16f), new Vector3(0.28f, 0.02f, 0.32f), frame);   // 倒すと落下柱（±0.12）全体を覆う
+                Box(flap, "PlateWall", new Vector3(-0.15f, 0.04f, -0.16f), new Vector3(0.02f, 0.10f, 0.32f), glass);   // 喉から横向きに出てきた球を板から落とさない
+                Box(flap, "PlateWall", new Vector3(0.15f, 0.04f, -0.16f), new Vector3(0.02f, 0.10f, 0.32f), glass);
                 flap.localRotation = KuruunTower.FlapDivert;
                 L.flap = flap;
 
-                var pass = Box(root, $"Pass{i}", new Vector3(0, yf - 0.26f, 0), new Vector3(0.12f, 0.06f, 0.12f), null);
+                var pass = Box(root, $"Pass{i}", new Vector3(xi, yf - 0.34f, zi), new Vector3(0.30f, 0.06f, 0.30f), null);
                 L.passTrigger = MakeTrigger(pass);
 
-                // 排出シュート（-Z へ 6° 下り）→ 落下チャンネル
                 var chute = new GameObject($"Chute{i}").transform; chute.SetParent(root, false);
-                chute.localPosition = new Vector3(0, yf - 0.18f, -0.09f);   // 落下柱（喉 r0.08 + 球 r0.05）の外・フラップ先端の下
-                chute.localRotation = Quaternion.LookRotation(Vector3.back) * Quaternion.Euler(6f, 0, 0);
+                chute.localPosition = origin + new Vector3(0, yf - 0.26f, 0) + dir * 0.18f;   // 落下柱（喉 r0.12 + 球 r0.05）の外・フラップ先端の下
+                chute.localRotation = Quaternion.LookRotation(dir) * Quaternion.Euler(6f, 0, 0);
                 Box(chute, "Sill", new Vector3(0, -0.01f, Lc / 2), new Vector3(0.24f, 0.02f, Lc), frame);
                 Box(chute, "SideL", new Vector3(-0.13f, 0.05f, Lc / 2), new Vector3(0.02f, 0.12f, Lc), glass);
                 Box(chute, "SideR", new Vector3(0.13f, 0.05f, Lc / 2), new Vector3(0.02f, 0.12f, Lc), glass);
@@ -205,29 +212,22 @@ namespace NTsLotoEngine.EditorTools
             Box(root, "ChannelL", new Vector3(-0.13f, 0.1f + chH / 2, zCh), new Vector3(0.02f, chH, 0.24f), glass);
             Box(root, "ChannelR", new Vector3(0.13f, 0.1f + chH / 2, zCh), new Vector3(0.02f, chH, 0.24f), glass);
             Tray(root, "LoseTray", new Vector3(0, 0.05f, zCh), rail, glass);
-            Tray(root, "WinTray", new Vector3(0, 0.05f, 0), rail, glass);
-            foreach (float sx in new[] { -(R + 0.12f), R + 0.12f }) Rod(root, c + new Vector3(sx, 0, 0), c + new Vector3(sx, top + H, 0), 0.025f, frame);
+            Tray(root, "WinTray", new Vector3(((n - 1) % 2 == 0 ? -1f : 1f) * Stagger, 0.05f, ((n - 1) % 2 == 0 ? -1f : 1f) * Stagger), rail, glass);   // 最下段の喉の真下
+            foreach (float sx in new[] { -(R + Stagger + 0.12f), R + Stagger + 0.12f }) Rod(root, c + new Vector3(sx, 0, 0), c + new Vector3(sx, top + H, 0), 0.025f, frame);
 
-            k.dropPoint = Anchor(root, "DropPoint", c + new Vector3(0, top + H + 0.15f, 0), null);   // 壁天端の 0.15 上（ドーム頂点 = 底+0.25 へ約 0.46 落下）
+            // 投入は最上段ボウルのコーン面（r=0.55・面の 0.13 上）へ接線速度付きで。中央ドーム頂点に落とすと弾かれて縁を越える
+            k.dropPoint = Anchor(root, "DropPoint", c + new Vector3(-Stagger - 0.39f, top + 0.40f, -Stagger + 0.39f), null);   // 最上段ボウル軸から角度 135°・r=0.55（継ぎ目を避ける）
             k.camAnchor = Anchor(root, "Cam", c + new Vector3(0, 0, -(R + 2.4f)), null);
             return k;
         }
 
-        static GameObject PlaceBowl(Transform root, GameObject prefab, Material mat, float bottomY, out Bounds bb)
+        static GameObject PlaceBowl(Transform root, Material mat, float xOff, float zOff, float bottomY, out Bounds bb)
         {
-            var bowl = (GameObject)PrefabUtility.InstantiatePrefab(prefab); bowl.name = "Bowl";
-            bowl.transform.SetParent(root, false);
-            bb = new Bounds(root.position, Vector3.zero); bool firstR = true;
-            foreach (var mf in bowl.GetComponentsInChildren<MeshFilter>())
-            {
-                var mc = mf.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mf.sharedMesh;
-                var r = mf.GetComponent<MeshRenderer>();
-                if (!r) continue;
-                var mats = r.sharedMaterials; for (int i = 0; i < mats.Length; i++) mats[i] = mat; r.sharedMaterials = mats;
-                if (firstR) { bb = r.bounds; firstR = false; } else bb.Encapsulate(r.bounds);
-            }
-            bowl.transform.position += new Vector3(root.position.x - bb.center.x, bottomY - bb.min.y, root.position.z - bb.center.z);
-            bb.center = new Vector3(root.position.x, bottomY + bb.extents.y, root.position.z);
+            var bowl = new GameObject("Bowl"); bowl.transform.SetParent(root, false);
+            bowl.transform.localPosition = new Vector3(xOff, bottomY, zOff);
+            bowl.AddComponent<KuruunBowl>().Rebuild();
+            bowl.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            bb = bowl.GetComponent<MeshRenderer>().bounds;
             return bowl;
         }
 
