@@ -24,7 +24,7 @@
 - **コレクタ・段間隔・減衰・材質を変えたら MC を回し直す**（`LotoMonteCarlo.RunBatch(new[]{...})` を RunCommand から。10 万試行 ≈ 75 秒。エディタが非アクティブだと update が間引かれるので `stepsPerUpdate` を 2500 に）。
 - **当たりを作るコードは書かない**（喉へ置く・引き寄せる）。詰まり救済は投入点へ戻すだけ。
 - Play 中に Assets のスクリプトを保存しない（再コンパイルで録画が落ちる）。MC 中もスクリプトを保存しない（ドメインリロードで MC が死に `Physics.simulationMode` が Script のまま残る。残ったら `Physics.simulationMode = SimulationMode.FixedUpdate` に戻す）。
-- Cowork サンドボックスの git は lock を消せない。コミットは User が Windows 側で。
+- Cowork サンドボックスの git は lock を消せない。書き込みは親フォルダの `scripts/g.sh NTsLotoEngine <git args>` 経由（lock を `.git/stale-locks/` へ退避）。退避先の掃除は `scripts/clean-git-locks.ps1`。
 
 ## 4. 主要ノブ
 

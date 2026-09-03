@@ -23,7 +23,7 @@
 | `main` | 安定版・統合ブランチ | 直接コミットしての作業は禁止。マージは User が実施 |
 
 - 作業開始前に `git branch --show-current` で `develop` にいることを確認する。push は User の明示指示があった場合のみ `develop` に対して行う。
-- Cowork のサンドボックスから git を書き込むと `.git/*.lock` が残ることがある。コミットは原則 User が Windows 側で行う。
+- Cowork のサンドボックスは git の `*.lock` を消せない（unlink 禁止・rename は可）。統合セッションでは親フォルダの `scripts/g.sh <repo> <git args>` 経由で書き込む（前後で lock を `.git/stale-locks/` へ退避、著者は直近コミットから流用）。溜まった退避先は User が `scripts/clean-git-locks.ps1` で消す。
 
 ## 3. Unity MCP の利用
 
