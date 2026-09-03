@@ -37,7 +37,8 @@ Assets/Scripts/            LotoRules / LotoDirector / LotoDrumTier / KuruunTower
 Assets/Scripts/Editor/     LotoSceneBuilder（シーン生成）/ LotoBuild / LotoSelfCheck / LotoPlay
 Assets/Materials/Generated/  ビルダーが生成するマテリアル（Glass / Frame / Rail / Bowl / Slick）
 Assets/Settings/           URP 設定（PC / Mobile）
-docs/                      DESIGN.md / raspberrypi-handoff.md
+Assets/Fonts/              PenchantManufacture.otf（HUD 用・サブモジュールから同期コピー）
+docs/                      DESIGN.md / HANDOFF.md / raspberrypi-handoff.md
 scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
 LotteryBallKit/ 100BeautiesLab_CreationsDB/ PenchantManufacture_ImageAssets/  サブモジュール（AGENTS.md 4.5）
 ```

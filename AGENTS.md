@@ -12,6 +12,7 @@
 - **エンジン**: Unity 6 (6000.6.0f1) / URP 3D
 - **リモート**: `radiann-kswg/NTsLotoEngine`（GitHub）
 - **素材の出自**: 球は `LotteryBallKit`（サブモジュール → UPM `file:` 依存・CC BY 4.0）。抽選機の筒・回転床・漏斗・クルーンのボウルはすべて `ProcMesh` でコード生成（ボウルの寸法は `RouletteSphereChaser` の `TowerD_Kuruun` に倣う。FBX は同梱しない）。
+- **引継ぎ**: `docs/HANDOFF.md`（いまの状態・次にやること・ノブ一覧）。セッションの終わりに更新する。
 - **抽選仕様・機構の設計正本**: `docs/DESIGN.md`。**確率の正本はコード `Assets/Scripts/LotoRules.cs`** で、DESIGN.md はその説明。
 
 ## 2. ブランチ運用（必読）
@@ -46,7 +47,7 @@
 | --- | --- | --- | --- |
 | `LotteryBallKit/` | `radiann-kswg/LotteryBallKit` | `main` | 球。`Packages/manifest.json` が `file:../LotteryBallKit/Assets/LotteryBallKit` で UPM パッケージとして読む（Unity は `Assets/` 外なので直接はインポートしない） |
 | `100BeautiesLab_CreationsDB/` | `radiann-kswg/100BeautiesLab_CreationsDB` | `develop` | 創作DB（球のキャラスキン・表示用に将来使う）。sparse: `DataBases` / `Dictionaries` / `Images/*/corefolder` / `RoleplayPrompts` |
-| `PenchantManufacture_ImageAssets/` | `radiann-kswg/PenchantManufacture_ImageAssets` | `main` | フォント。sparse: `assets/fonts`。HUD が使うようになったら `Assets/Fonts` へ同期（未実装） |
+| `PenchantManufacture_ImageAssets/` | `radiann-kswg/PenchantManufacture_ImageAssets` | `main` | HUD フォント。sparse: `assets/fonts`。正はサブモジュールで、`Assets/Fonts/PenchantManufacture.otf` は setup スクリプトの同期コピー（CJK 未収録。HUD 文字列は英数字のみ） |
 
 - クローン直後は `scripts/setup-submodule.ps1`（Windows）/ `scripts/setup-submodule.sh` を実行する。sparse 設定は `.gitmodules` に保存されない。
 - サブモジュールは**読み取り専用**。中のファイルを本リポジトリの作業で編集・コミットしない。更新は各サブモジュールで `git pull` → 親で gitlink をコミット。
@@ -61,7 +62,7 @@
 - RSC の罠（`RouletteSphereChaser/AGENTS.md` 3章）は本プロジェクトにも効く。特に: Cylinder プリミティブのコライダはカプセル（1）／球の `sleepThreshold=0`（2）／開口は縦 1.5d（57）／回転体の羽根と壁の隙間は 1.5d 以上（48）／`Physics.Raycast` はトリガーにも当たる（37）。
 - 本プロジェクトで踏んだ罠（2026-09-03）:
   1. MonoBehaviour は 1 クラス 1 ファイル（ファイル名一致）。同居させるとシーン保存後に Missing script になる。
-  2. 引き寄せ力で壁に押し付けた球は静止摩擦で固着する。壁・シュートは `Slick.physicsMaterial`（摩擦 0）。
+  2. 引き寄せ力で壁に押し付けた球は静止摩擦で固着する。壁・シュートは `Slick.asset`（PhysicsMaterial）（摩擦 0）。
   3. `Rigidbody.isKinematic` を切り替えると CCD が落ち、高速落下で薄いメッシュを突き抜ける。球の位置替えは `rb.position` 代入だけで行う。
   4. RSC の `TowerD_Kuruun.fbx` は単体ではコライダに穴があり球が抜けた。ボウルは `ProcMesh.Bowl` で生成する（片面メッシュ。表裏は `Cross(b-a, c-a)` が表面法線）。
   5. 漏斗の喉が 1.6d だと球が縁を周回して落ちない。喉 2.4d・45° 漏斗・球に角減衰 1.0。
