@@ -229,13 +229,12 @@
       }
     },
     "net.numbertales-radiann.lotteryballkit": {
-      "version": "https://github.com/radiann-kswg/LotteryBallKit.git?path=Assets/LotteryBallKit",
+      "version": "file:../LotteryBallKit/Assets/LotteryBallKit",
       "depth": 0,
-      "source": "git",
+      "source": "local",
       "dependencies": {
         "com.unity.render-pipelines.universal": "17.5.0"
-      },
-      "hash": "16ee9f60a6fe22f060c1e2392e670f89dcdb0435"
+      }
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
