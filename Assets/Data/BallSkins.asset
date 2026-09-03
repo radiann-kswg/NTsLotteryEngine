@@ -1,0 +1,652 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac4cb9462f9c5c4a80309d5d1214867, type: 3}
+  m_Name: BallSkins
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallSkinTable
+  defaultTexture: {fileID: 2800000, guid: 33753fbabd7ca0945abe7a2f05351e2e, type: 3}
+  skins:
+  - slot: 0
+    number: 1
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 2
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 3
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 4
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 5
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 6
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 7
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 8
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 9
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 10
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 11
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 12
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 13
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 14
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 15
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 16
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 17
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 18
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 19
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 20
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 21
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 22
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 23
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 24
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 25
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 26
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 27
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 28
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 29
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 30
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 31
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 32
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 33
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 34
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 35
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 36
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 37
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 38
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 39
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 40
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 41
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 42
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 43
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 44
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 45
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 46
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 47
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 48
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 49
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 50
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 51
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 52
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 53
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 54
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 55
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 56
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 57
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 58
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 59
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 60
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 61
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 62
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 63
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 64
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 65
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 66
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 67
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 68
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 69
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 70
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 71
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 72
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 73
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 74
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 75
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 76
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 77
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 78
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 79
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 80
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 81
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 82
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 83
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 84
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 85
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 86
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 87
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 88
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 89
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 90
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 91
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 92
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 93
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 94
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 95
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 96
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 97
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 98
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 0
+    number: 99
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 1
+    number: 1
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 
+  - slot: 1
+    number: 10
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 10-alt
+  - slot: 1
+    number: 0
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 000
+  - slot: 1
+    number: 2
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: Primary
+    dbNum: 2-alt
+  - slot: 1
+    number: 33
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: SemiPrimary
+    dbNum: 3x11
+  - slot: 1
+    number: 64
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: SemiPrimary
+    dbNum: 64-sxp
+  - slot: 1
+    number: 81
+    texture: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    db: SemiPrimary
+    dbNum: 9x9

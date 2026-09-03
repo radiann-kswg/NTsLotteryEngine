@@ -1,0 +1,120 @@
+{
+  "_comment": "クルーン 1 段の寸法 [m]。樋の幅 r_out〜gutter_r_out は 2d 以上（1.4d だと球が両壁に挟まって止まる 2026-09-03）、樋の勾配 gutter_fall は 0.25/半周。クルーン 1 段の寸法 [m]。角度は Blender θ（Unity 角 = θ + 180°）。コレクタの天端 top_z は穴リング(z=0)より球径以上下げ、壁の天端 top_z+wall_h をリングより下に保つ（突き出るとボウル内で球を弾く）。gen_kuruun.py が読む。ボウル（回転・穴は一様）と、その下の静止コレクタ（当たり扇形＝軸へ／ハズレ扇形＝外周樋へ）。確率はコレクタの当たり扇形の合計角で作り、Tools > NTsLoto > Monte Carlo で実測して詰める。",
+  "bowl": {
+    "rim_r": 1.0,
+    "rim_h": 0.56,
+    "cone_top_h": 0.28,
+    "ring_r_out": 0.65,
+    "ring_r_in": 0.45,
+    "dome_h": 0.22,
+    "holes": 6,
+    "hole_deg": 36,
+    "segments": 96,
+    "thickness": 0.02
+  },
+  "collector": {
+    "r_in": 0.36,
+    "r_out": 0.74,
+    "top_z": -0.2,
+    "drop": 0.16,
+    "wall_h": 0.14,
+    "gutter_r_out": 0.94,
+    "gutter_depth": 0.1,
+    "gutter_fall": 0.35,
+    "exit_deg": 0,
+    "exit_open_deg": 20,
+    "thickness": 0.02,
+    "segments": 96,
+    "gutter_tilt": 0.02
+  },
+  "variants": {
+    "_comment": "当たり扇形: [中心角, 幅] の並び（度）。幅は球径 0.1 に対し r=0.55 で 10.4°/球径なので 2.4d ≈ 25° 以上に保つ",
+    "p50": {
+      "win": [
+        [
+          0,
+          90
+        ],
+        [
+          180,
+          90
+        ]
+      ]
+    },
+    "p10": {
+      "win": [
+        [
+          90,
+          36
+        ]
+      ]
+    },
+    "p6of88": {
+      "win": [
+        [
+          90,
+          24.5
+        ]
+      ]
+    },
+    "p53": {
+      "win": [
+        [
+          0,
+          96
+        ],
+        [
+          180,
+          96
+        ]
+      ]
+    },
+    "p32": {
+      "win": [
+        [
+          0,
+          57
+        ],
+        [
+          180,
+          57
+        ]
+      ]
+    },
+    "p18": {
+      "win": [
+        [
+          90,
+          64
+        ]
+      ]
+    }
+  },
+  "sieves": {
+    "_comment": "篩型ロトマシーンの皿（回転・穴は一様・下に静止部品なし）。上段 2〜11 は 4 層、下段 12〜99 は 15 層。穴は弦 ≥1.5d・半径方向 ≥1.5d。build_bowl と同じ形（コーン→穴リング→中央ドーム）",
+    "Sieve_Dish_L": {
+      "rim_r": 0.7,
+      "rim_h": 0.22,
+      "cone_top_h": 0.1,
+      "ring_r_out": 0.42,
+      "ring_r_in": 0.26,
+      "dome_h": 0.08,
+      "holes": 3,
+      "hole_deg": 28,
+      "segments": 72,
+      "thickness": 0.02
+    },
+    "Sieve_Dish_U": {
+      "rim_r": 0.45,
+      "rim_h": 0.2,
+      "cone_top_h": 0.08,
+      "ring_r_out": 0.3,
+      "ring_r_in": 0.14,
+      "dome_h": 0.06,
+      "holes": 2,
+      "hole_deg": 40,
+      "segments": 64,
+      "thickness": 0.02
+    }
+  }
+}

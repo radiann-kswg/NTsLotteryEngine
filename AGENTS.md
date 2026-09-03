@@ -8,12 +8,12 @@
 ## 1. プロジェクト概要
 
 - **プロジェクト名**: NTsLotoEngine
-- **目的**: 一次創作「ナンバーテールズ」のコンテンツ用 **ボール抽選機**。二層式ロトマシーン（1〜11 から 1 個／12〜99 から 6 個）と別ボール 7 塔の縦連クルーン（連続抽選）を物理演出で見せ、結果を JSON に出力する。将来は Raspberry Pi や Misskey Bot で抽選中の様子を動画再生する。
+- **目的**: 一次創作「ナンバーテールズ」のコンテンツ用 **ボール抽選機**。篩型ロトマシーン（2〜11 の 4 層／12〜99 の 15 層。最下層に到達した順が抽選順）と別ボール 7 塔の縦連クルーン（連続抽選）を**物理で抽選**し、結果を JSON に出力する。将来は Raspberry Pi や Misskey Bot で抽選中の様子を動画再生する。
 - **エンジン**: Unity 6 (6000.6.0f1) / URP 3D
 - **リモート**: `radiann-kswg/NTsLotoEngine`（GitHub）
-- **素材の出自**: 球は `LotteryBallKit`（サブモジュール → UPM `file:` 依存・CC BY 4.0）。抽選機の筒・回転床・漏斗・クルーンのボウルはすべて `ProcMesh` でコード生成（ボウルの寸法は `RouletteSphereChaser` の `TowerD_Kuruun` に倣う。FBX は同梱しない）。
+- **素材の出自**: 球は `LotteryBallKit`（サブモジュール → UPM `file:` 依存・CC BY 4.0）。**抽選機の本体（クルーンのボウル・コレクタ・篩の皿）は Blender で生成**: 原本は `BlenderSources/gen_kuruun.py` + `kuruun_params.json`（寸法・穴・扇形の SSOT）、Blender GUI を開いた状態で Blender MCP / Python コンソールから `REPO=...; exec(open(".../gen_kuruun.py").read())` → `Assets/Models/*.fbx` と `BlenderSources/Kuruun.blend`。配管（漏斗・シュート・筒・レール）はまだ `ProcMesh`/Box（順次 Blender 化）。
 - **引継ぎ**: `docs/HANDOFF.md`（いまの状態・次にやること・ノブ一覧）。セッションの終わりに更新する。
-- **抽選仕様・機構の設計正本**: `docs/DESIGN.md`。**確率の正本はコード `Assets/Scripts/LotoRules.cs`** で、DESIGN.md はその説明。
+- **抽選仕様・機構の設計正本**: `docs/DESIGN.md`。**目標確率と球の範囲は `Assets/Scripts/LotoRules.cs`**、実測値は `Tools > NTsLoto > Monte Carlo` の `Output/mc_<variant>.json` と DESIGN.md 2.1 節。
 
 ## 2. ブランチ運用（必読）
 
@@ -55,32 +55,43 @@
 
 ## 5. 抽選の設計原則（必読）
 
-- **結果は RNG で先に確定し、物理は誘導演出**（`LotoRules.Draw(seed)` → `LotoDirector`）。物理だけで確率を作らない（クルーンは静止だと毎回同じ穴、単穴クルーンはほぼ必勝、など RSC の既知の罠）。
-- 誘導の仕組みは **レイヤー**: `Ball`(8) / `ChosenBall`(9) / `Blocker`(10)。`ChosenBall`–`Blocker` の衝突だけ無効（`LotoDirector.Start`）。ロトマシーンの排出口ブロッカーは `Blocker` 層。クルーン塔は可視のフラップで振り分ける。
-- 別ボールの当選率と最大回数は `LotoRules.Streaks` が唯一の正。P（= 1/1024）はコードで最小値として算出しており、手で数値を書かない。
-- 変更したら `Tools > NTsLoto > Self Check (Monte Carlo)` を回して ALL OK を確認する。
-- RSC の罠（`RouletteSphereChaser/AGENTS.md` 3章）は本プロジェクトにも効く。特に: Cylinder プリミティブのコライダはカプセル（1）／球の `sleepThreshold=0`（2）／開口は縦 1.5d（57）／回転体の羽根と壁の隙間は 1.5d 以上（48）／`Physics.Raycast` はトリガーにも当たる（37）。
+- **当選は物理が決める。RNG で先に決めて誘導しない**（2026-09-03 User 指示。旧方式は「作為的」で廃止）。球を喉へ置く・引き寄せる等の「当たりを作る」コードは書かない。詰まり救済は**その段の投入点へ戻してやり直す**だけ。
+- 別ボールの当選率は **コレクタの当たり扇形の角度比** で作り、`Tools > NTsLoto > Monte Carlo`（`LotoMonteCarlo.cs`。エディタで `Physics.Simulate` を手回し・並列 64・1 万試行 ≈ 8 分）で実測して有効数字 2 桁を保証する。MC と実機は同じ物理（球の減衰 0.05/0・`BallUtil.Machine` 摩擦 0.3・ボウル 10rpm）で回すこと。減衰や材質を変えたら測り直し。
+- 篩は回転皿の穴を球が見つけるまで待つだけ。到達順 = 抽選順（`SieveMachine.arrived` キュー）。最後の 1 球が着いたら Gate を閉じる。
+- 脱線監視 `DerailWatch`（速度 8m/s 超・床下・枠外を球ごとに 1 回警告）を常時付ける。警告が出たら Recorder の録画（`Play + Record`）の同時刻を切り出して原因を潰す。
+- 誘導レイヤー（`ChosenBall`/`Blocker`）は物理抽選では使わない（`LotoLayers` は残置）。
+- RSC の罠（`RouletteSphereChaser/AGENTS.md` 3章）は本プロジェクトにも効く。特に: Cylinder プリミティブのコライダはカプセル（1）／球の `sleepThreshold=0`（2）／開口は縦 1.5d（57）／回転体の羽根と壁の隙間（48）／`Physics.Raycast` はトリガーにも当たる（37）。
 - 本プロジェクトで踏んだ罠（2026-09-03）:
   1. MonoBehaviour は 1 クラス 1 ファイル（ファイル名一致）。同居させるとシーン保存後に Missing script になる。
-  2. 引き寄せ力で壁に押し付けた球は静止摩擦で固着する。壁・シュートは `Slick.asset`（PhysicsMaterial）（摩擦 0）。
+  2. 引き寄せ力で壁に押し付けた球は静止摩擦で固着する。壁・シュートは `Slick.asset`（摩擦 0・反発 0）。
   3. `Rigidbody.isKinematic` を切り替えると CCD が落ち、高速落下で薄いメッシュを突き抜ける。球の位置替えは `rb.position` 代入だけで行う。
-  4. RSC の `TowerD_Kuruun.fbx` は単体ではコライダに穴があり球が抜けた。ボウルは `ProcMesh.Bowl` で生成する（片面メッシュ。表裏は `Cross(b-a, c-a)` が表面法線）。
-  5. 漏斗の喉が 1.6d だと球が縁を周回して落ちない。喉 2.4d・45° 漏斗・球に角減衰 1.0。
-  6. 喉から横向きに出た球はフラップの側面から落ちる。フラップには側壁を付ける。
-  7. 縦積みでは上段の喉が下段ボウルの中央ドーム頂点の真上に来ると弾かれて縁を越える。段ごとに対角（±0.195, ±0.195）の千鳥にして下段コーン面（r=0.55）へ落とす。
+  4. RSC の `TowerD_Kuruun.fbx` は単体ではコライダに穴があり球が抜けた。
+  5. 漏斗の喉が 1.6d だと球が縁を周回して落ちない。喉 2.4d・45° 漏斗。漏斗内だけ角減衰 2.0（`KuruunTower.funnelDamping`）。
+  6. 中央ドームの頂点に球を落とすと弾かれて縁を越える。上段の喉は下段のコーン面（r=0.85）に落とす（x を ±0.425 交互）。
+  7. **`ProcMesh.Tube` / `Disc` は表裏が逆に巻かれていた**（修正済み・`B.Flip()`）。MeshCollider は片面。生成メッシュは必ず `MeshCollider.Raycast` を内側から撃って当たる面と法線を確認する。
+  8. 薄い壁に球の山を押し付けると depenetration で外へ射出される。球は `maxDepenetrationVelocity=1`・`solverIterations=12`。
+  9. **`Rotator` はワールド軸で回す**（`AngleAxis(...) * rb.rotation`）。右から掛けるとローカル軸になり、FBX の根（X −90°）を持つボウル・皿が横倒しの車輪のように回った。
+  10. **FBX の角度規約: Unity 角 = Blender θ + 180°**（純回転・鏡映なし。p10 コレクタの当たり扇形 Blender 90° が Unity 270°、出口 Blender 180° が Unity 0° で確認）。Blender は右手系・Unity は左手系なので、新しい非対称メッシュは必ずレイキャストで角度と表裏を実測してから使う。
+  11. **回転する皿と静止した筒の隙間**: 0.03（＜d/2）でも山に押された球が挟まって突き抜け、132m 先まで飛んだ。隙間ゼロ（筒を皿の縁に重ねる）にする。
+  12. 樋（U 字の溝）は幅 2d 以上・床は外壁側へ 0.02 傾け・勾配 0.35/半周。幅 1.4d は両壁に挟まって停止、床が平らだと出口の V の底で止まる、摩擦 0.6 の外壁に擦れると止まる（→ `BallUtil.Machine` 摩擦 0.3）。
+  13. コンパイルエラーは Console の Type が **Log** で出ることがある（Unity 6.6 の `error CS`）。`ReadConsole` は `FilterText: "error CS"` でも確認する。エラーがあると Play が始まらず、古いアセンブリでビルダーが走る。
+  14. Unity 6.6 では `Object.GetInstanceID()` が obsolete エラー。`HashSet<T>` に参照を入れる。
+  15. `Debug.Log` の周期が回転周期と同期すると球が止まって見える。ログ周期は回転周期の整数倍を避ける。
 
 ## 6. 実装の構成
 
-- `Assets/Scripts/LotoRules.cs` … 抽選仕様（SSOT）と `Draw(seed)`。
-- `Assets/Scripts/LotoDirector.cs` … 進行役。起動引数 `-seed N -out path -speed x -quit`。結果 JSON を書く。
-- `Assets/Scripts/LotoDrumTier.cs` … ロトマシーン 1 段（攪拌→減速→当選球だけ排出）。
-- `Assets/Scripts/KuruunTower.cs` … 縦連クルーン塔（各段の漏斗→振り分けフラップで次段／排出へ）。
-- `Assets/Scripts/ProcMesh.cs` … 筒・回転床・クルーンボウルのメッシュ生成。コンポーネントは `TubeWall.cs` / `DiscPlate.cs` / `KuruunBowl.cs`。
-- `Assets/Scripts/Rotator.cs` … `Rotator` / `LotoLayers` / `BallUtil`。`BallTrigger.cs` / `TubeWall.cs` / `DiscPlate.cs` は 1 クラス 1 ファイル（MonoBehaviour はファイル名一致が必須）。
-- `Assets/Scripts/Editor/LotoPlay.cs` … MCP から Play/Stop するメニュー。
-- `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。寸法はすべてここ。
-- `Assets/Scripts/Editor/LotoBuild.cs` … Linux x64 / Windows x64 ビルド。
-- `Assets/Scripts/Editor/LotoSelfCheck.cs` … 確率の自己検査。
+- `Assets/Scripts/LotoRules.cs` … 球の範囲・別ボールの並び・目標当選率・コレクタ variant（SSOT）。`Draw` は無い（結果は物理）。
+- `Assets/Scripts/LotoDirector.cs` … 進行役。篩 2 台 → 塔 7 本 → JSON。起動引数 `-seed N -out path -speed x -quit`。
+- `Assets/Scripts/SieveMachine.cs` … 篩型ロトマシーン（回転皿 × N・到達順キュー・Gate）。
+- `Assets/Scripts/KuruunTower.cs` … 縦連クルーン塔（回転ボウル＋静止コレクタ。Win/Exit トリガーで物理の結果を読む）。
+- `Assets/Scripts/DerailWatch.cs` … 脱線監視。`Assets/Scripts/BallTrigger.cs` … 通過検知。
+- `Assets/Scripts/Rotator.cs` … `Rotator`（ワールド軸）/ `LotoLayers` / `BallUtil`（球の物理マテリアル `Bouncy`・機械の `Machine`・`Prepare`）。
+- `Assets/Scripts/ProcMesh.cs` + `TubeWall.cs` / `DiscPlate.cs` … 配管用の生成メッシュ（漏斗・筒・落下管）。順次 Blender 化。
+- `Assets/Scripts/BallSkinTable.cs` … 全球のテクスチャ＋創作DBリンク（`Assets/Data/BallSkins.asset`）。`Assets/Scripts/CreationsDb.cs` … 創作DB ローダ。
+- `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。FBX の配置・配管・カメラ・スキン表。
+- `Assets/Scripts/Editor/LotoMonteCarlo.cs` … `Tools > NTsLoto > Monte Carlo > Run/Stop`。静的フィールド（variant / trials / parallel / bowlRpm / entryR / entryHeight / entryTangential）を RunCommand で書き換えて実行。結果 `Output/mc_<variant>.json`。
+- `Assets/Scripts/Editor/LotoRecord.cs` … `Tools > NTsLoto > Play + Record`（Recorder → `Recordings/*.mp4`）。`LotoPlay.cs` … Play/Stop。`LotoBuild.cs` … Linux/Windows ビルド。
+- `BlenderSources/gen_kuruun.py` + `kuruun_params.json` … 抽選機メッシュの原本。`Assets/Models/Kuruun_Bowl.fbx` / `Kuruun_Collector_<variant>.fbx` / `Sieve_Dish_L.fbx` / `Sieve_Dish_U.fbx`。
 
 ## 7. ビルドとRaspberry Pi 4Bへの引き渡し
 
@@ -91,7 +102,8 @@
 ## 8. 創作内容の取り扱い
 
 - 未公開の創作設定・台詞・ストーリー・固有用語を自動生成しない。不明点は創作DBサイト（https://database.numbertales-radiann.net/ ）で確認し、それでも不明なら User に質問する。
-- 球のキャラスキン（`NumberBall.SetCharacterTexture`）を入れる場合、画像は CC BY-NC 側の素材として扱い、`LotteryBallKit` の CC BY 4.0 と混同しない。
+- 球のキャラスキン（`NumberBall.SetCharacterTexture`・`BallSkinTable`）の画像は CC BY-NC 側の素材として扱い、`LotteryBallKit` の CC BY 4.0 と混同しない。いまの既定テクスチャ `BallSkins_Sample` は LotteryBallKit（CC BY）の仮貼り。
+- 球番号とキャラの対応（別ボール 0→000(チトセ)・10→ディケ・2→バイナ・33→トレッド・64→ゼフィア・81→9×9(クック)、ロトの 2→2(ツグ)・10→10(ミツル)、他は番号通り）は User 指定（2026-09-03）。9x9 は Progress が notProceeded のため公開まで名前は出ない（公開基準は変えない）。`BallSkinTable.StreakOverrides` と `Assets/Data/BallSkins.asset` の両方を変えないと食い違う（asset は既存行を保持する）。
 
 ## 9. ロールプレイ設定
 

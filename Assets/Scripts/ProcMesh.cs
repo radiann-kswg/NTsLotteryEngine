@@ -22,6 +22,9 @@ namespace NTsLotoEngine
                 int i = v.Count; v.Add(a); v.Add(b); v.Add(c);
                 t.AddRange(new[] { i, i + 1, i + 2 });
             }
+            /// <summary>全三角形の表裏を反転する。</summary>
+            public void Flip() { for (int i = 0; i < t.Count; i += 3) (t[i + 1], t[i + 2]) = (t[i + 2], t[i + 1]); }
+
             public Mesh Build(string name)
             {
                 var m = new Mesh { name = name, indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
@@ -37,7 +40,7 @@ namespace NTsLotoEngine
         /// 角度は +Z を 0°、Y 軸まわり右ねじ。
         /// </summary>
         public static Mesh Tube(float rInBottom, float rInTop, float thickness, float height, int segments,
-                                float gapCenterDeg = 0, float gapAngleDeg = 0, float gapHeight = 0)
+                                float gapCenterDeg = 0, float gapAngleDeg = 0, float gapHeight = 0, bool gapAtTop = false)
         {
             var b = new B();
             float RIn(float y) => Mathf.Lerp(rInBottom, rInTop, height <= 0 ? 0 : y / height);
@@ -72,9 +75,20 @@ namespace NTsLotoEngine
             {
                 float g0 = gapCenterDeg + gapAngleDeg * 0.5f, g1 = gapCenterDeg - gapAngleDeg * 0.5f + 360f;
                 float gh = Mathf.Min(gapHeight, height);
-                Band(0, gh, g0, g1, true);
-                if (gh < height) Band(gh, height, 0, 360, false);
+                if (gapAtTop)
+                {
+                    if (gh < height) Band(0, height - gh, 0, 360, false);
+                    Band(height - gh, height, g0, g1, true);   // 天端の切り欠き（排出口を上に置くと、口の前に球の栓ができない）
+                }
+                else
+                {
+                    Band(0, gh, g0, g1, true);
+                    if (gh < height) Band(gh, height, 0, 360, false);
+                }
             }
+            // 表裏の正: 内面は軸向き・外面は外向き（Cross(b-a,c-a) = 表面法線）。上の巻き方は全面が肉厚の内側を向いていて、
+            // 球は内面を素通りして外面に止まる＝壁の中に半分めり込み、薄壁だとフィンに押されて外へ抜けた（2026-09-03 実測）
+            b.Flip();
             return b.Build("Tube");
         }
 
@@ -90,6 +104,7 @@ namespace NTsLotoEngine
                 b.Tri(bot, P(i, radius, -thickness), P(i + 1, radius, -thickness));               // 下面
                 b.Quad(P(i, radius, 0), P(i + 1, radius, 0), P(i + 1, radius, -thickness), P(i, radius, -thickness)); // 側面
             }
+            b.Flip();   // Tube と同じ理由（上面が下を向いていた。convex の回転床は無影響、蓋は上面が実効面になっていた）
             return b.Build("Disc");
         }
 

@@ -73,9 +73,10 @@ crashlytics-build.properties
 # 抽選結果の出力（LotoDirector が書く JSON。Bot 連携の生成物）
 /[Oo]utput/
 /result*.json
-/probe.png
+
 # Unity のクラッシュ復旧フォルダ
 /[Aa]ssets/_Recovery/
 /[Aa]ssets/_Recovery.meta
 # IDE 生成物
 *.slnx
+/probe*.png
