@@ -19,6 +19,7 @@ namespace NTsLotoEngine
         public KuruunTower[] towers;    // LotoRules.Streaks と同じ並び
         public Camera cam;
         public Transform camMachine, camOverview;
+        public Font hudFont;            // PenchantManufacture（CJK 未収録。HUD は英数字のみ）
 
         [Header("Run")]
         public int seed = -1;           // -1 = 時刻から
@@ -129,7 +130,11 @@ namespace NTsLotoEngine
         GUIStyle style;
         void OnGUI()
         {
-            if (style == null) style = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt(Screen.height / 30f), richText = true };
+            if (style == null)
+            {
+                style = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt(Screen.height / 30f), richText = true, font = hudFont ? hudFont : GUI.skin.label.font };
+                Debug.Log($"[Loto] HUD font = {style.font.name}");
+            }
             float pad = Screen.height / 40f;
             var text = $"<b>{stage}</b>\n" + string.Join("\n", lines);
             var size = style.CalcSize(new GUIContent(text));

@@ -86,5 +86,5 @@
 
 - 動画化: Bot 側で画面録画（RPi なら `ffmpeg -f x11grab`）か、Unity Recorder（エディタ限定）。
 - 球のキャラスキン（`NumberBall.SetCharacterTexture`）と創作DBサブモジュール（NC 素材のため LICENSE.md の区分に注意）。
-- 数字表示 HUD の書体（現在は OnGUI 既定フォント。PenchantManufacture は CJK 未収録、RSC 罠53）。
+- HUD は OnGUI＋PenchantManufacture（CJK 未収録なので文字列は英数字のみ。RSC 罠53）。TMP 化は必要になったら。
 - 物理パラメータ（rpm・引き寄せ・timeout）は実機で回して調整する。全部 Inspector のノブ。

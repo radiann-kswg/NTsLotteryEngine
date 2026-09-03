@@ -87,6 +87,8 @@ namespace NTsLotoEngine.EditorTools
             if (!director.ballPrefab) Debug.LogError($"NumberBall prefab が見つからない: {BallPrefabPath}（Packages/manifest.json の LotteryBallKit を確認）");
             director.upper = upper; director.lower = lower; director.towers = towers;
             director.cam = cam; director.camMachine = camMachine; director.camOverview = camOverview;
+            director.hudFont = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PenchantManufacture.otf");
+            if (!director.hudFont) Debug.LogWarning("PenchantManufacture.otf が無い（scripts/setup-submodule で同期）。HUD は既定フォントで描く");
 
             // 壁・シュート・漏斗・フラップは摩擦ゼロ（引き寄せ中の球が壁に張り付かない。床とフィンは既定の摩擦で球を運ぶ）
             var slick = Slick();
@@ -302,7 +304,7 @@ namespace NTsLotoEngine.EditorTools
 
         static PhysicsMaterial Slick()
         {
-            string path = $"{MatDir}/Slick.physicsMaterial";
+            string path = $"{MatDir}/Slick.asset";   // .physicsMaterial だと CreateAsset が警告を出し LoadAssetAtPath も拾えない
             var pm = AssetDatabase.LoadAssetAtPath<PhysicsMaterial>(path);
             if (pm) return pm;
             Directory.CreateDirectory(MatDir);

@@ -24,9 +24,11 @@ git sparse-checkout set --no-cone `
 Set-Location ..
 Write-Host "OK: 100BeautiesLab_CreationsDB (sparse: DataBases + corefolder images + RoleplayPrompts)"
 
-# PenchantManufacture_ImageAssets（フォント。HUD で使うようになったら Assets/Fonts へ同期する）
+# PenchantManufacture_ImageAssets（フォント。正はサブモジュール。Assets/Fonts の .otf は同期コピー）
 git submodule update --init --depth 1 PenchantManufacture_ImageAssets
 Set-Location PenchantManufacture_ImageAssets
 git sparse-checkout set --no-cone '/*.md' '/LICENSE' '/assets/fonts/**'
 Set-Location ..
-Write-Host "OK: PenchantManufacture_ImageAssets (sparse: assets/fonts)"
+Copy-Item PenchantManufacture_ImageAssets/assets/fonts/PenchantManufacture.otf Assets/Fonts/PenchantManufacture.otf -Force
+Copy-Item PenchantManufacture_ImageAssets/LICENSE Assets/Fonts/PenchantManufacture_LICENSE.txt -Force
+Write-Host "OK: PenchantManufacture.otf synced to Assets/Fonts (HUD 用)"
