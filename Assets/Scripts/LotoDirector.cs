@@ -51,12 +51,23 @@ namespace NTsLotoEngine
 
             if (!skipSieves)
             {
-                int i = 0, nU = LotoRules.SingleMax - LotoRules.SingleMin + 1, nL = LotoRules.SixMax - LotoRules.SixMin + 1;
-                for (int n = LotoRules.SingleMin; n <= LotoRules.SingleMax; n++) Skin(upper.Spawn(ballPrefab, n, i++, nU));
-                i = 0;
-                for (int n = LotoRules.SixMin; n <= LotoRules.SixMax; n++) Skin(lower.Spawn(ballPrefab, n, i++, nL));
+                // 投入位置（螺旋の index: 外側ほど半径が大きく高い）と番号の対応を毎回シャッフルする。
+                // 番号順に置くと 2〜11 の篩は最外周・最上の 11 が 4 回連続で最下層に最初に着いた（2026-09-03）。位置の有利不利は残るが番号とは無関係になる
+                // 生成順も番号順にしない（位置だけシャッフルしても最後に生成した 11 が 6 回連続で勝った。PhysX の処理順に依る偏りを疑う）
+                int nU = LotoRules.SingleMax - LotoRules.SingleMin + 1, nL = LotoRules.SixMax - LotoRules.SixMin + 1;
+                var slotU = Shuffled(nU); var slotL = Shuffled(nL);
+                for (int k = 0; k < nU; k++) Skin(upper.Spawn(ballPrefab, LotoRules.SingleMin + slotU[k], k, nU));
+                for (int k = 0; k < nL; k++) Skin(lower.Spawn(ballPrefab, LotoRules.SixMin + slotL[k], k, nL));
             }
             StartCoroutine(Run());
+        }
+
+        static int[] Shuffled(int n)
+        {
+            var a = new int[n];
+            for (int i = 0; i < n; i++) a[i] = i;
+            for (int i = n - 1; i > 0; i--) { int j = UnityEngine.Random.Range(0, i + 1); (a[i], a[j]) = (a[j], a[i]); }   // Fisher–Yates（seed は Start で InitState 済み）
+            return a;
         }
 
         string Name(BallSlot slot, int n) => (skins ? skins.Character(slot, n) : null)?.nameJP ?? "";
@@ -85,7 +96,7 @@ namespace NTsLotoEngine
                 Look(camMachine);
                 stage = $"{LotoRules.SingleMin}-{LotoRules.SingleMax}";
                 upper.Spin(); lower.Spin();
-                yield return upper.DrawNext(b => { if (b) { Result.single = b.number; Result.singleName = Name(BallSlot.Drum, b.number); lines.Add($"{stage} : {b.number}"); } }, last: true);
+                yield return upper.DrawNext(b => { if (b) { Result.single = b.number; Result.singleName = Name(BallSlot.Drum, b.number); lines.Add($"{stage} : {b.number}"); } }, last: true, cam: cam);
                 upper.Stop();
                 yield return new WaitForSeconds(pauseBetween);
 
@@ -93,7 +104,7 @@ namespace NTsLotoEngine
                 var drawn = new List<int>();
                 for (int k = 0; k < LotoRules.SixCount; k++)
                 {
-                    yield return lower.DrawNext(b => { if (b) drawn.Add(b.number); }, last: k == LotoRules.SixCount - 1);
+                    yield return lower.DrawNext(b => { if (b) drawn.Add(b.number); }, last: k == LotoRules.SixCount - 1, cam: cam);
                     lines.RemoveAll(l => l.StartsWith(stage));
                     lines.Add($"{stage}: {string.Join(" ", drawn)}");
                     yield return new WaitForSeconds(pauseBetween);

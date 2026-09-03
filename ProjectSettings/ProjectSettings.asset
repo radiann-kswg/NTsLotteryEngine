@@ -932,11 +932,11 @@ PlayerSettings:
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
   enableDirectStorage: 0
-  cloudProjectId: bc4070b1-e77c-4e38-9741-b7a68a385965
+  cloudProjectId: 2a5e339a-22dc-4bd8-a54f-367068bbf5f4
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: LotteryBallKit
-  organizationId: nplottetrradian
+  projectName: NTsLotoEngine
+  organizationId: e3a73781-effd-4600-0000-0e4002434cf8
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

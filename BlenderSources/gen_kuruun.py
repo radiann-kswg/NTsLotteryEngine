@@ -95,13 +95,31 @@ def build_bowl(bp):
         (bp["ring_r_in"], 0.0, 0.0001, bp["dome_h"], False),                       # 中央ドーム
     ]
     pitch = 360.0 / bp["holes"]
+    roof_h = bp.get("ring_roof", 0.0)
+
+    def roof(deg):
+        """穴リングの桟（穴と穴の間）を屋根形にする: 桟の中央が roof_h 高く、穴の縁で 0。
+        平らだと球が桟の上（コーンの足元）で止まりボウルと一緒に回り続け、穴に出会わない（MC で 0.2%・実機なら 25s 後に再投入 = 脱線。2026-09-03）。
+        屋根なら静止した球が近い穴へ転がり落ちる。コーンの裾とドームの縁も同じ高さにして段差を作らない"""
+        if roof_h <= 0:
+            return 0.0
+        a = deg % pitch
+        if a < bp["hole_deg"]:
+            return 0.0
+        solid = pitch - bp["hole_deg"]
+        t = (a - bp["hole_deg"]) / solid          # 0..1 桟の中
+        return roof_h * (1.0 - abs(2.0 * t - 1.0))
+
+    def Z(deg, r, z):
+        return z + roof(deg) if abs(r - bp["ring_r_out"]) < 1e-6 or abs(r - bp["ring_r_in"]) < 1e-6 else z
+
     for i in range(seg):
         d0, d1 = 360.0 * i / seg, 360.0 * (i + 1) / seg
         dm = (d0 + d1) * 0.5
         for (r0, z0, r1, z1, ring) in prof:
             if ring and (dm % pitch) < bp["hole_deg"]:
                 continue   # 穴（各ピッチの先頭 hole_deg 度）
-            b.quad(P(d0, r0, z0), P(d1, r0, z0), P(d1, r1, z1), P(d0, r1, z1), inward(dm))
+            b.quad(P(d0, r0, Z(d0, r0, z0)), P(d1, r0, Z(d1, r0, z0)), P(d1, r1, Z(d1, r1, z1)), P(d0, r1, Z(d0, r1, z1)), inward(dm))
     return b.finish("Kuruun_Bowl", bp["thickness"])
 
 
@@ -130,21 +148,29 @@ def build_collector(cp, wins, name):
         d = abs((deg - exit_deg + 180.0) % 360.0 - 180.0)   # 出口からの角距離 0..180
         return top - drop - g_depth - g_fall * (1 - d / 180.0)   # 出口で最も低い
 
-    prev_win = win_at(360.0 * (seg - 0.5) / seg, wins)
-    for i in range(seg):
-        d0, d1 = 360.0 * i / seg, 360.0 * (i + 1) / seg
+    # 角度の分割: 等分 seg に扇形の境界角を差し込む（境界を等分に丸めると幅が 360/seg = 3.75° 刻みに量子化され、
+    # 88.7°・90°・91.3° が同じメッシュになって校正できなかった 2026-09-03）
+    edges = sorted({round(360.0 * i / seg, 6) for i in range(seg)} | {round((c + s * w * 0.5) % 360.0, 6) for (c, w) in wins for s in (-1, 1)})
+    prev_win = win_at((edges[-1] + edges[0] + 360.0) * 0.5, wins)
+    for i in range(len(edges)):
+        d0 = edges[i]
+        d1 = edges[i + 1] if i + 1 < len(edges) else edges[0] + 360.0
+        if d1 - d0 < 1e-4:
+            continue
         dm = (d0 + d1) * 0.5
         w = win_at(dm, wins)
         # 扇形の床（表は上）
         b.quad(P(d0, r_in, floor_z(dm, r_in)), P(d1, r_in, floor_z(dm, r_in)),
                P(d1, r_out, floor_z(dm, r_out)), P(d0, r_out, floor_z(dm, r_out)), (0, 0, 1))
-        # 当たり扇形の外縁には低い縁（外へこぼれない）／ハズレ扇形の内縁にも縁
+        # 当たり扇形の外縁／ハズレ扇形の内縁の縁。高さ rim_h（0.02 だとコーンを下ってきた球（内向き 1.2m/s）がハズレ床を登って
+        # 内縁を越え、当たりになった: p10 が 0.16、p50 が 0.53。2026-09-03 MC）
+        rim_h = cp.get("rim_h", 0.12)
         if w:
             b.quad(P(d0, r_out, floor_z(dm, r_out)), P(d1, r_out, floor_z(dm, r_out)),
-                   P(d1, r_out, top + 0.02), P(d0, r_out, top + 0.02), inward(dm, 0))
+                   P(d1, r_out, top + rim_h), P(d0, r_out, top + rim_h), inward(dm, 0))
         else:
             b.quad(P(d0, r_in, floor_z(dm, r_in)), P(d1, r_in, floor_z(dm, r_in)),
-                   P(d1, r_in, top + 0.02), P(d0, r_in, top + 0.02), outward(dm))
+                   P(d1, r_in, top + rim_h), P(d0, r_in, top + rim_h), outward(dm))
         # 扇形の境目: 放射壁（両面が表になるよう 2 枚）
         if w != prev_win:
             lo = top - drop

@@ -35,7 +35,7 @@ namespace NTsLotoEngine.EditorTools
             foreach (var go in scene.GetRootGameObjects())
                 if (go.name == "Loto" || go.name == "Main Camera" || go.name == "Directional Light") Object.DestroyImmediate(go);
 
-            var glass = Mat("Glass", new Color(0.80f, 0.90f, 1f, 0.14f), true);   // 0.22 だと筒が曇って中の球が見えない
+            var glass = Mat("Glass", new Color(0.80f, 0.90f, 1f, 0.10f), true);   // 0.22 だと筒が曇って中の球が見えない。篩の追従カメラ（1.9m）だと 0.14 でも白い
             var frame = Mat("Frame", new Color(0.18f, 0.18f, 0.20f));
             var rail = Mat("Rail", new Color(0.85f, 0.82f, 0.75f));
             var bowlMat = Mat("Bowl", new Color(0.93f, 0.94f, 0.96f, 0.75f), true);
@@ -94,7 +94,7 @@ namespace NTsLotoEngine.EditorTools
             foreach (var col in root.GetComponentsInChildren<Collider>())
             {
                 string nm = col.name;
-                if (nm == "Sill" || nm == "SideL" || nm == "SideR" || nm == "Back" || nm == "Housing" || nm.StartsWith("Channel"))   // 漏斗は摩擦あり（周回減衰）
+                if (nm == "Sill" || nm == "SideL" || nm == "SideR" || nm == "Back" || nm == "Housing" || nm == "TrayFloor" || nm.StartsWith("Channel"))   // 漏斗は摩擦あり（周回減衰）
                     col.sharedMaterial = slick;
             }
 
@@ -142,6 +142,7 @@ namespace NTsLotoEngine.EditorTools
             Box(chute, "Back", new Vector3(0, 0.08f, -0.04f), new Vector3(0.30f, 0.18f, 0.02f), glass);
             Cylinder(root, "Pedestal", new Vector3(0, (BaseY - 0.55f) / 2, 0), 0.25f, BaseY - 0.55f, frame);
             var spawn = new GameObject("Spawn").transform; spawn.SetParent(root, false); spawn.localPosition = new Vector3(0, top + 0.45f, 0); m.spawnCenter = spawn; m.spawnRadius = rimR - 0.15f;
+            m.camAnchor = Anchor(root, "Cam", root.TransformPoint(new Vector3(0, 0, -(rimR + 1.9f))), null);   // 正面。FOV 40 で縦 ≈ 1.9m（5〜6 層）。高さは最下の球に追従（SieveMachine.Follow）
             return m;
         }
 
@@ -150,7 +151,10 @@ namespace NTsLotoEngine.EditorTools
         public const float BlenderDegOffset = 180f;
         const float BowlRimR = 1.00f, BowlRimH = 0.56f, ConeR0 = 0.65f, ConeH = 0.28f;   // kuruun_params.json の bowl と一致させる
         const float TowerStagger = 0.425f;   // 段ごとに x を ±0.425 交互 → 上段の喉（軸上）が下段コーン面 r=0.85 に落ちる
-        const float TowerPitch = 1.25f;      // 穴リング面の段間隔。喉(−0.70)→次段コーン面(−1.25+0.16) = 0.39 の落差
+        // 穴リング面の段間隔。喉(−0.70)→次段コーン面(−1.45+0.16) = 0.59 の落差（LotoMonteCarlo.entryHeight と同じ値で校正する）。
+        // 1.25 だと下段ボウルの縁の天端（−1.25+0.56 = −0.69）が上段の樋の床（出口側 −0.81〜）を突き抜け、樋を走ってきた球が出口の 12〜22° 手前で止まった（2026-09-03 録画・全塔で再現）。
+        // 縁の天端が樋の最深部より球半径以上下（−0.87 以下）になる 1.45 以上にする
+        const float TowerPitch = 1.45f;
         const float EntryR = 0.85f;
         const float GutterR = 0.94f, GutterExitDepth = 0.81f;   // collector.gutter_r_out / 出口での樋の床の深さ（top_z − drop − depth − fall）
 
@@ -189,8 +193,10 @@ namespace NTsLotoEngine.EditorTools
                 Tube(root, $"Funnel{i}", new Vector3(xi, yb - 0.40f - FunnelH, 0), 0.12f, 0.42f, 0.02f, FunnelH, glass, 40);   // 45° 漏斗・喉 2.4d（ponytail: 配管はまだ ProcMesh。Blender 化は機構が固まってから）
                 L.throat = Anchor(root, $"Throat{i}", W(new Vector3(xi, yb - 0.40f - FunnelH - 0.02f, 0)), null);
 
-                // ハズレ: 樋の出口（正面 r=0.94・床 −0.71。kuruun_params.json の collector）→ 6° 下りのシュート → 塔中心線のチャンネル
-                var origin = new Vector3(xi, 0, -(GutterR + 0.04f)); var mouth = new Vector3(0, 0, zEnd);   // 樋の外壁（外面 0.96）の外から始める。樋の中に側板の端が入ると出口手前で球が止まる（2026-09-03）
+                // ハズレ: 樋の出口（正面 r=0.94・床 −0.81。kuruun_params.json の collector）→ 6° 下りの真っ直ぐなシュート → 幅 1.2 のチャンネル
+                // 塔中心線（x=0）へ 46° 斜めに向けると、回した側板の端が樋の開口の中（r=0.85）に入って外壁沿いに来た球を止め、
+                // 口では横向きの速度でチャンネルの開いた後面から反対側へ抜けた（2026-09-03 録画 ×2）。段の軸の真正面へ真っ直ぐ出す
+                var origin = new Vector3(xi, 0, -(GutterR + 0.04f)); var mouth = new Vector3(xi, 0, zEnd);   // 樋の外壁（外面 0.96）の外から始める
                 var dir = (mouth - origin).normalized;
                 float Lc = Vector3.Distance(origin, mouth);
                 var chute = new GameObject($"Chute{i}").transform; chute.SetParent(root, false);
@@ -205,16 +211,20 @@ namespace NTsLotoEngine.EditorTools
 
             float top = TowerBaseY + (n - 1) * TowerPitch;
             float chH = top - 0.55f;
-            Box(root, "ChannelF", new Vector3(0, 0.1f + chH / 2, zEnd - 0.25f), new Vector3(0.34f, chH, 0.02f), glass);
-            Box(root, "ChannelL", new Vector3(-0.16f, 0.1f + chH / 2, zCh), new Vector3(0.02f, chH, 0.24f), glass);
-            Box(root, "ChannelR", new Vector3(0.16f, 0.1f + chH / 2, zCh), new Vector3(0.02f, chH, 0.24f), glass);
-            Tray(root, "LoseTray", new Vector3(0, 0.05f, zCh), rail, glass);
-            Tray(root, "WinTray", new Vector3(((n - 1) % 2 == 0 ? -1f : 1f) * TowerStagger, 0.05f, 0), rail, glass);   // 最下段の喉の真下
+            // 落下チャンネル: 幅 1.2（x=±0.425 の両方のシュートを真っ直ぐ受ける）・奥行 0.24。球は前板（Slick・反発 0）に当たって真下へ落ち、ハズレトレイで止まる
+            const float ChW = 1.24f;
+            Box(root, "ChannelF", new Vector3(0, 0.1f + chH / 2, zEnd - 0.25f), new Vector3(ChW, chH, 0.02f), glass);
+            Box(root, "ChannelL", new Vector3(-ChW / 2, 0.1f + chH / 2, zCh), new Vector3(0.02f, chH, 0.24f), glass);
+            Box(root, "ChannelR", new Vector3(ChW / 2, 0.1f + chH / 2, zCh), new Vector3(0.02f, chH, 0.24f), glass);
+            // トレイの側壁はチャンネルの側板より外に置く（側板の内側にあると、側板沿いに 15m/s で落ちてきた球が壁の天端に当たって 9m/s で横へ弾かれた 2026-09-03）
+            k.loseTray = Tray(root, "LoseTray", new Vector3(0, 0.05f, zCh), rail, glass, ChW + 0.06f);
+            k.winTray = Tray(root, "WinTray", new Vector3(((n - 1) % 2 == 0 ? -1f : 1f) * TowerStagger, 0.05f, 0), rail, glass);   // 最下段の喉の真下
             foreach (float sx in new[] { -(BowlRimR + TowerStagger + 0.12f), BowlRimR + TowerStagger + 0.12f }) Rod(root, W(new Vector3(sx, 0, 0)), W(new Vector3(sx, top + BowlRimH, 0)), 0.025f, frame);
 
-            // 投入: 最上段ボウルのコーン面 r=EntryR・角度 135°（Unity 角）の 0.30 上へ、接線速度付き（KuruunTower.dropVelocity）
+            // 投入: 最上段ボウルのコーン面 r=EntryR・角度 135°（Unity 角）の上へ、下段と同じ落差（喉 −0.70 → 次段コーン面 = TowerPitch − 0.86）で静止落下
+            // （MC の entryHeight と同じ条件。接線速度付き 0.30 上からの投入は p50/p53 で p が変わるのでやめた 2026-09-03）
             float a = 135f * Mathf.Deg2Rad;
-            k.dropPoint = Anchor(root, "DropPoint", W(new Vector3(-TowerStagger + Mathf.Sin(a) * EntryR, top + ConeY(EntryR) + 0.05f + 0.30f, Mathf.Cos(a) * EntryR)), null);
+            k.dropPoint = Anchor(root, "DropPoint", W(new Vector3(-TowerStagger + Mathf.Sin(a) * EntryR, top + ConeY(EntryR) + 0.05f + (TowerPitch - 0.86f), Mathf.Cos(a) * EntryR)), null);
             k.camAnchor = Anchor(root, "Cam", W(new Vector3(0, 0, -(BowlRimR + 2.6f))), null);
             return k;
         }
@@ -238,14 +248,15 @@ namespace NTsLotoEngine.EditorTools
             return go.AddComponent<BallTrigger>();
         }
 
-        static void Tray(Transform parent, string name, Vector3 localPos, Material rail, Material glass)
+        static Transform Tray(Transform parent, string name, Vector3 localPos, Material rail, Material glass, float width = 0.30f)
         {
             var tray = new GameObject(name).transform; tray.SetParent(parent, false); tray.localPosition = localPos;
-            Box(tray, "Floor", Vector3.zero, new Vector3(0.30f, 0.02f, 0.30f), rail);
-            Box(tray, "W0", new Vector3(0, 0.04f, 0.15f), new Vector3(0.32f, 0.08f, 0.02f), glass);
-            Box(tray, "W1", new Vector3(0, 0.04f, -0.15f), new Vector3(0.32f, 0.08f, 0.02f), glass);
-            Box(tray, "W2", new Vector3(0.15f, 0.04f, 0), new Vector3(0.02f, 0.08f, 0.32f), glass);
-            Box(tray, "W3", new Vector3(-0.15f, 0.04f, 0), new Vector3(0.02f, 0.08f, 0.32f), glass);
+            Box(tray, "TrayFloor", Vector3.zero, new Vector3(width, 0.02f, 0.30f), rail);   // Slick（反発 0）: 落下チャンネルから 15m/s で来た球を跳ね返さない
+            Box(tray, "W0", new Vector3(0, 0.04f, 0.15f), new Vector3(width + 0.02f, 0.08f, 0.02f), glass);
+            Box(tray, "W1", new Vector3(0, 0.04f, -0.15f), new Vector3(width + 0.02f, 0.08f, 0.02f), glass);
+            Box(tray, "W2", new Vector3(width / 2, 0.04f, 0), new Vector3(0.02f, 0.08f, 0.32f), glass);
+            Box(tray, "W3", new Vector3(-width / 2, 0.04f, 0), new Vector3(0.02f, 0.08f, 0.32f), glass);
+            return tray;
         }
 
         // ---- helpers ----
@@ -334,12 +345,12 @@ namespace NTsLotoEngine.EditorTools
         {
             string path = $"{MatDir}/{name}.mat";
             var m = AssetDatabase.LoadAssetAtPath<Material>(path);
-            if (m) { m.SetColor("_BaseColor", color); m.SetFloat("_Smoothness", transparent ? 0.5f : 0.3f); EditorUtility.SetDirty(m); return m; }   // 色・質感はここが正（再ビルドで追従）
+            if (m) { m.SetColor("_BaseColor", color); m.SetFloat("_Smoothness", transparent ? 0.15f : 0.3f); EditorUtility.SetDirty(m); return m; }   // 色・質感はここが正（再ビルドで追従）
             Directory.CreateDirectory(MatDir);
             m = new Material(Shader.Find("Universal Render Pipeline/Lit"));
             m.SetColor("_BaseColor", color);
             m.SetFloat("_Cull", (float)CullMode.Off);   // 生成メッシュの巻き方向に依存しない
-            m.SetFloat("_Smoothness", transparent ? 0.5f : 0.3f);   // 0.9 だとガラス筒がハイライトで白飛びして中の球が見えない
+            m.SetFloat("_Smoothness", transparent ? 0.15f : 0.3f);   // 0.9 だとガラス筒がハイライトで白飛びして中の球が見えない。0.5 でも近接カメラでは白い
             if (transparent)
             {
                 m.SetFloat("_Surface", 1f); m.SetFloat("_Blend", 0f); m.SetFloat("_ZWrite", 0f);

@@ -24,12 +24,14 @@ namespace NTsLotoEngine
         public Level[] levels;              // 0 = 最上段
         public Transform dropPoint;
         public Transform camAnchor;         // x,z を使う。y は球に追従
+        public Transform loseTray, winTray; // 球が最後に居てよい場所（DerailWatch: 完走トレイ・排出側以外で地面に落ちていたら脱線）
 
         [Header("Tuning")]
         public float dropJitter = 0.03f;    // 投入ジッタ（RSC 罠15/18）
         public float bowlRpm = 10f;         // ボウルの回転数（LotoMonteCarlo.bowlRpm と同じ値で校正する）
-        // 最上段の投入点（ボウル軸から角度 135°・r=0.85 のコーン面の 0.30 上）での接線速度 1.4（コーン 27° の円軌道 ≈ 2.1 の 2/3）
-        public Vector3 dropVelocity = new Vector3(-0.99f, 0, -0.99f);
+        // 最上段の投入速度（塔のローカル座標）。下段と同じ条件（コーン面 r=0.85 の 0.59 上から静止落下）で校正するので既定はゼロ。
+        // 2 扇形のコレクタ（p50/p53）は落差 0.39→0.59 で p が −0.01 動いた（2026-09-03 MC）ので、投入条件は MC の entryHeight/entryTangential と必ず揃える
+        public Vector3 dropVelocity = Vector3.zero;
         public float angularDamping = 0.05f, linearDamping = 0f;   // 校正（LotoMonteCarlo.Launch）と同じ素の物理。変えるなら MC も変えて測り直す
         public float funnelDamping = 2.0f;  // コレクタより下（漏斗）だけ強くして喉で周回し続けない（罠5。当たり外れは確定済みなので確率に影響しない）
         public float timeout = 25f;         // 落ちないときは喉へ強制移動（警告ログ）
@@ -45,7 +47,9 @@ namespace NTsLotoEngine
             var j = UnityEngine.Random.insideUnitCircle * dropJitter;
             // isKinematic を切り替えない（切り替えると CCD が Discrete に落ち、高速落下でボウルを突き抜ける）
             rb.position = dropPoint.position + new Vector3(j.x, 0, j.y);
-            rb.linearVelocity = dropVelocity; rb.angularVelocity = Vector3.zero;
+            // dropVelocity は塔のローカル座標（弧の端の塔はワールドで 90° 回っている。ワールドのまま与えると接線のつもりが半径方向になり、
+            // 右端の塔（ball 10）で球が縁を越えて地面に落ちた 2026-09-03 録画）
+            rb.linearVelocity = transform.rotation * dropVelocity; rb.angularVelocity = Vector3.zero;
             yield return new WaitForFixedUpdate();
 
             int n = Mathf.Min(max, levels.Length);
