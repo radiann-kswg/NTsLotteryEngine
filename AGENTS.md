@@ -11,7 +11,7 @@
 - **目的**: 一次創作「ナンバーテールズ」のコンテンツ用 **ボール抽選機**。二層式ロトマシーン（1〜11 から 1 個／12〜99 から 6 個）と別ボール 7 塔の縦連クルーン（連続抽選）を物理演出で見せ、結果を JSON に出力する。将来は Raspberry Pi や Misskey Bot で抽選中の様子を動画再生する。
 - **エンジン**: Unity 6 (6000.6.0f1) / URP 3D
 - **リモート**: `radiann-kswg/NTsLotoEngine`（GitHub）
-- **素材の出自**: 球は `LotteryBallKit`（サブモジュール → UPM `file:` 依存）、クルーンのボウルは `RouletteSphereChaser` の `TowerD_Kuruun.fbx`（`Assets/RouletteSphereChaser/Models/`）。いずれも同作者 CC BY 4.0（`LICENSE.md`）。
+- **素材の出自**: 球は `LotteryBallKit`（サブモジュール → UPM `file:` 依存・CC BY 4.0）。抽選機の筒・回転床・漏斗・クルーンのボウルはすべて `ProcMesh` でコード生成（ボウルの寸法は `RouletteSphereChaser` の `TowerD_Kuruun` に倣う。FBX は同梱しない）。
 - **抽選仕様・機構の設計正本**: `docs/DESIGN.md`。**確率の正本はコード `Assets/Scripts/LotoRules.cs`** で、DESIGN.md はその説明。
 
 ## 2. ブランチ運用（必読）
@@ -58,7 +58,15 @@
 - 誘導の仕組みは **レイヤー**: `Ball`(8) / `ChosenBall`(9) / `Blocker`(10)。`ChosenBall`–`Blocker` の衝突だけ無効（`LotoDirector.Start`）。ロトマシーンの排出口ブロッカーは `Blocker` 層。クルーン塔は可視のフラップで振り分ける。
 - 別ボールの当選率と最大回数は `LotoRules.Streaks` が唯一の正。P（= 1/1024）はコードで最小値として算出しており、手で数値を書かない。
 - 変更したら `Tools > NTsLoto > Self Check (Monte Carlo)` を回して ALL OK を確認する。
-- RSC の罠（`RouletteSphereChaser/AGENTS.md` 3章）は本プロジェクトにも効く。特に: Cylinder プリミティブのコライダはカプセル（1）／球の `sleepThreshold=0`（2）／開口は縦 1.5d（57）／機構 FBX の根 `localScale=100`（46）／`Physics.Raycast` はトリガーにも当たる（37）。
+- RSC の罠（`RouletteSphereChaser/AGENTS.md` 3章）は本プロジェクトにも効く。特に: Cylinder プリミティブのコライダはカプセル（1）／球の `sleepThreshold=0`（2）／開口は縦 1.5d（57）／回転体の羽根と壁の隙間は 1.5d 以上（48）／`Physics.Raycast` はトリガーにも当たる（37）。
+- 本プロジェクトで踏んだ罠（2026-09-03）:
+  1. MonoBehaviour は 1 クラス 1 ファイル（ファイル名一致）。同居させるとシーン保存後に Missing script になる。
+  2. 引き寄せ力で壁に押し付けた球は静止摩擦で固着する。壁・シュートは `Slick.physicsMaterial`（摩擦 0）。
+  3. `Rigidbody.isKinematic` を切り替えると CCD が落ち、高速落下で薄いメッシュを突き抜ける。球の位置替えは `rb.position` 代入だけで行う。
+  4. RSC の `TowerD_Kuruun.fbx` は単体ではコライダに穴があり球が抜けた。ボウルは `ProcMesh.Bowl` で生成する（片面メッシュ。表裏は `Cross(b-a, c-a)` が表面法線）。
+  5. 漏斗の喉が 1.6d だと球が縁を周回して落ちない。喉 2.4d・45° 漏斗・球に角減衰 1.0。
+  6. 喉から横向きに出た球はフラップの側面から落ちる。フラップには側壁を付ける。
+  7. 縦積みでは上段の喉が下段ボウルの中央ドーム頂点の真上に来ると弾かれて縁を越える。段ごとに対角（±0.195, ±0.195）の千鳥にして下段コーン面（r=0.55）へ落とす。
 
 ## 6. 実装の構成
 
@@ -66,7 +74,7 @@
 - `Assets/Scripts/LotoDirector.cs` … 進行役。起動引数 `-seed N -out path -speed x -quit`。結果 JSON を書く。
 - `Assets/Scripts/LotoDrumTier.cs` … ロトマシーン 1 段（攪拌→減速→当選球だけ排出）。
 - `Assets/Scripts/KuruunTower.cs` … 縦連クルーン塔（各段の漏斗→振り分けフラップで次段／排出へ）。
-- `Assets/Scripts/ProcMesh.cs` … 筒・回転床の生成（`TubeWall` / `DiscPlate`）。
+- `Assets/Scripts/ProcMesh.cs` … 筒・回転床・クルーンボウルのメッシュ生成。コンポーネントは `TubeWall.cs` / `DiscPlate.cs` / `KuruunBowl.cs`。
 - `Assets/Scripts/Rotator.cs` … `Rotator` / `LotoLayers` / `BallUtil`。`BallTrigger.cs` / `TubeWall.cs` / `DiscPlate.cs` は 1 クラス 1 ファイル（MonoBehaviour はファイル名一致が必須）。
 - `Assets/Scripts/Editor/LotoPlay.cs` … MCP から Play/Stop するメニュー。
 - `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。寸法はすべてここ。

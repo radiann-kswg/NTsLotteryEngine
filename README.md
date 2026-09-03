@@ -17,7 +17,7 @@
 
 - Unity **6000.6.0f1**（URP 17.6）
 - 球: [LotteryBallKit](https://github.com/radiann-kswg/LotteryBallKit)（サブモジュール `LotteryBallKit/` を `Packages/manifest.json` が `file:` 参照）
-- クルーン: [RouletteSphereChaser](https://github.com/radiann-kswg/RouletteSphereChaser) の `TowerD_Kuruun.fbx`（同梱）
+- クルーンのボウル・筒・漏斗はコード生成（`ProcMesh`）。形は [RouletteSphereChaser](https://github.com/radiann-kswg/RouletteSphereChaser) のクルーンに倣う
 - 対応プラットフォーム: Windows x64 / **Linux x64**（Raspberry Pi 4B は box64 経由。`docs/raspberrypi-handoff.md`）
 
 ## 動かしかた
@@ -33,9 +33,9 @@
 ## 構成
 
 ```
-Assets/Scripts/            LotoRules / LotoDirector / LotoDrumTier / KuruunTower / ProcMesh / TubeWall / DiscPlate / BallTrigger / Rotator
+Assets/Scripts/            LotoRules / LotoDirector / LotoDrumTier / KuruunTower / ProcMesh / TubeWall / DiscPlate / KuruunBowl / BallTrigger / Rotator
 Assets/Scripts/Editor/     LotoSceneBuilder（シーン生成）/ LotoBuild / LotoSelfCheck / LotoPlay
-Assets/RouletteSphereChaser/Models/  TowerD_Kuruun.fbx（CC BY 4.0）
+Assets/Materials/Generated/  ビルダーが生成するマテリアル（Glass / Frame / Rail / Bowl / Slick）
 Assets/Settings/           URP 設定（PC / Mobile）
 docs/                      DESIGN.md / raspberrypi-handoff.md
 scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
