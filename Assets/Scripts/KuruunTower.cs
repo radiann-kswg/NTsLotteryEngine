@@ -57,6 +57,7 @@ namespace NTsLotoEngine
             {
                 var L = levels[i];
                 bool passed = false, exited = false;
+                float dropAz = float.NaN;   // コレクタ天端を割った瞬間の方位（塔ローカル・Unity 角）= 当落を決める方位
                 Action<NumberBall> onPass = b => { if (b == ball) passed = true; };
                 Action<NumberBall> onExit = b => { if (b == ball) exited = true; };
                 L.passTrigger.Entered += onPass; L.exitTrigger.Entered += onExit;
@@ -65,6 +66,11 @@ namespace NTsLotoEngine
                 {
                     t += Time.fixedDeltaTime;
                     rb.angularDamping = rb.position.y < L.bowl.position.y - 0.40f ? funnelDamping : angularDamping;   // コレクタ内縁（−0.36）より下 = 漏斗
+                    if (float.IsNaN(dropAz) && rb.position.y < L.bowl.position.y - 0.20f)
+                    {   // コレクタ天端（−0.20）を割った ＝ ボウルの穴を抜けた。この方位が当たり扇形に入っているかで当落が決まる
+                        var d = transform.InverseTransformPoint(rb.position) - transform.InverseTransformPoint(L.bowl.position);
+                        dropAz = Mathf.Repeat(Mathf.Atan2(d.x, d.z) * Mathf.Rad2Deg, 360f);
+                    }
                     if (t > nextLog)
                     {
                         var lp = rb.position - L.bowl.position;
@@ -85,6 +91,10 @@ namespace NTsLotoEngine
                 }
                 L.passTrigger.Entered -= onPass; L.exitTrigger.Entered -= onExit;
                 bool win = passed;   // 物理の結果
+                // 実測ログ（エディタのみ・Output/ は git 管轄外）: 塔,段,落下方位,当落。MC（LotoMonteCarlo）の方位別 p と突き合わせる
+                if (Application.isEditor)
+                    try { System.IO.Directory.CreateDirectory("Output"); System.IO.File.AppendAllText("Output/drop_azimuth.csv", $"{name},{i},{dropAz:F1},{(win ? 1 : 0)}\n"); }
+                    catch (Exception e) { Debug.LogWarning($"[{name}] azimuth log failed: {e.Message}"); }
                 onRound?.Invoke(i, win);
                 if (!win) break;
             }

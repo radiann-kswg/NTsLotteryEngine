@@ -23,6 +23,10 @@ namespace NTsLotoEngine.EditorTools
         public static float entryR = 0.85f;         // 投入半径（コーン面上。喉から落ちてくる想定。LotoSceneBuilder.EntryR と同じ）
         public static float entryHeight = 0.59f;    // コーン面からの落下高さ（喉 −0.70 → 次段コーン面 −1.45+0.16。LotoSceneBuilder.TowerPitch と連動）
         public static float entryTangential = 0f;   // 接線速度（最上段の投入を模すとき > 0）
+        // 投入方位（Unity 角 atan2(x,z)・度）。NaN = 毎試行ランダム（校正時の既定）。
+        // 実機の塔は喉が段ごとに x=±0.425 交互なので方位が固定される: 最上段 135°／奇数段 270°／偶数段(≥2) 90°
+        // （p10/p6of88/p18 の当たり扇形は Blender 90° = Unity 270°。奇数段は当たり扇形の真上に落ちる）。段ごとの p はこれを固定して測る
+        public static float entryAzimuth = float.NaN;
         public static float maxSeconds = 25f;
         public static int stepsPerUpdate = 2500;   // エディタが非アクティブだと update が間引かれる（200 だと 10 倍遅い）。1 update ≈ 3s
         public static int seed = 1;
@@ -78,16 +82,26 @@ namespace NTsLotoEngine.EditorTools
             Physics.simulationMode = SimulationMode.Script;
             running = true;
             EditorApplication.update += Step;
-            Debug.Log($"[MC] start variant={variant} trials={trials} parallel={parallel} rpm={bowlRpm} entryR={entryR} h={entryHeight} vt={entryTangential} seed={seed}");
+            Debug.Log($"[MC] start variant={variant} az={(float.IsNaN(entryAzimuth) ? "random" : entryAzimuth + "deg")} trials={trials} parallel={parallel} rpm={bowlRpm} entryR={entryR} h={entryHeight} vt={entryTangential} seed={seed}");
         }
 
         [MenuItem("Tools/NTsLoto/Monte Carlo/Stop")]
         public static void Stop() { queue.Clear(); Finish(true); }
 
         /// <summary>variant を順に回す（校正ループ用。RunCommand から呼ぶ）。各 variant の結果は Output/mc_&lt;variant&gt;.json。</summary>
-        static readonly Queue<string> queue = new Queue<string>();
-        public static void RunBatch(IEnumerable<string> variants) { foreach (var v in variants) queue.Enqueue(v); Next(); }
-        static void Next() { if (queue.Count > 0 && !running) { variant = queue.Dequeue(); Run(); } }
+        static readonly Queue<(string v, float az)> queue = new Queue<(string, float)>();
+        public static void RunBatch(IEnumerable<string> variants) { foreach (var v in variants) queue.Enqueue((v, float.NaN)); Next(); }
+
+        /// <summary>(variant × 投入方位) の総当たり。段ごとの p を測る用（方位は Unity 角・度）。結果は Output/mc_&lt;variant&gt;_a&lt;deg&gt;.json。</summary>
+        public static void RunGrid(IEnumerable<string> variants, IEnumerable<float> azimuths)
+        {
+            foreach (var v in variants) foreach (var a in azimuths) queue.Enqueue((v, a));
+            Next();
+        }
+
+        static void Next() { if (queue.Count > 0 && !running) { var q = queue.Dequeue(); variant = q.v; entryAzimuth = q.az; Run(); } }
+
+        static string Tag => float.IsNaN(entryAzimuth) ? variant : $"{variant}_a{Mathf.RoundToInt(entryAzimuth)}";
 
         static void AddMeshColliders(GameObject go)
         {
@@ -100,7 +114,7 @@ namespace NTsLotoEngine.EditorTools
 
         static void Launch(Copy c)
         {
-            float a = (float)rng.NextDouble() * 360f * Mathf.Deg2Rad;
+            float a = (float.IsNaN(entryAzimuth) ? (float)rng.NextDouble() * 360f : entryAzimuth) * Mathf.Deg2Rad;
             var radial = new Vector3(Mathf.Sin(a), 0, Mathf.Cos(a));
             var tangent = new Vector3(Mathf.Cos(a), 0, -Mathf.Sin(a));   // 角度増加方向（ボウル回転と同じ向き）
             float coneY = 0.28f * Mathf.Clamp01((entryR - 0.65f) / 0.35f);   // kuruun_params.json の bowl: cone (1.0,0.28)→(0.65,0)
@@ -179,12 +193,13 @@ namespace NTsLotoEngine.EditorTools
             var report = new Report
             {
                 variant = variant, trials = done, win = win, lose = lose, timeout = timeout, p = p, ci95lo = lo, ci95hi = hi,
-                meanSeconds = done > 0 ? sumT / done : 0, bowlRpm = bowlRpm, entryR = entryR, entryHeight = entryHeight, entryTangential = entryTangential, seed = seed,
+                meanSeconds = done > 0 ? sumT / done : 0, bowlRpm = bowlRpm, entryR = entryR, entryHeight = entryHeight, entryTangential = entryTangential,
+                entryAzimuth = entryAzimuth, seed = seed,
                 aborted = aborted, timeoutSamples = timeoutNotes.GetRange(0, Math.Min(20, timeoutNotes.Count)).ToArray(),
             };
             Directory.CreateDirectory("Output");
-            File.WriteAllText($"Output/mc_{variant}.json", JsonUtility.ToJson(report, true));
-            Debug.Log($"[MC] {(aborted ? "ABORTED " : "")}variant={variant} n={n} win={win} lose={lose} timeout={timeout} p={p:F4} 95%CI=[{lo:F4},{hi:F4}] (±{(hi - lo) / 2:F4}) meanT={report.meanSeconds:F1}s");
+            File.WriteAllText($"Output/mc_{Tag}.json", JsonUtility.ToJson(report, true));
+            Debug.Log($"[MC] {(aborted ? "ABORTED " : "")}variant={Tag} n={n} win={win} lose={lose} timeout={timeout} p={p:F4} 95%CI=[{lo:F4},{hi:F4}] (±{(hi - lo) / 2:F4}) meanT={report.meanSeconds:F1}s");
             var sb = new System.Text.StringBuilder("[MC] p by trial index (5 each): ");
             for (int i = 0; i < 40 && binIdxN[i] > 0; i++) sb.Append($"{(double)binIdxWin[i] / binIdxN[i]:F3} ");
             sb.Append("\n[MC] p by copy elapsed (30s each): ");
@@ -206,7 +221,7 @@ namespace NTsLotoEngine.EditorTools
         class Report
         {
             public string variant; public int trials, win, lose, timeout; public double p, ci95lo, ci95hi, meanSeconds;
-            public float bowlRpm, entryR, entryHeight, entryTangential; public int seed; public bool aborted; public string[] timeoutSamples;
+            public float bowlRpm, entryR, entryHeight, entryTangential, entryAzimuth; public int seed; public bool aborted; public string[] timeoutSamples;
         }
     }
 }

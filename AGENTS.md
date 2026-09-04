@@ -59,6 +59,7 @@
 
 - **当選は物理が決める。RNG で先に決めて誘導しない**（2026-09-03 User 指示。旧方式は「作為的」で廃止）。球を喉へ置く・引き寄せる等の「当たりを作る」コードは書かない。詰まり救済は**その段の投入点へ戻してやり直す**だけ。
 - 別ボールの当選率は **コレクタの当たり扇形の角度比** で作り、`Tools > NTsLoto > Monte Carlo`（`LotoMonteCarlo.cs`。エディタで `Physics.Simulate` を手回し・並列 256・10 万試行 ≈ 75 秒）で実測して有効数字 2 桁を保証する（2026-09-03 校正済み。実測 p ≈ 0.0029×合計角 − 0.01）。MC と実機は同じ物理（球の減衰 0.05/0・`BallUtil.Machine` 摩擦 0.3・ボウル 10rpm・落差 0.59 = `TowerPitch` − 0.86）で回すこと。減衰・材質・段間隔・コレクタ寸法を変えたら測り直し。
+  **ただしこの校正値は「落下方位が一様」という前提の平均値**（2026-09-04 実測。罠27・28、`docs/DESIGN.md` 2.2）。実機の落下方位は 120〜150° と 300° に山があり、当たり扇形が 270° の p10/p6of88/p18 は目標より高く、0/180° の p32 は低い（p10 実測 0.169 vs 目標 0.100）。**扇形を円周に散らすか、当たり円盤を回すまで、2 桁保証は成立していない**。
 - 篩は回転皿の穴を球が見つけるまで待つだけ。到達順 = 抽選順（`SieveMachine.arrived` キュー）。最後の 1 球が着いたら Gate を閉じる。
 - 脱線監視 `DerailWatch`（速度 8m/s 超・床下・枠外を球ごとに 1 回警告）を常時付ける。警告が出たら Recorder の録画（`Play + Record`）の同時刻を切り出して原因を潰す。
 - 誘導レイヤー（`ChosenBall`/`Blocker`）は物理抽選では使わない（`LotoLayers` は残置）。
@@ -90,6 +91,9 @@
   24. **投入条件で p が変わる**（2 扇形の p50/p53 は落差 0.39→0.59 で −0.01、p10 は桟の屋根で −0.005）。最上段の投入も下段と同じ条件（r=0.85・落差 `TowerPitch`−0.86・静止）にし、MC の `entryHeight` と揃える。落差・材質・ボウル形状を変えたら全 variant を測り直す。
   25. **篩の投入位置と番号を固定で対応させない**。螺旋の index 順（外側ほど半径が大きく高い）に番号を置いたら、2〜11 の篩は最外周の 11 が全経路 Play 4 回連続で最初に着いた。`LotoDirector` は毎回 Fisher–Yates で位置をシャッフルする（位置の有利不利は残るが番号とは無関係）。
   26. 落下チャンネルの底のトレイの側壁は、チャンネルの側板の**外**に置く。内側にあると側板沿いに 15m/s で落ちた球が壁の天端で 9m/s 横に弾かれる。
+  27. **当落を決めるのは「球がコレクタ天端（−0.20）を割った瞬間の方位」**（塔ローカル・Unity 角）。実機 407 段のログで方位から当落を 99.0% 再現できた（`KuruunTower` が `Output/drop_azimuth.csv` に `塔,段,方位,当落` を追記する。git 管轄外）。**MC の校正値は「方位一様の平均」**なので、実機の落下方位が偏れば実測はそのぶんズレる（2026-09-04: p10 実測 0.169 vs 校正 0.100）。詳細と直し方は `docs/DESIGN.md` 2.2。
+  28. **MC の投入方位固定は実機の代用にならない**。治具は静止落下なので Δ（落下方位 − 投入方位）が +30° に集中し、方位を固定すると p が 0.0002〜0.78 まで振れる。実機は喉から落ちる球の位置・速度・スピンがばらけて Δ の中央値 105〜115°・分布が広い。段ごとの p を知りたいときは**実機 Play を回す**（`LotoPlayLoop.Start(n, "Output/verify")`。`LotoDirector.skipSieves` ＋ `speed 4` で 1 回 ≈ 24 秒）。
+  29. 実機 Play を MCP から繰り返すときは `PlayerSettings.runInBackground = true`（非フォーカスで Play が止まる）。`Unity_RunCommand` に `File.Delete` を書くと "User interactions are not supported" で丸ごと弾かれる（消すのは別手段で）。
 
 ## 6. 実装の構成
 
@@ -103,7 +107,7 @@
 - `Assets/Scripts/BallSkinTable.cs` … 全球のテクスチャ＋創作DBリンク（`Assets/Data/BallSkins.asset`）。`Assets/Scripts/CreationsDb.cs` … 創作DB ローダ。
 - `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。FBX の配置・配管・カメラ・スキン表。
 - `Assets/Scripts/Editor/LotoMonteCarlo.cs` … `Tools > NTsLoto > Monte Carlo > Run/Stop`。静的フィールド（variant / trials / parallel / bowlRpm / entryR / entryHeight / entryTangential）を RunCommand で書き換えて実行。結果 `Output/mc_<variant>.json`。
-- `Assets/Scripts/Editor/LotoRecord.cs` … `Tools > NTsLoto > Play + Record`（Recorder → `Recordings/*.mp4`）。`LotoPlay.cs` … Play/Stop。`LotoBuild.cs` … Linux/Windows ビルド。
+- `Assets/Scripts/Editor/LotoRecord.cs` … `Tools > NTsLoto > Play + Record`（Recorder → `Recordings/*.mp4`）。`LotoPlay.cs` … Play/Stop と **`LotoPlayLoop`**（Play を N 回繰り返して結果 JSON を退避。実機の当落統計用）。`LotoBuild.cs` … Linux/Windows ビルド。
 - `BlenderSources/gen_kuruun.py` + `kuruun_params.json` … 抽選機メッシュの原本。`Assets/Models/Kuruun_Bowl.fbx` / `Kuruun_Collector_<variant>.fbx` / `Sieve_Dish_L.fbx` / `Sieve_Dish_U.fbx`。
 
 ## 7. ビルドとRaspberry Pi 4Bへの引き渡し
@@ -116,6 +120,17 @@
 
 - 未公開の創作設定・台詞・ストーリー・固有用語を自動生成しない。不明点は創作DBサイト（https://database.numbertales-radiann.net/ ）で確認し、それでも不明なら User に質問する。
 - 球のキャラスキン（`NumberBall.SetCharacterTexture`・`BallSkinTable`）の画像は CC BY-NC 側の素材として扱い、`LotteryBallKit` の CC BY 4.0 と混同しない。いまの既定テクスチャ `BallSkins_Sample` は LotteryBallKit（CC BY）の仮貼り。
+- **ボールテクスチャの保存場所（2026-09-04 確定・User 指定）**:
+
+  | 何 | 場所 | git |
+  | --- | --- | --- |
+  | テクスチャ PNG | `Assets/Textures/BallSkins/BallTex_NTS-{Num_Badge}.png` | 管轄内（CC BY-NC 4.0。`LICENSE.md`） |
+  | 編集用 PSD | `E:\Dropbox\Creative Cloud Files\ナンバーテールズ\LotteryBallKit\BallTex_NTS-{Num_Badge}.psd` | **管轄外**（リポジトリに置かない） |
+
+  - `{Num_Badge}` は創作DB の `Num_Badge`（`BallSkinTable.BallSkin.DbNum` と同じ文字列）。例: `BallTex_NTS-000.png` / `BallTex_NTS-2-alt.png` / `BallTex_NTS-3x11.png` / `BallTex_NTS-9x9.png`。
+  - **番号ではなく badge で名付ける**。ロトの球と別ボールは同じ番号でも別キャラ（ロト `2`=2(ツグ) と 別ボール `2`=バイナ(`2-alt`)）。創作DBの画像命名（`cnsp_imgNTS-1` 等）と同じ `...NTS-{Num_Badge}` 形式。
+  - PSD を `Assets/` 内に置かない（Unity がテクスチャとして二重にインポートし `.meta` と `Library` が膨らむ）。リポジトリ直下にも置かない（`.gitignore` 頼みは事故る）。書き出した PNG だけを `Assets/Textures/BallSkins/` へコピーする。詳細は同フォルダの `README.md`。
+  - 貼り付けは `Assets/Data/BallSkins.asset`（`BallSkinTable`）の各行 `texture` に Inspector から。UV は `LotteryBallKit` の `BallUV_Template`（球面 UV）に合わせる。
 - 球番号とキャラの対応（別ボール 0→000(チトセ)・10→ディケ・2→バイナ・33→トレッド・64→ゼフィア・81→9×9(クック)、ロトの 2→2(ツグ)・10→10(ミツル)、他は番号通り）は User 指定（2026-09-03）。9x9 は Progress が notProceeded のため公開まで名前は出ない（公開基準は変えない）。`BallSkinTable.StreakOverrides` と `Assets/Data/BallSkins.asset` の両方を変えないと食い違う（asset は既存行を保持する）。
 
 ## 9. ロールプレイ設定

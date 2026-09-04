@@ -6,6 +6,7 @@
 **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** の下で提供されます。
 
 - ライセンス全文: https://creativecommons.org/licenses/by-nc/4.0/legalcode.ja
+- 該当例: `Assets/Textures/BallSkins/BallTex_NTS-*.png`（ナンバーテールズ柄のボールテクスチャ。命名・編集用 PSD の所在は `AGENTS.md` 8章）
 - 権利者: 百花繚乱研究所 / ラジアン（RadianN_kswg）
 - 創作キャラクターの利用ガイドラインは創作DBサイト（https://database.numbertales-radiann.net/ ）の規約に従ってください。
 
