@@ -131,7 +131,9 @@
   - `{Num_Badge}` は創作DB の `Num_Badge`（`BallSkinTable.BallSkin.DbNum` と同じ文字列）。例: `BallTex_NTS-000.png` / `BallTex_NTS-2-alt.png` / `BallTex_NTS-3x11.png` / `BallTex_NTS-9x9.png`。
   - **番号ではなく badge で名付ける**。ロトの球と別ボールは同じ番号でも別キャラ（ロト `2`=2(ツグ) と 別ボール `2`=バイナ(`2-alt`)）。創作DBの画像命名（`cnsp_imgNTS-1` 等）と同じ `...NTS-{Num_Badge}` 形式。
   - PSD を `Assets/` 内に置かない（Unity がテクスチャとして二重にインポートし `.meta` と `Library` が膨らむ）。リポジトリ直下にも置かない（`.gitignore` 頼みは事故る）。書き出した PNG だけを `Assets/Textures/BallSkins/` へコピーする。詳細は同フォルダの `README.md`。
-  - 貼り付けは `Assets/Data/BallSkins.asset`（`BallSkinTable`）の各行 `texture` に Inspector から。UV は `LotteryBallKit` の `BallUV_Template`（球面 UV）に合わせる。
+  - 貼り付けは `Tools > NTsLoto > Build Ball View Scene` が自動でやる（ファイル名 → `Assets/Data/BallSkins.asset` の空き行。手貼り済みの行は触らない・冪等）。PNG を足したら実行するだけ。個別に上書きしたいときだけ Inspector で。UV は `LotteryBallKit` の `BallUV_Template`（球面 UV）に合わせる。
+  - **確認シーン**: `Assets/Scenes/BallViewScene.unity`（`Tools > NTsLoto > Build Ball View Scene` で生成）。球 1 個だけ置いて `BallSkinViewer` で番号・スロットを切り替え、姿勢を生のクォータニオン（`pose`）、角速度を `spinAxis` × `spinDegPerSec` [deg/s] で指定する。Play すると `pose` が積分されて現在姿勢の読み取り値になる。
+  - `BallSkinTable.Apply()` は **`SetCharacterTexture` → `Apply()` の順**（2026-09-06）。`NumberBall.Apply()` は `rend==null` だと黙って return する＝エディタで生成した直後（Awake 前）は番号デカールが乗らない。`SetCharacterTexture` が Renderer を取り直すので先に呼ぶ。逆順にすると本体テクスチャはあるのに番号が 0 のままになる。
 - 球番号とキャラの対応（別ボール 0→000(チトセ)・10→ディケ・2→バイナ・33→トレッド・64→ゼフィア・81→9×9(クック)、ロトの 2→2(ツグ)・10→10(ミツル)、他は番号通り）は User 指定（2026-09-03）。9x9 は Progress が notProceeded のため公開まで名前は出ない（公開基準は変えない）。`BallSkinTable.StreakOverrides` と `Assets/Data/BallSkins.asset` の両方を変えないと食い違う（asset は既存行を保持する）。
 
 ## 9. ロールプレイ設定

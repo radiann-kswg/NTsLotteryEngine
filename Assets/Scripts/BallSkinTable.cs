@@ -41,8 +41,13 @@ namespace NTsLotteryEngine
             var s = Find(slot, ball.number);
             var tex = s?.texture ? s.texture : defaultTexture;
             ball.tint = s?.tint ?? Color.white;
-            if (tex) ball.SetCharacterTexture(tex);
-            else ball.Apply();
+            // 順番が大事（2026-09-06 BallSkinViewer で発覚）:
+            // 1. SetCharacterTexture が先。内部で Renderer を取り直すので、Awake 前（エディタで生成した直後）でも効く。
+            //    NumberBall.Apply() は rend==null だと黙って return するため、先に Apply() を呼ぶと番号デカールが乗らない。
+            // 2. そのあと Apply()。SetCharacterTexture は本体（submesh0）しか触らないので、番号デカール（submesh1）は
+            //    Apply() でしか更新されない＝生成済みの球に貼り直すと番号が前のまま残る。
+            ball.SetCharacterTexture(tex);   // tex==null なら内部で Apply() に落ちて白球へ戻る
+            if (tex) ball.Apply();
         }
 
         /// <summary>球に紐づく創作DBレコード（無ければ null）。</summary>
