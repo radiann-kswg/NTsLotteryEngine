@@ -42,6 +42,7 @@ namespace NTsLotteryEngine.EditorTools
             var viewer = ball.AddComponent<BallSkinViewer>();
             viewer.skins = table;
             viewer.number = 6;
+            viewer.hudFont = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PenchantManufacture.otf");   // 無ければ IMGUI 既定フォント
             viewer.ApplySkin();   // AddComponent 直後の OnEnable は skins=null で走っている（フィールド代入では OnValidate が飛ばない）
 
             // 球径 0.1m。0.20m 手前から fov 60° で撮ると球が画面の約半分
