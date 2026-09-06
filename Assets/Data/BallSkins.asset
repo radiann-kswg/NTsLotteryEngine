@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ac4cb9462f9c5c4a80309d5d1214867, type: 3}
   m_Name: BallSkins
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallSkinTable
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallSkinTable
   defaultTexture: {fileID: 2800000, guid: 33753fbabd7ca0945abe7a2f05351e2e, type: 3}
   skins:
   - slot: 0

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>
     /// 抽選機の筒・回転床を生成する。面ごとに頂点を持つ（フラットシェーディング・Cull Off 前提）。

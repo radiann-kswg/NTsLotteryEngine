@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>球の出どころ。同じ番号でもロトマシーンの球と別ボールではキャラが違う（別ボール 2 = バイナ、ロトの 2 = ツグ）。</summary>
     public enum BallSlot { Drum, Streak }

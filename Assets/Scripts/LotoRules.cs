@@ -1,6 +1,6 @@
 using System;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>
     /// 抽選仕様の正本（SSOT）。**結果は物理が決める**（2026-09-03 User 指示: RNG で先に決めて見せかけるのをやめる）。

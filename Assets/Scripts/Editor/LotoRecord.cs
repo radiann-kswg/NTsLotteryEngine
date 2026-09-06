@@ -6,7 +6,7 @@ using UnityEditor.Recorder.Encoder;
 using UnityEditor.Recorder.Input;
 using UnityEngine;
 
-namespace NTsLotoEngine.EditorTools
+namespace NTsLotteryEngine.EditorTools
 {
     /// <summary>
     /// Tools > NTsLoto > Play + Record … Unity Recorder で Game View を MP4 に録りながら Play する（演出の観察・調整用）。

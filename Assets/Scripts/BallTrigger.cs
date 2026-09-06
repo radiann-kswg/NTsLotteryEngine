@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>球が入ったら通知するトリガー。</summary>
     [RequireComponent(typeof(Collider))]

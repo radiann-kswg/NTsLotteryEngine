@@ -1,4 +1,4 @@
-# License — NTsLotoEngine
+# License — NTsLotteryEngine
 
 ## 本リポジトリ（既定）: CC BY-NC 4.0
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>
     /// 篩型ロトマシーン（2026-09-03 User 指示）。穴あきの回転皿を N 層重ね、球は穴を見つけるたびに下の層へ落ちる。

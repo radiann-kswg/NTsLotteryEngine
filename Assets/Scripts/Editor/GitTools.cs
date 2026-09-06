@@ -39,7 +39,7 @@ public static class GitTools
     {
         string git = Path.Combine(root, ".git");
         if (!Directory.Exists(git)) return;
-        string stale = Path.Combine(git, "stale-locks"); // サンドボックスが rename で退避した残骸置き場（NTsLotoEngine で実在）
+        string stale = Path.Combine(git, "stale-locks"); // サンドボックスが rename で退避した残骸置き場（NTsLotteryEngine で実在）
         var files = Directory.GetFiles(git, "*.lock*", SearchOption.TopDirectoryOnly);
         if (Directory.Exists(stale)) files = files.Concat(Directory.GetFiles(stale)).ToArray();
         foreach (var f in files)

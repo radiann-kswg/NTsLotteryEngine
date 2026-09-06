@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace NTsLotoEngine.EditorTools
+namespace NTsLotteryEngine.EditorTools
 {
     /// <summary>MCP からプレイモードを出し入れするためのメニュー（公式 MCP に Play が無いので）。</summary>
     public static class LotoPlay

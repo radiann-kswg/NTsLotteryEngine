@@ -3,21 +3,21 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 
-namespace NTsLotoEngine.EditorTools
+namespace NTsLotteryEngine.EditorTools
 {
     /// <summary>
     /// ビルド。Linux x64 は Raspberry Pi 4B（box64）向けに Mono バックエンド固定（NTsWallpaperEngine と同じ方針）。
-    /// CLI: Unity.exe -batchmode -quit -projectPath . -executeMethod NTsLotoEngine.EditorTools.LotoBuild.BuildLinux64
+    /// CLI: Unity.exe -batchmode -quit -projectPath . -executeMethod NTsLotteryEngine.EditorTools.LotoBuild.BuildLinux64
     /// </summary>
     public static class LotoBuild
     {
         const string ScenePath = "Assets/Scenes/LotoScene.unity";
 
         [MenuItem("Tools/NTsLoto/Build Linux x64 (RPi)")]
-        public static void BuildLinux64() => Build(BuildTarget.StandaloneLinux64, "Builds/Linux/NTsLotoEngine.x86_64");
+        public static void BuildLinux64() => Build(BuildTarget.StandaloneLinux64, "Builds/Linux/NTsLotteryEngine.x86_64");
 
         [MenuItem("Tools/NTsLoto/Build Windows x64")]
-        public static void BuildWin64() => Build(BuildTarget.StandaloneWindows64, "Builds/Windows/NTsLotoEngine.exe");
+        public static void BuildWin64() => Build(BuildTarget.StandaloneWindows64, "Builds/Windows/NTsLotteryEngine.exe");
 
         static void Build(BuildTarget target, string output)
         {

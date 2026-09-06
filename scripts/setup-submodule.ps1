@@ -1,4 +1,4 @@
-# NTsLotoEngine: サブモジュールの初期化 + sparse-checkout 設定（NTsWallpaperEngine と同仕様）
+# NTsLotteryEngine: サブモジュールの初期化 + sparse-checkout 設定（NTsWallpaperEngine と同仕様）
 # 使い方: リポジトリルートで `pwsh -File scripts/setup-submodule.ps1`
 # sparse 設定は .gitmodules に保存されないため、新規クローン時は必ずこのスクリプトを使う。
 $ErrorActionPreference = "Stop"

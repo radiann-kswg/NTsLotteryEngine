@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 724366301}
     throat: {fileID: 1886100616}
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &34448359
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -1610,7 +1610,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -1902,7 +1902,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -1984,7 +1984,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 742736902}
     throat: {fileID: 981531184}
@@ -2130,7 +2130,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -2265,7 +2265,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -2383,7 +2383,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &67646022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2607,7 +2607,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -2914,7 +2914,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &96699907
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3205,7 +3205,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.69
   innerRadiusTop: 0.69
   thickness: 0.02
@@ -3531,7 +3531,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &115122109
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3709,7 +3709,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &123088682
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3887,7 +3887,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &132947075
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4211,7 +4211,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -4660,7 +4660,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 744238111}
     throat: {fileID: 870964946}
@@ -5073,7 +5073,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &178095162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5139,7 +5139,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &178449508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5866,7 +5866,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &211140576
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6044,7 +6044,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &221665014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6200,7 +6200,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &228027047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6592,7 +6592,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -6884,7 +6884,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -7302,7 +7302,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -8263,7 +8263,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &340557597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9727,7 +9727,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -9956,7 +9956,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -10267,7 +10267,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -10783,7 +10783,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -11254,7 +11254,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -11547,7 +11547,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &447631025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11613,7 +11613,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &453037471
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11974,7 +11974,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &483692532
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12102,7 +12102,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -12185,7 +12185,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &496897639
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12399,7 +12399,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &511628419
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12577,7 +12577,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &526241329
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12822,7 +12822,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &529586097
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12905,7 +12905,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -14233,7 +14233,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -15102,7 +15102,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -15475,7 +15475,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &604139879
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15603,7 +15603,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -15875,7 +15875,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -16563,7 +16563,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -17013,7 +17013,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &669314665
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17735,7 +17735,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &693714771
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18025,7 +18025,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &699923645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18270,7 +18270,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &704762234
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18336,7 +18336,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &705080801
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18432,7 +18432,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4df2ee9f0e8205b40bad854915e4a576, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.SieveMachine
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.SieveMachine
   dishes:
   - {fileID: 1004592002}
   - {fileID: 1254920315}
@@ -18503,7 +18503,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &722694961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18586,7 +18586,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -18766,7 +18766,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -19073,7 +19073,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &728826874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19139,7 +19139,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &729675593
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19365,7 +19365,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -19657,7 +19657,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -19802,7 +19802,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -19947,7 +19947,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -20030,7 +20030,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &750269230
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20208,7 +20208,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &759695204
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20632,7 +20632,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &763880191
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20698,7 +20698,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &766791713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20764,7 +20764,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &768650145
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21802,7 +21802,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &818610742
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22046,7 +22046,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &831846735
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22474,7 +22474,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -22721,7 +22721,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -23409,7 +23409,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 1124388323}
     throat: {fileID: 11040316}
@@ -23578,7 +23578,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &916559961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24333,7 +24333,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -25450,7 +25450,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -25979,7 +25979,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -26077,7 +26077,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dae5f202d96d9547a60853abd0756df, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.DerailWatch
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.DerailWatch
   maxSpeed: 8
   maxFallSpeed: 18
   minY: -0.5
@@ -26094,7 +26094,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd4d900437fa45a4f9eae2a15077816d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.LotoDirector
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.LotoDirector
   ballPrefab: {fileID: 2896516794010156156, guid: de54ff98f1ff2f84db779ac64c54e251, type: 3}
   upper: {fileID: 719289779}
   lower: {fileID: 1103373110}
@@ -26275,7 +26275,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -26489,7 +26489,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &997311165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26617,7 +26617,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -26762,7 +26762,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -26956,7 +26956,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -27007,7 +27007,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -28126,7 +28126,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1058072434
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28244,7 +28244,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -28424,7 +28424,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -29214,7 +29214,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4df2ee9f0e8205b40bad854915e4a576, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.SieveMachine
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.SieveMachine
   dishes:
   - {fileID: 1852045266}
   - {fileID: 1324268017}
@@ -29741,7 +29741,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1116027988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29824,7 +29824,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -30004,7 +30004,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -30216,7 +30216,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -30396,7 +30396,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -30496,7 +30496,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -31851,7 +31851,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -31902,7 +31902,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -32244,7 +32244,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1209401225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32645,7 +32645,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -32679,7 +32679,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1229815011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32807,7 +32807,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -33037,7 +33037,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1237323983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33165,7 +33165,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -33396,7 +33396,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -33737,7 +33737,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -34061,7 +34061,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1273533428
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34368,7 +34368,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -34822,7 +34822,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1290654304
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35129,7 +35129,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -35246,7 +35246,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 1484140461}
     throat: {fileID: 2005112140}
@@ -35513,7 +35513,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -35751,7 +35751,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -36120,7 +36120,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -36154,7 +36154,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1325178702
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36506,7 +36506,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -36651,7 +36651,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -37039,7 +37039,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -37444,7 +37444,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1377211710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37510,7 +37510,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1378097617
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37754,7 +37754,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 1238536107}
     throat: {fileID: 354530676}
@@ -38074,7 +38074,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -38188,7 +38188,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1388600377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38495,7 +38495,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.39999998
   thickness: 0.02
@@ -38774,7 +38774,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e7da282983a91a4486dfcb628c0e829, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.KuruunTower
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.KuruunTower
   levels:
   - bowl: {fileID: 1312558171}
     throat: {fileID: 875722185}
@@ -38965,7 +38965,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1415595834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39499,7 +39499,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -39533,7 +39533,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1437333388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39773,7 +39773,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -40146,7 +40146,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1455749631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40641,7 +40641,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -40836,7 +40836,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1471905721
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41126,7 +41126,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1476243733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41509,7 +41509,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -42635,7 +42635,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1508911483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43847,7 +43847,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -44204,7 +44204,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -44463,7 +44463,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -44724,7 +44724,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1611868135
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45244,7 +45244,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -45344,7 +45344,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -45849,7 +45849,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1659119817
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45932,7 +45932,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -46086,7 +46086,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!1 &1667063378
 GameObject:
   m_ObjectHideFlags: 0
@@ -46133,7 +46133,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -46251,7 +46251,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1669302266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46513,7 +46513,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -46906,7 +46906,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1687164278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47307,7 +47307,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -48266,7 +48266,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -48366,7 +48366,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -49419,7 +49419,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -49985,7 +49985,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1816517382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50180,7 +50180,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.65
   thickness: 0.02
@@ -50573,7 +50573,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1828849160
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50751,7 +50751,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1837164820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51040,7 +51040,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -51587,7 +51587,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -51638,7 +51638,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -51756,7 +51756,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1865120517
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52018,7 +52018,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -52617,7 +52617,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1885485455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -53325,7 +53325,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -53519,7 +53519,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.44
   innerRadiusTop: 0.44
   thickness: 0.02
@@ -53816,7 +53816,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1926266222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -53882,7 +53882,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1927141154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54130,7 +54130,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &1939229084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -55083,7 +55083,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!1 &2003304948
 GameObject:
   m_ObjectHideFlags: 0
@@ -55497,7 +55497,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -55838,7 +55838,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -56015,7 +56015,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &2023650048
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56762,7 +56762,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &2050628132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57035,7 +57035,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 0
   targetRpm: 0
   rampRpmPerSecond: 20
@@ -57069,7 +57069,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &2062231548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57359,7 +57359,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &2067941158
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57826,7 +57826,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -58169,7 +58169,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -58322,7 +58322,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &2106718890
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58893,7 +58893,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b07b4fd6f3874e48b721d42be07d800, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.BallTrigger
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.BallTrigger
 --- !u!65 &2125208696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59021,7 +59021,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20
@@ -59264,7 +59264,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7fbd3dd93e22ad4fb0802435ce1f789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.TubeWall
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.TubeWall
   innerRadiusBottom: 0.12
   innerRadiusTop: 0.42
   thickness: 0.02
@@ -59444,7 +59444,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3171e6f6e63f69e408a3a641bd5c1514, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NTsLotoEngine.Rotator
+  m_EditorClassIdentifier: Assembly-CSharp::NTsLotteryEngine.Rotator
   rpm: 10
   targetRpm: 10
   rampRpmPerSecond: 20

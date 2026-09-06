@@ -1,4 +1,4 @@
-# Raspberry Pi 4B 引き渡し資料 — NTsLotoEngine
+# Raspberry Pi 4B 引き渡し資料 — NTsLotteryEngine
 
 「Raspberry Pi OS開発」Coworkプロジェクトへの引き渡し内容。OSイメージへの組み込み（配置・録画・Bot 連携）はあちら側の管轄で、本リポジトリはビルド成果物と起動要件の提供までを担当する。基本構成は NTsWallpaperEngine と同じ（Linux x64 / Mono / box64）。
 
@@ -8,8 +8,8 @@ Unityメニュー `Tools > NTsLoto > Build Linux x64 (RPi)` の実行で生成�
 
 | 内容 | パス |
 | --- | --- |
-| プレイヤー本体 | `Builds/Linux/NTsLotoEngine.x86_64` |
-| データ一式 | `Builds/Linux/NTsLotoEngine_Data/` |
+| プレイヤー本体 | `Builds/Linux/NTsLotteryEngine.x86_64` |
+| データ一式 | `Builds/Linux/NTsLotteryEngine_Data/` |
 | Unityランタイム | `Builds/Linux/UnityPlayer.so` ほか |
 | 起動スクリプト | `scripts/rpi/run-loto.sh`（成果物と同じフォルダに配置する） |
 

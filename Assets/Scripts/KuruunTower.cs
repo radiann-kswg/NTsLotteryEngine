@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>
     /// 別ボール用の縦連クルーン塔。各段 = 回転ボウル（穴は一様）＋静止コレクタ（当たり扇形は軸へ／ハズレ扇形は外周の樋へ）。

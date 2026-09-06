@@ -1,4 +1,4 @@
-# AGENTS.md — NTsLotoEngine
+# AGENTS.md — NTsLotteryEngine
 
 > **本ファイルは、このリポジトリにおけるAIエージェント設定の単一情報源（SSOT）です。**
 > `CLAUDE.md` は本ファイルを参照するだけの薄いポインタです。エージェント設定の追加・変更は**必ず本ファイルにのみ**行ってください。
@@ -7,10 +7,10 @@
 
 ## 1. プロジェクト概要
 
-- **プロジェクト名**: NTsLotoEngine
+- **プロジェクト名**: NTsLotteryEngine
 - **目的**: 一次創作「ナンバーテールズ」のコンテンツ用 **ボール抽選機**。篩型ロトマシーン（2〜11 の 4 層／12〜99 の 15 層。最下層に到達した順が抽選順）と別ボール 7 塔の縦連クルーン（連続抽選）を**物理で抽選**し、結果を JSON に出力する。将来は Raspberry Pi や Misskey Bot で抽選中の様子を動画再生する。
 - **エンジン**: Unity 6 (6000.6.0f1) / URP 3D
-- **リモート**: `radiann-kswg/NTsLotoEngine`（GitHub）
+- **リモート**: `radiann-kswg/NTsLotteryEngine`（GitHub）
 - **素材の出自**: 球は `LotteryBallKit`（サブモジュール → UPM `file:` 依存・CC BY 4.0）。**抽選機の本体（クルーンのボウル・コレクタ・篩の皿）は Blender で生成**: 原本は `BlenderSources/gen_kuruun.py` + `kuruun_params.json`（寸法・穴・扇形の SSOT）、Blender GUI を開いた状態で Blender MCP / Python コンソールから `REPO=...; exec(open(".../gen_kuruun.py").read())` → `Assets/Models/*.fbx` と `BlenderSources/Kuruun.blend`。配管（漏斗・シュート・筒・レール）はまだ `ProcMesh`/Box（順次 Blender 化）。
 - **引継ぎ**: `docs/HANDOFF.md`（いまの状態・次にやること・ノブ一覧）。セッションの終わりに更新する。
 - **抽選仕様・機構の設計正本**: `docs/DESIGN.md`。**目標確率と球の範囲は `Assets/Scripts/LotoRules.cs`**、実測値は `Tools > NTsLoto > Monte Carlo` の `Output/mc_<variant>.json` と DESIGN.md 2.1 節。
@@ -114,7 +114,7 @@
 ## 7. ビルドとRaspberry Pi 4Bへの引き渡し
 
 - ビルドターゲット: **StandaloneLinux64**（Mono バックエンド。box64 互換性優先で IL2CPP は使わない）。
-- メニュー `Tools > NTsLoto > Build Linux x64 (RPi)` またはCLIから `NTsLotoEngine.EditorTools.LotoBuild.BuildLinux64`。出力は `Builds/Linux/`（git管理外）。
+- メニュー `Tools > NTsLoto > Build Linux x64 (RPi)` またはCLIから `NTsLotteryEngine.EditorTools.LotoBuild.BuildLinux64`。出力は `Builds/Linux/`（git管理外）。
 - 起動スクリプト `scripts/rpi/run-loto.sh`。引き渡し内容は `docs/raspberrypi-handoff.md`。動画化・Misskey 投稿は本リポジトリの管轄外（Bot 側が JSON と画面録画を扱う）。
 
 ## 8. 創作内容の取り扱い

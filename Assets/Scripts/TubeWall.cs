@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>ProcMesh.Tube をコンポーネント化。値を変えるとエディタ上でも即再生成。</summary>
     [ExecuteAlways, RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]

@@ -1,7 +1,7 @@
 """クルーン 1 段（回転ボウル＋静止コレクタ）を kuruun_params.json から生成し、FBX を Assets/Models/ へ書き出す。
 
 使い方（Blender GUI を開いた状態で Blender MCP / Python コンソールから）:
-    exec(open(r"D:/.../NTsLotoEngine/BlenderSources/gen_kuruun.py").read())
+    exec(open(r"D:/.../NTsLotteryEngine/BlenderSources/gen_kuruun.py").read())
     # 変数 REPO を先に定義しておけばそのパスを使う。未定義ならこのファイルの位置から辿る
 
 出力:

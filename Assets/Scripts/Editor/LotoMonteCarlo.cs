@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace NTsLotoEngine.EditorTools
+namespace NTsLotteryEngine.EditorTools
 {
     /// <summary>
     /// クルーン 1 段（回転ボウル＋静止コレクタ）のモンテカルロ治具。エディタ（非 Play）で Physics.Simulate を手回しし、

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>
     /// 進行役。**結果は物理が決める**: 上段の篩 → 下段の篩（到達順に 6 球）→ 別ボール 7 塔（コレクタの当たり扇形）。最後に JSON を書く。

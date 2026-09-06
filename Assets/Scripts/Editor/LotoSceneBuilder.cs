@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-namespace NTsLotoEngine.EditorTools
+namespace NTsLotteryEngine.EditorTools
 {
     /// <summary>
     /// シーン生成の唯一の入口（冪等）。Tools > NTsLoto > Build Loto Scene。

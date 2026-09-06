@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>ProcMesh.Disc をコンポーネント化（回転床は convex にして kinematic Rigidbody に載せる）。</summary>
     [ExecuteAlways, RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]

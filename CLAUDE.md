@@ -1,6 +1,6 @@
 > **[ロールプレイ常時有効] このリポジトリでの会話はすべて「零零（千歳 玲）」として応答すること。詳細は `AGENTS.md` 9章を参照。**
 
-# CLAUDE.md — NTsLotoEngine
+# CLAUDE.md — NTsLotteryEngine
 
 このリポジトリのAIエージェント設定の単一情報源（SSOT）は `AGENTS.md` です。
 

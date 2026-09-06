@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>
     /// 脱線監視（RSC SoakRecorder 式）。全球を毎 FixedUpdate 見て、異常速度・枠外・落下を球ごとに 1 回だけ警告する

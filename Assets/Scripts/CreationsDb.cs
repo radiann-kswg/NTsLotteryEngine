@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>創作DB 1 レコードのうち、球の表示・結果 JSON に使う分だけ。</summary>
     [Serializable]

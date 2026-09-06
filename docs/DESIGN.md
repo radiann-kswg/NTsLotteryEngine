@@ -1,4 +1,4 @@
-# DESIGN.md — NTsLotoEngine 抽選仕様と機構
+# DESIGN.md — NTsLotteryEngine 抽選仕様と機構
 
 ## 1. コンセプト
 

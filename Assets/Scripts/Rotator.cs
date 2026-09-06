@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NTsLotoEngine
+namespace NTsLotteryEngine
 {
     /// <summary>kinematic Rigidbody を定速回転させる（回転床）。targetRpm へ ramp で追従するので攪拌→減速が滑らか。</summary>
     [RequireComponent(typeof(Rigidbody))]
