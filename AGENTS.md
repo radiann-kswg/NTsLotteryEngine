@@ -42,6 +42,10 @@
 3. 大きな変更（多数ファイル生成・構成変更など）の前に、計画を提示して User に確認する。
 4. `Assets/Materials/Generated/` はビルダーが無ければ作るマテリアル。Unity 生成物なのでコミットしてよい。
 5. 抽選結果 `result*.json` / `Output/` は生成物（git 管轄外）。
+6. **セッションの終わりに README のプレビューを撮り直してコミットする**（NTsMedalGame `AGENTS.md` 4 章と同じ運用）。LotoScene を Play して `Tools > NTsLoto > Capture Preview` → `docs/captures/preview_sieve.png` / `preview_towers.png` / `preview_tower.png`。README 冒頭がこの 3 枚を貼っていて、**GitHub を見れば最新の画面がいつでも分かる**状態を保つ。撮影は `Assets/Scripts/Editor/LotoCapture.cs`（`Camera.main` を RenderTexture に描くだけ。`Unity_Camera_Capture` は Play 中に失敗する）。
+7. **ボールテクスチャを足した回は `Tools > NTsLoto > Capture Ball Skins`**（BallViewScene を**開いた状態**で。別シーンを開くと確認ダイアログで MCP が止まるので、シーンを開くのは人／別コマンド）。貼り済みの球を 1 個ずつ `docs/captures/ball_<slot>_<Num_Badge>.png` に撮り、**README の `<!-- ballskins:start -->`〜`<!-- ballskins:end -->` の間に収録状況の表を書き戻す**（収録数・画像・ファイル名）。この表は手で書かない。マーカーを消すと更新が止まる。
+8. **動画**は `Tools > NTsLoto > Play + Record`（Unity Recorder → `Recordings/*.mp4`・git 管轄外）。README に載せるのは GIF（GitHub は mp4 をインライン再生しない）: サンドボックスの ffmpeg で `trim`＋`concat` して 420px・10fps・2MB 台に落とし `docs/captures/preview.gif` へ。mp4 はコミットしない。
+9. **README はリポジトリ収録内容の窓口**。実装・確率・FBX・サブモジュールを増減したら、README の「抽選のしくみ」「リポジトリの中身」の表を**同じコミットで**直す。仕様の詳細は `docs/DESIGN.md`、進捗は `docs/HANDOFF.md` に置き、README には要約とリンクだけ書く（三重管理にしない）。
 
 ## 4.5 サブモジュール（sparse-checkout 運用・NTsWallpaperEngine と同仕様）
 
@@ -108,6 +112,7 @@
 - `Assets/Scripts/BallSkinTable.cs` … 全球のテクスチャ＋創作DBリンク（`Assets/Data/BallSkins.asset`）。`Assets/Scripts/CreationsDb.cs` … 創作DB ローダ。
 - `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。FBX の配置・配管・カメラ・スキン表。
 - `Assets/Scripts/Editor/LotoMonteCarlo.cs` … `Tools > NTsLoto > Monte Carlo > Run/Stop`。静的フィールド（variant / trials / parallel / bowlRpm / entryR / entryHeight / entryTangential）を RunCommand で書き換えて実行。結果 `Output/mc_<variant>.json`。
+- `Assets/Scripts/Editor/LotoCapture.cs` … `Tools > NTsLoto > Capture Preview` / `Capture Ball Skins`。README 用の PNG を `docs/captures/` に書き、ボールテクスチャの収録状況表を README のマーカー間へ書き戻す（4 章 6〜9）。
 - `Assets/Scripts/Editor/LotoRecord.cs` … `Tools > NTsLoto > Play + Record`（Recorder → `Recordings/*.mp4`）。`LotoPlay.cs` … Play/Stop と **`LotoPlayLoop`**（Play を N 回繰り返して結果 JSON を退避。実機の当落統計用）。`LotoBuild.cs` … Linux/Windows ビルド。
 - `BlenderSources/gen_kuruun.py` + `kuruun_params.json` … 抽選機メッシュの原本。`Assets/Models/Kuruun_Bowl.fbx` / `Kuruun_Collector_<variant>.fbx` / `Sieve_Dish_L.fbx` / `Sieve_Dish_U.fbx`。
 
