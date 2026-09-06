@@ -48,6 +48,14 @@ namespace NTsLotteryEngine
             return b;
         }
 
+        /// <summary>球を全部消して初期状態へ（再実行用。レールに出た球も篩の子なので一緒に消える）。</summary>
+        public void Clear()
+        {
+            foreach (var b in GetComponentsInChildren<NumberBall>()) Destroy(b.gameObject);
+            balls.Clear(); arrived.Clear(); drawn = 0;
+            if (gate) gate.SetActive(false);
+        }
+
         public void Spin() { for (int i = 0; i < dishes.Length; i++) dishes[i].targetRpm = (i % 2 == 0 ? 1f : -1f) * dishRpm; }
         public void Stop() { foreach (var d in dishes) d.targetRpm = 0f; if (gate) gate.SetActive(true); }
 

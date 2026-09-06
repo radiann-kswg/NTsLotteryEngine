@@ -35,36 +35,9 @@ namespace NTsLotteryEngine.EditorTools
             foreach (var go in scene.GetRootGameObjects())
                 if (go.name == "Loto" || go.name == "Main Camera" || go.name == "Directional Light") Object.DestroyImmediate(go);
 
-            var glass = Mat("Glass", new Color(0.80f, 0.90f, 1f, 0.10f), true);   // 0.22 だと筒が曇って中の球が見えない。篩の追従カメラ（1.9m）だと 0.14 でも白い
-            var frame = Mat("Frame", new Color(0.18f, 0.18f, 0.20f));
-            var rail = Mat("Rail", new Color(0.85f, 0.82f, 0.75f));
-            var bowlMat = Mat("Bowl", new Color(0.93f, 0.94f, 0.96f, 0.75f), true);
-
             var root = new GameObject("Loto").transform;
-            Box(root, "Ground", new Vector3(0, -0.05f, 0), new Vector3(30, 0.1f, 30), frame);
-
-            // ---- 篩型ロトマシーン ×2（Blender 生成の回転皿。到達順が抽選順。2026-09-03 User 指示）----
-            var machine = new GameObject("LotoMachine").transform; machine.SetParent(root, false);
-            var lower = BuildSieve(machine, "SieveL", "Sieve_Dish_L", LowerLayers, new Vector3(0, 0, 0), 0.70f, 0.34f, new Vector3(0.3f, 0, RailZ), bowlMat, frame, glass);     // 12〜99・15 層
-            var upper = BuildSieve(machine, "SieveU", "Sieve_Dish_U", UpperLayers, new Vector3(-1.7f, 0, 0), 0.45f, 0.32f, new Vector3(-0.8f, 0, RailZ), bowlMat, frame, glass);  // 2〜11・4 層
-
-            // 結果レール（+X 側が 3° 低い）
-            var railT = new GameObject("ResultRail").transform; railT.SetParent(root, false);
-            railT.SetPositionAndRotation(new Vector3(0, RailY, RailZ), Quaternion.Euler(0, 0, -3f));
-            Box(railT, "Floor", new Vector3(0, 0, 0), new Vector3(RailLen, 0.02f, 0.24f), rail);
-            Box(railT, "WallF", new Vector3(0, 0.15f, -0.13f), new Vector3(RailLen, 0.30f, 0.02f), glass);   // シュートから 1.5m/s で来る球を跳び越えさせない
-            Box(railT, "WallB", new Vector3(0, 0.06f, 0.13f), new Vector3(RailLen, 0.12f, 0.02f), glass);
-            Box(railT, "StopR", new Vector3(RailLen / 2, 0.06f, 0), new Vector3(0.02f, 0.12f, 0.28f), frame);
-            Box(railT, "StopL", new Vector3(-RailLen / 2, 0.06f, 0), new Vector3(0.02f, 0.12f, 0.28f), frame);
-
-            // ---- 別ボール 7 塔（縦連クルーン）----
-            var towers = new KuruunTower[LotoRules.Streaks.Length];
-            for (int slot = 0; slot < TowerArcOrder.Length; slot++)
-            {
-                float phi = Mathf.Lerp(180f, 0f, (float)slot / (TowerArcOrder.Length - 1)) * Mathf.Deg2Rad;   // 左(+X 側から見て 180°) → 右(0°)。中央 90° が真後ろ
-                int i = TowerArcOrder[slot];
-                towers[i] = BuildTower(root, i, new Vector3(Mathf.Cos(phi) * TowerArcR, 0, Mathf.Sin(phi) * TowerArcR), bowlMat, frame, rail, glass);
-            }
+            Box(root, "Ground", new Vector3(0, -0.05f, 0), new Vector3(30, 0.1f, 30), Mat("Frame", new Color(0.18f, 0.18f, 0.20f)));
+            var (upper, lower, towers) = BuildMachine(root);
 
             // ---- カメラ・照明・進行役 ----
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
@@ -89,15 +62,6 @@ namespace NTsLotteryEngine.EditorTools
             if (!director.hudFont) Debug.LogWarning("PenchantManufacture.otf が無い（scripts/setup-submodule で同期）。HUD は既定フォントで描く");
             director.skins = SkinTable();
 
-            // シュート・筒・チャンネルは摩擦ゼロ・反発ゼロ（Slick）。皿・ボウル・コレクタは FBX 既定（摩擦 0.6）
-            var slick = Slick();
-            foreach (var col in root.GetComponentsInChildren<Collider>())
-            {
-                string nm = col.name;
-                if (nm == "Sill" || nm == "SideL" || nm == "SideR" || nm == "Back" || nm == "Housing" || nm == "TrayFloor" || nm.StartsWith("Channel"))   // 漏斗は摩擦あり（周回減衰）
-                    col.sharedMaterial = slick;
-            }
-
             Physics.SyncTransforms();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -106,12 +70,62 @@ namespace NTsLotteryEngine.EditorTools
             Debug.Log($"[LotoSceneBuilder] built: sieves={LowerLayers}+{UpperLayers} layers, towers={towers.Length}");
         }
 
+        /// <summary>FBX の置き場。NTsMedalGame は Sync 先（Assets/External/NTsLotteryEngine/Models）に差し替えてから BuildMachine を呼ぶ。</summary>
+        public static string ModelDir = "Assets/Models";
+
+        /// <summary>
+        /// 篩 2 台＋結果レール＋別ボール塔を root の下に置く（配置は root のローカル。原点 = 篩 L の中心）。
+        /// towerIndices = 生成する LotoRules.Streaks の index（null = 全 7 本）。弧のスロットは据え置きなので一部だけ生成しても位置は変わらない。
+        /// 戻り値の towers は Streaks と同じ長さ（生成しなかった塔は null）。NTsMedalGame（M3）が lotoOrigin の下に呼ぶ共有入口。
+        /// </summary>
+        public static (SieveMachine upper, SieveMachine lower, KuruunTower[] towers) BuildMachine(Transform root, int[] towerIndices = null)
+        {
+            var glass = Mat("Glass", new Color(0.80f, 0.90f, 1f, 0.10f), true);   // 0.22 だと筒が曇って中の球が見えない。篩の追従カメラ（1.9m）だと 0.14 でも白い
+            var frame = Mat("Frame", new Color(0.18f, 0.18f, 0.20f));
+            var rail = Mat("Rail", new Color(0.85f, 0.82f, 0.75f));
+            var bowlMat = Mat("Bowl", new Color(0.93f, 0.94f, 0.96f, 0.75f), true);
+
+            // ---- 篩型ロトマシーン ×2（Blender 生成の回転皿。到達順が抽選順。2026-09-03 User 指示）----
+            var machine = new GameObject("LotoMachine").transform; machine.SetParent(root, false);
+            var lower = BuildSieve(machine, "SieveL", "Sieve_Dish_L", LowerLayers, new Vector3(0, 0, 0), 0.70f, 0.34f, new Vector3(0.3f, 0, RailZ), bowlMat, frame, glass);     // 12〜99・15 層
+            var upper = BuildSieve(machine, "SieveU", "Sieve_Dish_U", UpperLayers, new Vector3(-1.7f, 0, 0), 0.45f, 0.32f, new Vector3(-0.8f, 0, RailZ), bowlMat, frame, glass);  // 2〜11・4 層
+
+            // 結果レール（+X 側が 3° 低い）
+            var railT = new GameObject("ResultRail").transform; railT.SetParent(root, false);
+            railT.SetLocalPositionAndRotation(new Vector3(0, RailY, RailZ), Quaternion.Euler(0, 0, -3f));   // root がずれていても付いていく（NTsMedalGame の lotoOrigin）
+            Box(railT, "Floor", new Vector3(0, 0, 0), new Vector3(RailLen, 0.02f, 0.24f), rail);
+            Box(railT, "WallF", new Vector3(0, 0.15f, -0.13f), new Vector3(RailLen, 0.30f, 0.02f), glass);   // シュートから 1.5m/s で来る球を跳び越えさせない
+            Box(railT, "WallB", new Vector3(0, 0.06f, 0.13f), new Vector3(RailLen, 0.12f, 0.02f), glass);
+            Box(railT, "StopR", new Vector3(RailLen / 2, 0.06f, 0), new Vector3(0.02f, 0.12f, 0.28f), frame);
+            Box(railT, "StopL", new Vector3(-RailLen / 2, 0.06f, 0), new Vector3(0.02f, 0.12f, 0.28f), frame);
+
+            // ---- 別ボール 7 塔（縦連クルーン）----
+            var towers = new KuruunTower[LotoRules.Streaks.Length];
+            for (int slot = 0; slot < TowerArcOrder.Length; slot++)
+            {
+                float phi = Mathf.Lerp(180f, 0f, (float)slot / (TowerArcOrder.Length - 1)) * Mathf.Deg2Rad;   // 左(+X 側から見て 180°) → 右(0°)。中央 90° が真後ろ
+                int i = TowerArcOrder[slot];
+                if (towerIndices != null && System.Array.IndexOf(towerIndices, i) < 0) continue;
+                towers[i] = BuildTower(root, i, new Vector3(Mathf.Cos(phi) * TowerArcR, 0, Mathf.Sin(phi) * TowerArcR), bowlMat, frame, rail, glass);
+            }
+
+            // シュート・筒・チャンネルは摩擦ゼロ・反発ゼロ（Slick）。皿・ボウル・コレクタは FBX 既定（摩擦 0.6）
+            var slick = Slick();
+            foreach (var col in root.GetComponentsInChildren<Collider>())
+            {
+                string nm = col.name;
+                if (nm == "Sill" || nm == "SideL" || nm == "SideR" || nm == "Back" || nm == "Housing" || nm == "TrayFloor" || nm.StartsWith("Channel"))   // 漏斗は摩擦あり（周回減衰）
+                    col.sharedMaterial = slick;
+            }
+            return (upper, lower, towers);
+        }
+
         const int LowerLayers = 15, UpperLayers = 4;
 
         /// <summary>篩: 回転皿を layers 枚重ね、最下層の下に漏斗→受け口トリガー→レールへのシュート。dish は Assets/Models/&lt;dish&gt;.fbx（穴リング面が y=0）。</summary>
         static SieveMachine BuildSieve(Transform parent, string name, string dish, int layers, Vector3 pos, float rimR, float pitch, Vector3 railPoint, Material bowlMat, Material frame, Material glass)
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Models/{dish}.fbx");
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{ModelDir}/{dish}.fbx");
             var root = new GameObject(name).transform; root.SetParent(parent, false); root.localPosition = pos;
             var m = root.gameObject.AddComponent<SieveMachine>();
             if (!prefab) { Debug.LogError($"{dish}.fbx が無い（Blender で gen_kuruun.py を実行）"); return m; }
@@ -170,8 +184,8 @@ namespace NTsLotteryEngine.EditorTools
             var k = root.gameObject.AddComponent<KuruunTower>();
             Vector3 W(Vector3 local) => root.TransformPoint(local);
 
-            var bowlPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Kuruun_Bowl.fbx");
-            var colPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Models/Kuruun_Collector_{s.variant}.fbx");
+            var bowlPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{ModelDir}/Kuruun_Bowl.fbx");
+            var colPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{ModelDir}/Kuruun_Collector_{s.variant}.fbx");
             if (!bowlPrefab || !colPrefab) { Debug.LogError($"Kuruun FBX が無い（bowl={bowlPrefab} collector={s.variant}）。Blender で BlenderSources/gen_kuruun.py を実行して"); return k; }
 
             float zEnd = -(GutterR + 0.45f);   // 落下チャンネル入口（塔の中心線 x=0・正面）

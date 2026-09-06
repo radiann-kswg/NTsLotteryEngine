@@ -29,6 +29,8 @@ namespace NTsLotteryEngine
         public bool quitWhenDone = false;
         public float pauseBetween = 1.5f;
         public bool skipSieves = false;  // デバッグ用: 篩を飛ばして塔から始める
+        public bool autoStart = true;    // false = 外部（NTsMedalGame 同一プロセス）が Begin() で起動する。起動引数・timeScale・Quit は触らない
+        public Action<LotoResult> onFinished;   // Write() 直後（Begin() ごとに 1 回）
 
         public LotoResult Result { get; private set; }
         readonly List<string> lines = new List<string>();
@@ -36,13 +38,22 @@ namespace NTsLotteryEngine
 
         void Start()
         {
+            if (!autoStart) return;
             ParseArgs();
-            if (seed < 0) seed = (int)(DateTime.Now.Ticks & 0x7fffffff);
-            UnityEngine.Random.InitState(seed);
             Time.timeScale = speed;
             Physics.bounceThreshold = 0.5f;   // 既定 2 m/s 未満の衝突は反発ゼロ → 球が床に貼り付いて見える
+            Begin();
+        }
 
-            Result = new LotoResult { seed = seed, drawnAt = DateTime.Now.ToString("o"), six = new int[0], sixNames = new string[0], sixSorted = new int[0] };
+        /// <summary>1 回の抽選を始める（篩に球を撒いて Run）。再実行可: 前回の球は篩ごと消す。</summary>
+        public void Begin()
+        {
+            int runSeed = seed < 0 ? (int)(DateTime.Now.Ticks & 0x7fffffff) : seed;   // seed 未指定なら毎回時刻から（Begin() を繰り返しても同じ配置にならない）
+            UnityEngine.Random.InitState(runSeed);
+            upper?.Clear(); lower?.Clear();
+            lines.Clear();
+
+            Result = new LotoResult { seed = runSeed, drawnAt = DateTime.Now.ToString("o"), six = new int[0], sixNames = new string[0], sixSorted = new int[0] };
             Result.streaks = Array.ConvertAll(LotoRules.Streaks, s =>
             {
                 var c = skins ? skins.Character(BallSlot.Streak, s.ball) : null;
@@ -135,6 +146,7 @@ namespace NTsLotteryEngine
             stage = "RESULT";
             Look(camOverview);
             Write();
+            onFinished?.Invoke(Result);
             if (quitWhenDone) { yield return new WaitForSeconds(3f); Application.Quit(); }
         }
 
