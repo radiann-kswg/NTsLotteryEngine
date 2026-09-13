@@ -568,7 +568,7 @@ MonoBehaviour:
     dbNum: 
   - slot: 0
     number: 93
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 76b1514dc6f71bd47b8bb5862929f149, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 1}
     db: Primary
     dbNum: 

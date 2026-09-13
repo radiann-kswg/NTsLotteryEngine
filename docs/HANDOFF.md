@@ -47,7 +47,7 @@
 3. 篩側も同じ観点で 1 度測る（2〜11 の勝者のばらつき。`Tools > NTsLoto > Play + Record` → `[SieveU] spawn/arrived`）。
 4. 配管の Blender 化（漏斗・シュート・筒・チャンネル・レール）と見た目（材質・照明）。塔は 11 段 ≈ 16m なので全景カメラは要再検討。
 5. `StreamingAssets/CreationsDB` 同期ツール、Linux ビルドの実機確認（未着手）。
-6. ボールテクスチャの実装: `Assets/Textures/BallSkins/` に PNG を置き、`Assets/Data/BallSkins.asset` の各行に Inspector で貼る（規約は同フォルダの `README.md`）。
+6. ボールテクスチャの実装（進行中・2026-09-13 時点 **3 / 106 球**: ロト 6・50・93）: `Assets/Textures/BallSkins/` に `BallTex_NTS-{Num_Badge}.png` を置いたら `Tools > NTsLoto > Build Ball View Scene`（空き行へ自動割当・冪等）→ `Tools > NTsLoto > Capture Ball Skins`（BallViewScene を開いた状態で。プレビュー撮影と README 収録表の書き戻し）。Inspector での手貼りは個別上書きのときだけ。規約は同フォルダの `README.md`、運用は `AGENTS.md` 4 章 7 と 8 章。
 
 ## 3. 触るときの注意（要点。詳細は AGENTS.md 5 章）
 
