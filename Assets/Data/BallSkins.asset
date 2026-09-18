@@ -358,7 +358,7 @@ MonoBehaviour:
     dbNum: 
   - slot: 0
     number: 58
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: e8b18931ce202324692355146f1b65d2, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 1}
     db: Primary
     dbNum: 
@@ -388,7 +388,7 @@ MonoBehaviour:
     dbNum: 
   - slot: 0
     number: 63
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 5ffbf953c195dce4e94189361a7ca1af, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 1}
     db: Primary
     dbNum: 
@@ -520,7 +520,7 @@ MonoBehaviour:
     dbNum: 
   - slot: 0
     number: 85
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 9b6a63a55d97ae744a39bb5ce05896b7, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 1}
     db: Primary
     dbNum: 
