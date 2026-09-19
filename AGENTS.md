@@ -34,6 +34,7 @@
 - 統合Coworkセッション「Unity周り」では、親フォルダ `CLAUDE.md` の単一接続モデルに従う。`unity-mcp` のパスパラメータを本リポジトリに合わせ、他のUnityプロジェクトのエディタは閉じておく。
 - リポジトリ単体で開く場合の接続設定は `.mcp.json` / `.vscode/mcp.json`（Unity公式リレー）。
 - 作業完了前に、MCP経由で **Console のエラー・警告を確認**する（`Unity_ReadConsole`）。
+- **`unity-mcp` がクラウド側で `no_tools` / failed のまま出ないときは Unity CLI で代替する**（2026-09-19 に `com.unity.pipeline` 0.6.0-exp.1 を導入。NTsMedalGame と同版）。`unity status --format json` で `state: ready` → `unity command menu --path "Tools/NTsLoto/…" --project-path "<本リポジトリ>" --json --no-banner` / `console --since <cursor>` / `clear_console` / `list_open_scenes` / `recompile` など。手順と罠は NTsMedalGame `AGENTS.md` 罠 23。manifest を書き換えた直後は **Unity にフォーカスが当たるまでパッケージが解決されない**（User にクリックしてもらう）。git は Desktop Commander の `start_process` で Windows 側の `git` を直接（lock はサンドボックス固有なので残らない）。
 
 ## 4. Git・ファイル運用ルール
 
