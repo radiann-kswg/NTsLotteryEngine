@@ -69,16 +69,18 @@ PNG を置いて `Tools > NTsLoto > Build Ball View Scene` を回すとファイ
 
 <!-- ballskins:start -->
 
-**収録 6 / 106 球**（2026-09-18 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）
+**収録 8 / 106 球**（2026-09-19 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）
 
 | | 区分 | 番号 | Num_Badge | ファイル |
 | --- | --- | --- | --- | --- |
+| <img src="docs/captures/ball_Drum_4.png" width="96"> | ロト | 4 | `4` | `BallTex_NTS-4.png` |
 | <img src="docs/captures/ball_Drum_6.png" width="96"> | ロト | 6 | `6` | `BallTex_NTS-6.png` |
 | <img src="docs/captures/ball_Drum_50.png" width="96"> | ロト | 50 | `50` | `BallTex_NTS-50.png` |
 | <img src="docs/captures/ball_Drum_58.png" width="96"> | ロト | 58 | `58` | `BallTex_NTS-58.png` |
 | <img src="docs/captures/ball_Drum_63.png" width="96"> | ロト | 63 | `63` | `BallTex_NTS-63.png` |
 | <img src="docs/captures/ball_Drum_85.png" width="96"> | ロト | 85 | `85` | `BallTex_NTS-85.png` |
 | <img src="docs/captures/ball_Drum_93.png" width="96"> | ロト | 93 | `93` | `BallTex_NTS-93.png` |
+| <img src="docs/captures/ball_Streak_2B.png" width="96"> | 別ボール | 2 | `2B` | `BallTex_NTS-2B.png` |
 
 <!-- ballskins:end -->
 

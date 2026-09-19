@@ -10,11 +10,13 @@ BallTex_NTS-{Num_Badge}.png
 ```
 
 - `{Num_Badge}` は創作DB（`100BeautiesLab_CreationsDB/data/Works_NumberTales/DataBases/db_*.json`）の
-  **`Num_Badge`** フィールドの値。`BallSkinTable.BallSkin.dbNum`（`DbNum`）と同じ文字列。
-- 例: `BallTex_NTS-1.png` / `BallTex_NTS-000.png` / `BallTex_NTS-2-alt.png` / `BallTex_NTS-10-alt.png` /
-  `BallTex_NTS-3x11.png` / `BallTex_NTS-64-sxp.png` / `BallTex_NTS-9x9.png`
+  **`Num_Badge`** フィールドの値（`BallSkinTable.BallSkin.Badge`）。
+- 例: `BallTex_NTS-1.png` / `BallTex_NTS-000.png` / `BallTex_NTS-2B.png` / `BallTex_NTS-10D.png` /
+  `BallTex_NTS-3x11.png` / `BallTex_NTS-64XP.png` / `BallTex_NTS-9x9.png`
+- **`Num_Badge` は `Num`（`BallSkin.dbNum` / `DbNum`）とは別**。別ボールは `Num` が `2-alt` / `10-alt` / `64-sxp`、
+  `Num_Badge` が `2B` / `10D` / `64XP`。ファイル名は `Num_Badge` の方（`Build Ball View Scene` は旧名 `...NTS-{Num}.png` も拾う）。
 - **番号ではなく Num_Badge で名付ける**。ロトマシーンの球と別ボールは同じ番号でも別キャラ
-  （ロトの `2` = 2(ツグ) → `BallTex_NTS-2.png`／別ボールの `2` = バイナ → `BallTex_NTS-2-alt.png`）。
+  （ロトの `2` = 2(ツグ) → `BallTex_NTS-2.png`／別ボールの `2` = バイナ → `BallTex_NTS-2B.png`）。
 - 創作DBの画像命名（`cnsp_imgNTS-1` / `emstk_corefolderNTS-1-1` / `art_imgNTS-1-humanoid`）に合わせた
   `...NTS-{Num_Badge}` 形式。
 

@@ -133,10 +133,11 @@
   | テクスチャ PNG | `Assets/Textures/BallSkins/BallTex_NTS-{Num_Badge}.png` | 管轄内（CC BY-NC 4.0。`LICENSE.md`） |
   | 編集用 PSD | `E:\Dropbox\Creative Cloud Files\ナンバーテールズ\LotteryBallKit\BallTex_NTS-{Num_Badge}.psd` | **管轄外**（リポジトリに置かない） |
 
-  - `{Num_Badge}` は創作DB の `Num_Badge`（`BallSkinTable.BallSkin.DbNum` と同じ文字列）。例: `BallTex_NTS-000.png` / `BallTex_NTS-2-alt.png` / `BallTex_NTS-3x11.png` / `BallTex_NTS-9x9.png`。
-  - **番号ではなく badge で名付ける**。ロトの球と別ボールは同じ番号でも別キャラ（ロト `2`=2(ツグ) と 別ボール `2`=バイナ(`2-alt`)）。創作DBの画像命名（`cnsp_imgNTS-1` 等）と同じ `...NTS-{Num_Badge}` 形式。
+  - `{Num_Badge}` は創作DB の `Num_Badge`（`BallSkinTable.BallSkin.Badge`）。例: `BallTex_NTS-000.png` / `BallTex_NTS-2B.png` / `BallTex_NTS-3x11.png` / `BallTex_NTS-9x9.png`。
+  - **`Num_Badge` は `DbNum`（創作DB の `Num`）とは別物**（2026-09-19 `BallTex_NTS-2B.png` で判明）。番号どおりの球と `000` / `3x11` / `9x9` は一致するが、別ボールの `2-alt`→**`2B`**（バイナ）・`10-alt`→**`10D`**（ディケ）・`64-sxp`→**`64XP`**（ゼフィア）は違う。`BallSkinTable.StreakOverrides` / `dbNum` は DB を引くための `Num` のまま。
+  - **番号ではなく badge で名付ける**。ロトの球と別ボールは同じ番号でも別キャラ（ロト `2`=2(ツグ) と 別ボール `2`=バイナ(`2B`)）。創作DBの画像命名（`cnsp_imgNTS-1` 等）と同じ `...NTS-{Num_Badge}` 形式。
   - PSD を `Assets/` 内に置かない（Unity がテクスチャとして二重にインポートし `.meta` と `Library` が膨らむ）。リポジトリ直下にも置かない（`.gitignore` 頼みは事故る）。書き出した PNG だけを `Assets/Textures/BallSkins/` へコピーする。詳細は同フォルダの `README.md`。
-  - 貼り付けは `Tools > NTsLoto > Build Ball View Scene` が自動でやる（ファイル名 → `Assets/Data/BallSkins.asset` の空き行。手貼り済みの行は触らない・冪等）。PNG を足したら実行するだけ。個別に上書きしたいときだけ Inspector で。UV は `LotteryBallKit` の `BallUV_Template`（球面 UV）に合わせる。
+  - 貼り付けは `Tools > NTsLoto > Build Ball View Scene` が自動でやる（ファイル名 → `Assets/Data/BallSkins.asset` の空き行。`Badge` で探し、旧規約の `BallTex_NTS-{DbNum}.png` も拾う。手貼り済みの行は触らない・冪等）。PNG を足したら実行するだけ。個別に上書きしたいときだけ Inspector で。UV は `LotteryBallKit` の `BallUV_Template`（球面 UV）に合わせる。
   - **確認シーン**: `Assets/Scenes/BallViewScene.unity`（`Tools > NTsLoto > Build Ball View Scene` で生成）。球 1 個だけ置いて `BallSkinViewer` で番号・スロットを切り替え、姿勢を生のクォータニオン（`pose`）、角速度を `spinAxis` × `spinDegPerSec` [deg/s] で指定する。Play すると `pose` が積分されて現在姿勢の読み取り値になる。Play 中は IMGUI（左＝貼り済みボール一覧・◀ ▶、右上＝姿勢/ω フォーム（xyzw ⇄ Euler ZXY、Apply / Enter で置換・ω は触らない）、右下＝正規化済み読み取り値）。`showAllBalls || Debug.isDebugBuild` のとき一覧に All/Skinned トグル。初期姿勢 `DefaultPose = Euler(-70,180,0)`＝顔正面・俯瞰 20°（FBX は identity で顔が −Y 極・耳が +Z。実測 2026-09-06）、初期 ω=0、Reset で戻す。永続化なし。
   - `BallSkinTable.Apply()` は **`SetCharacterTexture` → `Apply()` の順**（2026-09-06）。`NumberBall.Apply()` は `rend==null` だと黙って return する＝エディタで生成した直後（Awake 前）は番号デカールが乗らない。`SetCharacterTexture` が Renderer を取り直すので先に呼ぶ。逆順にすると本体テクスチャはあるのに番号が 0 のままになる。
 - 球番号とキャラの対応（別ボール 0→000(チトセ)・10→ディケ・2→バイナ・33→トレッド・64→ゼフィア・81→9×9(クック)、ロトの 2→2(ツグ)・10→10(ミツル)、他は番号通り）は User 指定（2026-09-03）。9x9 は Progress が notProceeded のため公開まで名前は出ない（公開基準は変えない）。`BallSkinTable.StreakOverrides` と `Assets/Data/BallSkins.asset` の両方を変えないと食い違う（asset は既存行を保持する）。

@@ -102,9 +102,11 @@ namespace NTsLotteryEngine.EditorTools
             foreach (var s in done)
             {
                 viewer.slot = s.slot; viewer.number = s.number; viewer.ApplySkin();
-                var file = $"ball_{s.slot}_{s.DbNum}.png";
+                var badge = s.Badge;   // Num_Badge（DbNum とは別。別ボール 2 = バイナは 2B）
+                var file = $"ball_{s.slot}_{badge}.png";
                 Shot(cam, file, 320, 320);
-                rows.AppendLine($"| <img src=\"{Dir}/{file}\" width=\"96\"> | {(s.slot == BallSlot.Drum ? "ロト" : "別ボール")} | {s.number} | `{s.DbNum}` | `BallTex_NTS-{s.DbNum}.png` |");
+                var texFile = Path.GetFileName(AssetDatabase.GetAssetPath(s.texture));   // 実際に貼られているファイル（手貼りの上書きも正しく出る）
+                rows.AppendLine($"| <img src=\"{Dir}/{file}\" width=\"96\"> | {(s.slot == BallSlot.Drum ? "ロト" : "別ボール")} | {s.number} | `{badge}` | `{texFile}` |");
             }
             viewer.slot = (BallSlot)slot; viewer.number = number; viewer.ApplySkin();
 

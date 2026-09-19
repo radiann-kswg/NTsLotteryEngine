@@ -10,7 +10,7 @@ namespace NTsLotteryEngine.EditorTools
     /// ボールテクスチャ確認シーンの生成（冪等）。Tools &gt; NTsLoto &gt; Build Ball View Scene。
     /// 球 1 個＋カメラ＋ライトだけ。姿勢・角速度は BallSkinViewer に生のクォータニオンで指定する。
     /// ついでに Assets/Textures/BallSkins/BallTex_NTS-{Num_Badge}.png を BallSkins.asset の空き行へ割り当てる
-    /// （命名規約は同フォルダの README.md。手貼り済みの行は触らない）。
+    /// （命名規約は同フォルダの README.md。Num_Badge は BallSkin.Badge で、旧名 BallTex_NTS-{DbNum}.png も拾う。手貼り済みの行は触らない）。
     /// </summary>
     public static class BallViewSceneBuilder
     {
@@ -68,16 +68,20 @@ namespace NTsLotteryEngine.EditorTools
         }
 
         /// <summary>空の行だけ命名規約の PNG で埋める（冪等・手貼りは保持）。割り当てた行数を返す。</summary>
+        /// <remarks>名前は Num_Badge（別ボール 2 = バイナは BallTex_NTS-2B.png）が正。DbNum（2-alt）名は旧規約の互換。</remarks>
         static int LinkTextures(BallSkinTable table)
         {
             int n = 0;
             foreach (var s in table.skins)
             {
                 if (s.texture) continue;
-                var tex = AssetDatabase.LoadAssetAtPath<Texture2D>($"{SkinDir}/BallTex_NTS-{s.DbNum}.png");
+                Texture2D tex = null;
+                foreach (var key in new[] { s.Badge, s.DbNum })
+                    if (!tex) tex = AssetDatabase.LoadAssetAtPath<Texture2D>($"{SkinDir}/BallTex_NTS-{key}.png");
                 if (!tex) continue;
                 s.texture = tex;
                 n++;
+                Debug.Log($"[BallViewSceneBuilder] link {s.slot} {s.number} ← {tex.name}");
             }
             if (n > 0) { EditorUtility.SetDirty(table); AssetDatabase.SaveAssets(); }
             return n;

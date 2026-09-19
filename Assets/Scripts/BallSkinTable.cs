@@ -22,6 +22,13 @@ namespace NTsLotteryEngine
         public string dbNum = "";
 
         public string DbNum => string.IsNullOrEmpty(dbNum) ? number.ToString() : dbNum;
+
+        /// <summary>
+        /// 創作DB の Num_Badge（テクスチャのファイル名 BallTex_NTS-{Num_Badge}.png に使う）。DbNum（= Num）とは別物で、
+        /// 番号どおりの球・000・3x11・9x9 は一致するが、別ボールの 2-alt→2B（バイナ）・10-alt→10D・64-sxp→64XP は違う（2026-09-19）。
+        /// 未公開・DB 未取得で引けないときは DbNum。
+        /// </summary>
+        public string Badge => CreationsDb.Find(db, DbNum)?.badge is { Length: > 0 } b ? b : DbNum;
     }
 
     /// <summary>
