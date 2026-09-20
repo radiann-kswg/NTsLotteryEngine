@@ -1,4 +1,4 @@
-# HANDOFF.md — 次セッションへの引継ぎ（2026-09-04 時点・制作その４）
+# HANDOFF.md — 次セッションへの引継ぎ（2026-09-20 時点・制作その５＝観賞ビルド。抽選側は 2026-09-04 のまま）
 
 > 読む順: `AGENTS.md`（運用・罠）→ `docs/DESIGN.md`（仕様・機構）→ 本ファイル（いまの状態と次にやること）。
 
@@ -34,6 +34,12 @@
 - **篩の公平性**: 2〜11 は番号順に生成すると最後に生成した球（11）が 6 回連続で最初に着いた（皿の桟が平らで静止した球が皿と一緒に回り続け、動いている球だけが落ちる）。皿の桟を屋根形（`sieves.*.ring_roof` 0.02）にし、投入位置と生成順を毎回シャッフル（AGENTS.md 罠23・25）。直後の Play は 7（slot 8）が勝ち。外周の slot が有利な傾向は残るかもしれないので、次の数回の結果を見ること。
 - ブランチ `develop`。今日の変更は未コミット（User が Windows 側で）。
 - 別ボール 81 は 9×9(クック)（Progress notProceeded のため名前は出ない）。テクスチャは User が Inspector で貼る。
+
+## 1.5 観賞ビルド NTsLotoWatch（2026-09-20・制作その５）
+
+- `docs/WATCH.md` の MUST をエディタで確認済み（両モードとも球が周回・自動送り・FPS ログ）。Linux ビルド成功（132MB）→ USB カセット `F:\UnityGames\NTsLotoWatch\` に配置済み。**Pi 実機での確認は未実施**（User が挿して起動 → FPS・音・パッドを報告する段取り）。
+- 未コミットのまま残す差分: `ProjectSettings.asset` の `organizationId` / `projectName`（Unity の自動書き換え・User 判断）と `UnityConnectSettings.asset`、`BallViewScene.unity` の fileID 振り直し。Watch ビルドが変える `defaultScreen 1280×720` と Linux の `OpenGLCore` はビルドのたびに `WatchBuild` が当て直すのでコミット不要。
+- 次の手: Pi で avg 30 に届かなければ `Pi_RPAsset` の `renderScale` を 0.8 へ／塔モードのカメラ（外周 1.9m から中を覗く。ボウルの壁越しになる区間がある）の見直し／Pi でスキンが左右反転する件（NTsSphereChaser で未解決）を BallView の既定姿勢で見比べる。
 
 ## 2. 次にやること（優先順）
 

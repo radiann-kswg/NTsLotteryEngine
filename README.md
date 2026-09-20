@@ -90,16 +90,18 @@ PNG を置いて `Tools > NTsLoto > Build Ball View Scene` を回すとファイ
 Assets/Scripts/            LotoRules（確率の正本）/ LotoDirector（進行）/ SieveMachine / KuruunTower /
                            BallSkinTable / CreationsDb / DerailWatch / BallTrigger / Rotator /
                            ProcMesh + TubeWall + DiscPlate（配管の生成メッシュ）/ BallSkinViewer
-Assets/Scripts/Editor/     LotoSceneBuilder（シーン生成・冪等）/ BallViewSceneBuilder / LotoMonteCarlo /
-                           LotoPlay（+LotoPlayLoop）/ LotoRecord / LotoCapture / LotoBuild / GitTools
-Assets/Models/             Kuruun_Bowl / Kuruun_Collector_{p10,p18,p32,p50,p53,p6of88} / Sieve_Dish_{U,L}（Blender 生成 FBX）
-Assets/Scenes/             LotoScene（抽選本体）/ BallViewScene（ボールテクスチャ確認）
+Assets/Scripts/Watch/      観賞ビルド NTsLotoWatch（docs/WATCH.md）: WatchDirector / WatchCoaster / WatchAudio / WatchInput / WatchBoot / TitleMenu
+Assets/Scripts/Editor/     LotoSceneBuilder（シーン生成・冪等）/ BallViewSceneBuilder / WatchSceneBuilder / LotoMonteCarlo /
+                           LotoPlay（+LotoPlayLoop）/ LotoRecord / LotoCapture / LotoBuild / WatchBuild / GitTools
+Assets/Models/             Kuruun_Bowl / Kuruun_Collector_{p10,p18,p32,p50,p53,p6of88} / Sieve_Dish_{U,L} / Coaster_Helix（Blender 生成 FBX）
+Assets/Scenes/             LotoScene（抽選本体）/ BallViewScene（ボールテクスチャ確認）/ TitleScene + WatchScene（観賞ビルド）
+Assets/Resources/          SFX/（RSC の効果音・CC BY 4.0）/ Pi_RPAsset（Raspberry Pi 用 URP 設定）
 Assets/Data/               BallSkins.asset（球ごとのテクスチャ + 創作DBリンク）
 Assets/Textures/BallSkins/ ボールテクスチャ PNG（CC BY-NC 4.0）
 Assets/Materials/Generated/ ビルダーが生成するマテリアル（Glass / Frame / Rail / Bowl / Slick）
 Assets/Fonts/              PenchantManufacture.otf（HUD 用・サブモジュールから同期コピー。CJK 未収録）
-BlenderSources/            gen_kuruun.py + kuruun_params.json（抽選機メッシュの原本）/ Kuruun.blend
-docs/                      DESIGN.md（仕様・機構の正本）/ HANDOFF.md（いまの状態）/ raspberrypi-handoff.md / captures/
+BlenderSources/            gen_kuruun.py + kuruun_params.json（抽選機メッシュの原本）/ gen_coaster.py（観賞用コースター）/ Kuruun.blend
+docs/                      DESIGN.md（仕様・機構の正本）/ HANDOFF.md（いまの状態）/ WATCH.md（観賞ビルドの要件）/ raspberrypi-handoff.md / captures/
 scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
 ```
 
@@ -128,6 +130,14 @@ scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
 
 ビルド: `Tools > NTsLoto > Build Linux x64 (RPi)` / `Build Windows x64`。
 起動引数: `-seed N` / `-out path` / `-speed x` / `-quit`。
+
+### 観賞ビルド「NTsLotoWatch」
+
+収録済みのボールテクスチャを 1 球ずつ転がして眺めるだけのアプリ（[docs/WATCH.md](docs/WATCH.md)）。`RasPiOS_UnityConsole`（Raspberry Pi 4B）で 30FPS を目標。
+`Tools > NTsLoto > Build Watch Scene` / `Build Title Scene` でシーンを生成し、`Build Watch Linux x64 (RPi)` で `Builds/Watch/` へ。
+タイトル → Watch（塔 ⇄ 螺旋コースター。LB/RB で球・X で機械・A で自動送り・Y で音・Select でヘルプ・Start/B で戻る）／ Ball View（LB/RB で球・R/A で回転）。
+
+![観賞ビルド（コースター）](docs/captures/watch_shot.png)
 
 ## ライセンス
 

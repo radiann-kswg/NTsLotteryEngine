@@ -80,3 +80,6 @@ crashlytics-build.properties
 # IDE 生成物
 *.slnx
 /probe*.png
+# 観賞ビルドが書き出す創作DB の公開レコード（WatchBuild.ExportCreationsDb。ビルドのたびに作る）
+/[Aa]ssets/[Ss]treamingAssets/
+/[Aa]ssets/[Ss]treamingAssets.meta

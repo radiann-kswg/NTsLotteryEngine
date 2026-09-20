@@ -114,6 +114,9 @@
 - `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。FBX の配置・配管・カメラ・スキン表。
 - `Assets/Scripts/Editor/LotoMonteCarlo.cs` … `Tools > NTsLoto > Monte Carlo > Run/Stop`。静的フィールド（variant / trials / parallel / bowlRpm / entryR / entryHeight / entryTangential）を RunCommand で書き換えて実行。結果 `Output/mc_<variant>.json`。
 - `Assets/Scripts/Editor/LotoCapture.cs` … `Tools > NTsLoto > Capture Preview` / `Capture Ball Skins`。README 用の PNG を `docs/captures/` に書き、ボールテクスチャの収録状況表を README のマーカー間へ書き戻す（4 章 6〜9）。
+- `Assets/Scripts/Watch/` … 観賞ビルド NTsLotoWatch（7.5 章・`docs/WATCH.md`）。`WatchDirector`（進行・追従カメラ・HUD・FPS ログ）/ `WatchCoaster`（螺旋樋＋リフト）/ `WatchAudio`（RSC の物理音の移植）/ `WatchInput`（旧 Input Manager・Xbox 配列）/ `WatchBoot`（30FPS・Pi 用 URP）/ `TitleMenu`。
+- `Assets/Scripts/Editor/WatchSceneBuilder.cs` … `Tools > NTsLoto > Build Watch Scene` / `Build Title Scene`（冪等）＋ `Assets/Resources/Pi_RPAsset.asset` の生成。`WatchBuild.cs` … `Build Watch Linux x64 (RPi)` / `Build Watch Windows x64` / `Export Creations DB (StreamingAssets)`。
+- `BlenderSources/gen_coaster.py` … 観賞用コースターの螺旋樋 `Assets/Models/Coaster_Helix.fbx`（寸法は `WatchCoaster.cs` の定数と一致させる）。
 - `Assets/Scripts/Editor/LotoRecord.cs` … `Tools > NTsLoto > Play + Record`（Recorder → `Recordings/*.mp4`）。`LotoPlay.cs` … Play/Stop と **`LotoPlayLoop`**（Play を N 回繰り返して結果 JSON を退避。実機の当落統計用）。`LotoBuild.cs` … Linux/Windows ビルド。
 - `BlenderSources/gen_kuruun.py` + `kuruun_params.json` … 抽選機メッシュの原本。`Assets/Models/Kuruun_Bowl.fbx` / `Kuruun_Collector_<variant>.fbx` / `Sieve_Dish_L.fbx` / `Sieve_Dish_U.fbx`。
 
@@ -122,6 +125,20 @@
 - ビルドターゲット: **StandaloneLinux64**（Mono バックエンド。box64 互換性優先で IL2CPP は使わない）。
 - メニュー `Tools > NTsLoto > Build Linux x64 (RPi)` またはCLIから `NTsLotteryEngine.EditorTools.LotoBuild.BuildLinux64`。出力は `Builds/Linux/`（git管理外）。
 - 起動スクリプト `scripts/rpi/run-loto.sh`。引き渡し内容は `docs/raspberrypi-handoff.md`。動画化・Misskey 投稿は本リポジトリの管轄外（Bot 側が JSON と画面録画を扱う）。
+
+## 7.5 観賞ビルド NTsLotoWatch（2026-09-20）
+
+- 要件と受け入れ条件は `docs/WATCH.md`。抽選ビルド（`LotoScene` / `LotoBuild`）と MC には影響させない。**新規プロジェクト・新規サブモジュールを作らない**（User 鉄則）。
+- シーンはコード生成: `Tools > NTsLoto > Build Watch Scene`（塔 = `LotoSceneBuilder.BuildTower` の流用・`Streaks[3]`＝ball 2・根の名前は `WatchTower`／コースター = `Coaster_Helix.fbx`＋トレイ＋柱）と `Build Title Scene`。3 シーン（Title / Watch / BallView）が Build Settings に追加される。
+- ビルド: `Tools > NTsLoto > Build Watch Linux x64 (RPi)` → `Builds/Watch/NTsLotoWatch.x86_64`（Mono・**OpenGLCore 固定**・1280×720）。ビルド前に創作DB の公開レコードだけを `Assets/StreamingAssets/CreationsDB/`（git 管轄外）へ書き出す＝球の名前はビルドに焼き、未公開は入れない。
+- USB カセット: `F:\UnityGames\NTsLotoWatch\` にビルド一式＋`game.json`（表示名 `NTs Loto Watch`）＋`icon.png`（`*_BackUpThisFolder_*` は除外・`robocopy /E /XD`）。UnityConsole は導入済みの同名アプリをスキップする。
+- 性能の受け入れ: `Player.log` の `[Watch] fps avg/min`（10 秒ごと）。Pi 4B で avg ≥ 30。実行時は `WatchBoot` が `targetFrameRate=30`・vSync 0・`Pi_RPAsset`（影／HDR／MSAA／深度・不透明テクスチャなし）を当てる（エディタは PC 設定のまま）。
+- 罠:
+  1. コースターのトレイは出口の**接線上**に、接線を向けて置く（`LookRotation(Tangent(EndDeg))`・手前の壁なし）。軸に沿った位置に軸平行で置いたら球が壁に当たって外へ逃げた。
+  2. 樋の球は `linearDamping`（`WatchCoaster.damping`・既定 0.5）で終端 ≈1.4 m/s に抑える。減衰なしだと 4 turn で 4.5 m/s になり U 字（半円）から飛び出す。`KuruunTower.Run` が塔用の値に戻すので塔には効かない。
+  3. `BallUtil.Carry`（isKinematic の往復）のあとは `collisionDetectionMode` を `ContinuousDynamic` に戻す（5 章 罠 3）。搬送中に球／機械を切り替えたときは `WatchDirector.Loop` が isKinematic / detectCollisions を戻す。
+  4. FBX の角度規約は塔と同じ（Unity 角 = Blender θ + 180°）。`WatchSceneBuilder` が入口の床をレイキャストで実測してログに出す（期待 1.492）。
+  5. 音モードは All / Mute の 2 値（BGM を入れていないので RSC の SfxOnly は無い）。
 
 ## 8. 創作内容の取り扱い
 

@@ -174,7 +174,7 @@ namespace NTsLotteryEngine.EditorTools
 
         static float ConeY(float r) => ConeH * Mathf.Clamp01((r - ConeR0) / (BowlRimR - ConeR0));   // 穴リング面からのコーン高さ
 
-        static KuruunTower BuildTower(Transform parent, int index, Vector3 pos, Material bowlMat, Material frame, Material rail, Material glass)
+        internal static KuruunTower BuildTower(Transform parent, int index, Vector3 pos, Material bowlMat, Material frame, Material rail, Material glass)
         {
             var s = LotoRules.Streaks[index];
             int n = s.max;
@@ -243,7 +243,7 @@ namespace NTsLotteryEngine.EditorTools
             return k;
         }
 
-        static GameObject Fbx(GameObject prefab, Transform parent, string name, Vector3 localPos, Material mat)
+        internal static GameObject Fbx(GameObject prefab, Transform parent, string name, Vector3 localPos, Material mat)
         {
             var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
             go.name = name; go.transform.localPosition = localPos;
@@ -274,7 +274,7 @@ namespace NTsLotteryEngine.EditorTools
         }
 
         // ---- helpers ----
-        static GameObject Box(Transform parent, string name, Vector3 localPos, Vector3 size, Material mat)
+        internal static GameObject Box(Transform parent, string name, Vector3 localPos, Vector3 size, Material mat)
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube); go.name = name;
             go.transform.SetParent(parent, false); go.transform.localPosition = localPos; go.transform.localScale = size;
@@ -283,7 +283,7 @@ namespace NTsLotteryEngine.EditorTools
         }
 
         // 見た目だけの円柱（Cylinder のカプセルコライダ罠を避けるためコライダは外す）
-        static GameObject Cylinder(Transform parent, string name, Vector3 localPos, float radius, float height, Material mat)
+        internal static GameObject Cylinder(Transform parent, string name, Vector3 localPos, float radius, float height, Material mat)
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cylinder); go.name = name;
             Object.DestroyImmediate(go.GetComponent<Collider>());
@@ -343,7 +343,7 @@ namespace NTsLotteryEngine.EditorTools
         }
 
         // Slick: 摩擦ゼロ・反発ゼロ（bounceCombine=Minimum で球側の 0.6 に勝つ）。フラップの上で跳ねた球が振り分けと逆側へ落ちる（81 の塔で当たり判定ズレ 2026-09-03）
-        static PhysicsMaterial Slick() => PhysMat("Slick", 0f, PhysicsMaterialCombine.Minimum, 0f, PhysicsMaterialCombine.Minimum);
+        internal static PhysicsMaterial Slick() => PhysMat("Slick", 0f, PhysicsMaterialCombine.Minimum, 0f, PhysicsMaterialCombine.Minimum);
 
         static PhysicsMaterial PhysMat(string name, float friction, PhysicsMaterialCombine frictionCombine, float bounce, PhysicsMaterialCombine bounceCombine)
         {
@@ -355,7 +355,7 @@ namespace NTsLotteryEngine.EditorTools
             return pm;
         }
 
-        static Material Mat(string name, Color color, bool transparent = false)
+        internal static Material Mat(string name, Color color, bool transparent = false)
         {
             string path = $"{MatDir}/{name}.mat";
             var m = AssetDatabase.LoadAssetAtPath<Material>(path);

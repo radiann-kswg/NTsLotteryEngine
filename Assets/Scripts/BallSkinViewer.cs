@@ -48,7 +48,7 @@ namespace NTsLotteryEngine
         void OnEnable()
         {
             ApplySkin(); ApplyPose();
-            if (Application.isPlaying) { RebuildRows(); FillPoseBuf(); FillOmegaBuf(); }
+            if (Application.isPlaying) { Watch.WatchBoot.Apply(); RebuildRows(); FillPoseBuf(); FillOmegaBuf(); }
         }
         void OnValidate() { ApplySkin(); ApplyPose(); }
 
@@ -56,6 +56,13 @@ namespace NTsLotteryEngine
         {
             // Inspector 以外（スクリプト・MCP）からフィールドを書き換えると OnValidate が飛ばないので毎フレーム見張る
             if (number != appliedNumber || slot != appliedSlot || skins != appliedSkins) ApplySkin();
+            if (Application.isPlaying)
+            {   // 観賞ビルド（docs/WATCH.md S2）: LB/RB ←→ で球、A / R で回転の on/off、B / Start / Esc でタイトルへ
+                if (Watch.WatchInput.Prev) Select(rows.FindIndex(r => r.slot == slot && r.number == number) - 1);
+                if (Watch.WatchInput.Next) Select(rows.FindIndex(r => r.slot == slot && r.number == number) + 1);
+                if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton0)) { spinDegPerSec = spinDegPerSec == 0f ? 45f : 0f; spinAxis = Vector3.up; FillOmegaBuf(); }
+                if (Watch.WatchInput.Back) Watch.TitleMenu.Back();
+            }
             if (Application.isPlaying && spinDegPerSec != 0f && spinAxis.sqrMagnitude > 1e-6f)
                 pose = Quaternion.AngleAxis(spinDegPerSec * Time.deltaTime, spinAxis.normalized) * pose;
             ApplyPose();

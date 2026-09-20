@@ -8,5 +8,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LotoScene.unity
     guid: 3a1f0c5e9b7d4e6f8a2c1d0b9e8f7a65
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 73c492d267bffac4c8a9026d9d6305e9
+  - enabled: 1
+    path: Assets/Scenes/BallViewScene.unity
+    guid: 05f7a3df5bca998439647b2b35a97e86
+  - enabled: 1
+    path: Assets/Scenes/WatchScene.unity
+    guid: f93d9a89c6c2d9f41a0e154054357649
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

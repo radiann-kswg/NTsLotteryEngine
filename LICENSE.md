@@ -17,6 +17,8 @@
 - **LotteryBallKit**（番号ボール: モデル・番号アトラス・`NumberBall.cs`）… サブモジュール `LotteryBallKit/`（https://github.com/radiann-kswg/LotteryBallKit ）を UPM `file:` 依存で取り込み。番号アトラスの書体は PenchantManufacture 由来。
   クレジット例: `LotteryBallKit by RadianN_kswg / ラジアン（柏木主税） — CC BY 4.0`
 - **RouletteSphereChaser**（https://github.com/radiann-kswg/RouletteSphereChaser ）… クルーンのボウル形状（`KuruunBowl` の既定寸法）と設計知見（`AGENTS.md` 3章の罠）を参考にした。メッシュ資産そのものは同梱していない（回転体を `ProcMesh.Bowl` で生成）。
+  観賞ビルドの効果音 `Assets/Resources/SFX/`（`Hit_1..4.wav` / `Lift_Loop.wav`）は同リポジトリ `Assets/Resources/SFX/` のコピー（CC BY 4.0）。
+  クレジット例: `RouletteSphereChaser by RadianN_kswg / ラジアン（柏木主税） — CC BY 4.0`
 - **PenchantManufacture**（フォント／画像素材。サブモジュール `PenchantManufacture_ImageAssets/`、番号アトラス経由でも間接的に含む）… https://github.com/radiann-kswg/PenchantManufacture_ImageAssets — CC BY 4.0
 
 ## サブモジュール `100BeautiesLab_CreationsDB/`
