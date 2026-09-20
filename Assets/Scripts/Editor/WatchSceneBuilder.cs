@@ -127,7 +127,9 @@ namespace NTsLotteryEngine.EditorTools
                 if (p == null) { Debug.LogWarning($"[PiPipeline] {k} が無い"); continue; }
                 if (p.propertyType == SerializedPropertyType.Boolean) p.boolValue = v != 0; else p.intValue = v;
             }
-            so.FindProperty("m_RenderScale").floatValue = 1f;
+            // Pi 4B の V3D はフィルレート律速（2026-09-20 実測: 1280x720 で 5.1fps / 640x360 で 18.9fps・GPU render 99.9%・CPU は 3 割）。
+            // 内部解像度だけ下げて出力は 1280x720 のまま（0.5 = 640x360 相当で描いて引き伸ばす）。
+            so.FindProperty("m_RenderScale").floatValue = 0.5f;
             so.FindProperty("m_ShadowDistance").floatValue = 0f;
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(a); AssetDatabase.SaveAssets();
