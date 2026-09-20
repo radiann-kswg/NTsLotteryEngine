@@ -33,3 +33,37 @@
 1. エディタ: `Tools > NTsLoto > Build Watch Scene`（冪等）→ Play で両モード・自動送り・音。`recompile_status` の errors 0。
 2. `Tools > NTsLoto > Build Watch Linux x64 (RPi)` → `Builds/Watch/NTsLotoWatch.x86_64`（OpenGLCore 固定・Mono）。
 3. `F:\UnityGames\NTsLotoWatch\` にビルド一式＋`game.json`＋`icon.png` を置く（`*_BackUpThisFolder_ButDontShipItWithYourGame` は除外）→ Pi に挿す → User が起動して FPS ログ・音・パッドを報告。
+
+## 5. 実機での所見（2026-09-20・Pi 4B / RasPiOS_UnityConsole）
+
+USB カセットで導入した版を仮想パッド（uinput の Xbox360 相当）で 1 入力ずつ検証した結果。
+
+| 項目 | 結果 |
+| --- | --- |
+| ボタン A / B / X / Y / LB / RB / Select / Start | 効く（`ucon-run-app` の `SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS=1` が前提） |
+| 左スティック | 効く（既定の `Horizontal` / `Vertical`） |
+| 十字キー | **効かなかった** → `InputManager` に `WatchDPadX` / `WatchDPadY` を足して対応（`WatchInput` が両方を読む） |
+| FPS（M3 の受け入れ条件 avg ≥ 30 / min ≥ 20） | **avg 5.3 / min 3.2（Tower・1280×720・70 秒）** … 未達。`temp=45.7'C` / `throttled=0x0` なので熱でも電源でもない |
+
+- Linux(SDL) の十字キーは軸ではなく**ハット**で来る。Unity では *7th axis / 8th axis*（`InputManager` の `axis: 6` / `7`）に現れ、
+  既定の `Horizontal` / `Vertical`（スティック）には乗らない。
+- ハットの縦は Unity の生値が**下で +1**（evdev と同じ向き）。既定の `Vertical`（スティック）と同じ向きにそろえるには
+  `WatchDPadY` は `invert: 1` が要る。`invert: 0` にすると十字キー↓でカーソルが上がる（両方を実機で試して確認）。
+- 画面写真 1 枚で向きを判断しないこと。項目 3 つのメニューは**巻き戻る**ので、押下が 1 回落ちただけで逆向きに見える。
+  「押さない状態の写真を続けて 3 枚撮る」（`retest-dpad2.py`）と、二重発火と取りこぼしを切り分けられる。
+- **FPS が 5 のままだと軸入力は取りこぼす**。軸（十字キー・スティック）は毎フレームのポーリングなので、
+  1 フレーム 200ms の間に押して離すと拾われない。ボタンはイベントなので落ちにくい。
+  「パッドが反応しない」という体感の半分はここから来ている。M3 を満たすまでは操作感も直らない。
+
+### 実機試験の道具（`WSLSettings/scripts`）
+
+| スクリプト | 役割 |
+| --- | --- |
+| `deploy-lotowatch.sh` | `C:\Users\Public\unitycon\UnityGames\NTsLotoWatch` を rsync → `ucon-install`（カセットと同じ経路） |
+| `verify-lotowatch-input.py` | 仮想パッドで 1 入力ずつ押し、各段の画面を `/tmp/v-*.png` に回収 |
+| `lotowatch-fps-test.py` | Watch を 70 秒回して `[Watch] fps` を採る |
+| `retest-dpad.py` | 十字キーの向きだけを見る最小の試験 |
+
+- ランチャーは「一覧 → 詳細パネル（起動 / バックアップ / 削除 / 戻る）」の 2 段。前の試験の続きだと詳細パネルに居るので、
+  試験は毎回 `systemctl restart unitycon-launcher` から始める（固まったときの復帰も同じ）。
+- `pkill -f` でゲームを畳むときは**先頭アンカー必須**（`^/var/lib/unityconsole/apps/<App>/…`）。無いと ssh 自身の `bash -c` を殺して無出力 exit 1 になる。
