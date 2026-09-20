@@ -359,11 +359,11 @@ namespace NTsLotteryEngine.EditorTools
         {
             string path = $"{MatDir}/{name}.mat";
             var m = AssetDatabase.LoadAssetAtPath<Material>(path);
-            if (m) { m.SetColor("_BaseColor", color); m.SetFloat("_Smoothness", transparent ? 0.15f : 0.3f); EditorUtility.SetDirty(m); return m; }   // 色・質感はここが正（再ビルドで追従）
+            if (m) { m.SetColor("_BaseColor", color); m.SetFloat("_Smoothness", transparent ? 0.15f : 0.3f); SetCull(m, transparent); EditorUtility.SetDirty(m); return m; }   // 色・質感はここが正（再ビルドで追従）
             Directory.CreateDirectory(MatDir);
             m = new Material(Shader.Find("Universal Render Pipeline/Lit"));
             m.SetColor("_BaseColor", color);
-            m.SetFloat("_Cull", (float)CullMode.Off);   // 生成メッシュの巻き方向に依存しない
+            SetCull(m, transparent);
             m.SetFloat("_Smoothness", transparent ? 0.15f : 0.3f);   // 0.9 だとガラス筒がハイライトで白飛びして中の球が見えない。0.5 でも近接カメラでは白い
             if (transparent)
             {
@@ -374,6 +374,18 @@ namespace NTsLotteryEngine.EditorTools
             }
             AssetDatabase.CreateAsset(m, path);
             return m;
+        }
+
+        /// <summary>
+        /// 不透明は Cull Off（生成メッシュの巻き方向に依存しない）。透明は Cull Back。
+        /// 透明を両面描くと同じ画素を 2 回ブレンドすることになり、Pi 4B の V3D では塗り面積がそのまま frame time に出る
+        /// （2026-09-20 実測: 観賞ビルドは GPU の render が 99.9% 張り付きのフィルレート律速。docs/WATCH.md 5 章）。
+        /// ガラスは筒・箱・樋なので裏面を落としても中の球は見える。
+        /// </summary>
+        static void SetCull(Material m, bool transparent)
+        {
+            m.SetFloat("_Cull", (float)(transparent ? CullMode.Back : CullMode.Off));
+            m.doubleSidedGI = !transparent;
         }
     }
 }
