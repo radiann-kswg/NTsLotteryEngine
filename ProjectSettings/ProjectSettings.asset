@@ -855,7 +855,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: LotteryBallKit
-  metroPackageVersion: 
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -863,7 +863,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: LotteryBallKit
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: NTsLotteryEngine
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
@@ -935,8 +935,8 @@ PlayerSettings:
   cloudProjectId: 2a5e339a-22dc-4bd8-a54f-367068bbf5f4
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: NTsLotoEngine
-  organizationId: 100beautieslab
+  projectName: NTsLotteryEngine
+  organizationId: f338c3bd-4e8c-4afe-0000-0e406640703d
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
