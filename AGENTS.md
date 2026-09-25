@@ -19,10 +19,12 @@
 
 | ブランチ | 役割 | AIエージェントの扱い |
 | --- | --- | --- |
-| `develop` | **Claude のバイブコーディング作業用ブランチ（既定）** | 通常の作業・コミットはすべてここで行う |
+| `develop` | **Claude のバイブコーディング作業用ブランチ（既定）** | Claude の作業・コミットを行う |
+| `develop-codex` | **Codex の開発・Blender MCP モデリング作業用ブランチ（既定）** | Codex のコード・モデル・設定・ドキュメントの変更を行う |
 | `main` | 安定版・統合ブランチ | 直接コミットしての作業は禁止。マージは User が実施 |
 
-- 作業開始前に `git branch --show-current` で `develop` にいることを確認する。push は User の明示指示があった場合のみ `develop` に対して行う。
+- 作業開始前に対象リポジトリで `git branch --show-current` と差分を確認し、上表のエージェント別ブランチを使う。`develop-codex` が未作成なら `develop` から作成する。既存の未コミット変更を保持し、別エージェントの作業は同じチェックアウトで同時に行わない。push は User の明示指示がある場合のみ担当ブランチへ行い、ブランチ間の統合は User の指示に従う。
+- **Codex Desktop の Windows PowerShell では Windows の `git` を直接使う**。以下の Linux Cowork 固有の制限と区別する。読み取りは `git --no-optional-locks` を使い、コミット時は今回の対象ファイルを明示して add する。
 - **git の書き込み（add / commit / checkout / submodule / stash など）は Cowork の Linux サンドボックス（bash）から行わない。** サンドボックスはマウント上の `.git/*.lock` を unlink できず（rename は可）、残骸が次の git 操作を止める（本リポジトリで多発。`.git/stale-locks/` はその退避跡）。書き込みは Windows 側で動く Unity 経由:
   `Unity_RunCommand` → `GitTools.RunGit("add -A")` / `GitTools.CommitAll()`（`Assets/Scripts/Editor/GitTools.cs`。RouletteSphereChaser と同一。60 秒より古い `.git/*.lock*` と `.git/stale-locks/` は実行前に自動で掃除する）。
   サンドボックスの `git` は `status` / `log` / `diff` の**読み取りだけ**。Unity MCP が落ちているときだけ親フォルダの `scripts/g.sh <repo> <git args>`（lock を退避するだけで残骸は増える）。溜まった退避先は User が `scripts/clean-git-locks.ps1` で消す。
@@ -35,6 +37,14 @@
 - リポジトリ単体で開く場合の接続設定は `.mcp.json` / `.vscode/mcp.json`（Unity公式リレー）。
 - 作業完了前に、MCP経由で **Console のエラー・警告を確認**する（`Unity_ReadConsole`）。
 - **`unity-mcp` がクラウド側で `no_tools` / failed のまま出ないときは Unity CLI で代替する**（2026-09-19 に `com.unity.pipeline` 0.6.0-exp.1 を導入。NTsMedalGame と同版）。`unity status --format json` で `state: ready` → `unity command menu --path "Tools/NTsLoto/…" --project-path "<本リポジトリ>" --json --no-banner` / `console --since <cursor>` / `clear_console` / `list_open_scenes` / `recompile` など。手順と罠は NTsMedalGame `AGENTS.md` 罠 23。manifest を書き換えた直後は **Unity にフォーカスが当たるまでパッケージが解決されない**（User にクリックしてもらう）。git は Desktop Commander の `start_process` で Windows 側の `git` を直接（lock はサンドボックス固有なので残らない）。
+
+### 3.1 Codex と Blender MCP
+
+- Codex でも Blender MCP でモデリング・既存メッシュの修正・FBX 書き出しを行う。接続設定の正本はユーザーの `~/.codex/config.toml` の `mcp_servers.blender`。Claude 用 `.mcp.json` とは別に登録し、接続先は既存の Blender Lab 公式 MCP とアドオンを使う。
+- 編集前に `get_blendfile_summary_path_info` / `get_objects_summary` で開いているファイルとシーンを確認する。未保存の別作業を保護し、Claude と Codex から同じ Blender シーンを同時編集しない。接続できない場合は Blender の MCP アドオンの有効化・待受状態を確認する。
+- 形状の正本は1章・6章の `BlenderSources/` 内の生成スクリプトと寸法パラメータ。生成には `execute_blender_code` を使い、**毎回 `REPO` を今回の Codex チェックアウトの絶対パスに設定**してから `exec(compile(open(script, encoding="utf-8").read(), script, "exec"))` を実行する（`script` は `REPO` 配下の対象生成スクリプト）。スクリプトはシーンを消去し得るため、実行前に内容と保存先を確認する。
+- `.blend` と FBX は対象リポジトリの既存出力先へ保存し、原本の変更と生成物を一緒に管理する。Unity MCP は `unityMCP` のインスタンス一覧から対象プロジェクトを確認し、`set_active_instance` で選択してから再インポート・シーン再生成・Console 確認を行う。5章の法線・角度・当選率の検証を適用する。
+- MCP の設定追加後は Codex を再起動してツールを再読み込みする。設定の登録、MCP の接続成功、Unity でのモデル検証は別々に確認して報告する。
 
 ## 4. Git・ファイル運用ルール
 
