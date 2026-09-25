@@ -19,7 +19,7 @@
 ![抽選の様子](docs/captures/preview.gif)
 
 > 画像は `docs/captures/`。撮り直しは `Tools > NTsLoto > Capture Preview`（LotoScene を Play 中）と
-> `Tools > NTsLoto > Capture Ball Skins`（BallViewScene を開いて）。動画は `Tools > NTsLoto > Play + Record`
+> `Tools > NTsLoto > Capture Ball Skins`（BallViewScene を開いて。球ごとの正面・俯瞰の静止画と回転 GIF）。動画は `Tools > NTsLoto > Play + Record`
 > （Unity Recorder → `Recordings/*.mp4`・git 管轄外）を撮って GIF に落とす。運用は [AGENTS.md](AGENTS.md) 4 章。
 
 <br clear="right">
@@ -78,19 +78,32 @@ PNG を置いて `Tools > NTsLoto > Build Ball View Scene` を回すとファイ
 
 <!-- ballskins:start -->
 
-**収録 9 / 106 球**（2026-09-20 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）
+**収録 9 / 106 球**（2026-09-26 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）。区分名をクリックで一覧を開閉。
 
-| | 区分 | 番号 | Num_Badge | ファイル |
-| --- | --- | --- | --- | --- |
-| <img src="docs/captures/ball_Drum_4.png" width="96"> | ロト | 4 | `4` | `BallTex_NTS-4.png` |
-| <img src="docs/captures/ball_Drum_6.png" width="96"> | ロト | 6 | `6` | `BallTex_NTS-6.png` |
-| <img src="docs/captures/ball_Drum_50.png" width="96"> | ロト | 50 | `50` | `BallTex_NTS-50.png` |
-| <img src="docs/captures/ball_Drum_58.png" width="96"> | ロト | 58 | `58` | `BallTex_NTS-58.png` |
-| <img src="docs/captures/ball_Drum_63.png" width="96"> | ロト | 63 | `63` | `BallTex_NTS-63.png` |
-| <img src="docs/captures/ball_Drum_85.png" width="96"> | ロト | 85 | `85` | `BallTex_NTS-85.png` |
-| <img src="docs/captures/ball_Drum_87.png" width="96"> | ロト | 87 | `87` | `BallTex_NTS-87.png` |
-| <img src="docs/captures/ball_Drum_93.png" width="96"> | ロト | 93 | `93` | `BallTex_NTS-93.png` |
-| <img src="docs/captures/ball_Streak_2B.png" width="96"> | 別ボール | 2 | `2B` | `BallTex_NTS-2B.png` |
+<details>
+<summary><b>ロト</b>（8 / 99 球）</summary>
+
+| 正面 | 俯瞰 | 回転 | 番号 | Num_Badge | ファイル |
+| --- | --- | --- | --- | --- | --- |
+| <img src="docs/captures/ball_Drum_4.png" width="96"> | <img src="docs/captures/ball_Drum_4_top.png" width="96"> | <img src="docs/captures/ball_Drum_4.gif" width="96"> | 4 | `4` | `BallTex_NTS-4.png` |
+| <img src="docs/captures/ball_Drum_6.png" width="96"> | <img src="docs/captures/ball_Drum_6_top.png" width="96"> | <img src="docs/captures/ball_Drum_6.gif" width="96"> | 6 | `6` | `BallTex_NTS-6.png` |
+| <img src="docs/captures/ball_Drum_50.png" width="96"> | <img src="docs/captures/ball_Drum_50_top.png" width="96"> | <img src="docs/captures/ball_Drum_50.gif" width="96"> | 50 | `50` | `BallTex_NTS-50.png` |
+| <img src="docs/captures/ball_Drum_58.png" width="96"> | <img src="docs/captures/ball_Drum_58_top.png" width="96"> | <img src="docs/captures/ball_Drum_58.gif" width="96"> | 58 | `58` | `BallTex_NTS-58.png` |
+| <img src="docs/captures/ball_Drum_63.png" width="96"> | <img src="docs/captures/ball_Drum_63_top.png" width="96"> | <img src="docs/captures/ball_Drum_63.gif" width="96"> | 63 | `63` | `BallTex_NTS-63.png` |
+| <img src="docs/captures/ball_Drum_85.png" width="96"> | <img src="docs/captures/ball_Drum_85_top.png" width="96"> | <img src="docs/captures/ball_Drum_85.gif" width="96"> | 85 | `85` | `BallTex_NTS-85.png` |
+| <img src="docs/captures/ball_Drum_87.png" width="96"> | <img src="docs/captures/ball_Drum_87_top.png" width="96"> | <img src="docs/captures/ball_Drum_87.gif" width="96"> | 87 | `87` | `BallTex_NTS-87.png` |
+| <img src="docs/captures/ball_Drum_93.png" width="96"> | <img src="docs/captures/ball_Drum_93_top.png" width="96"> | <img src="docs/captures/ball_Drum_93.gif" width="96"> | 93 | `93` | `BallTex_NTS-93.png` |
+
+</details>
+
+<details>
+<summary><b>別ボール</b>（1 / 7 球）</summary>
+
+| 正面 | 俯瞰 | 回転 | 番号 | Num_Badge | ファイル |
+| --- | --- | --- | --- | --- | --- |
+| <img src="docs/captures/ball_Streak_2B.png" width="96"> | <img src="docs/captures/ball_Streak_2B_top.png" width="96"> | <img src="docs/captures/ball_Streak_2B.gif" width="96"> | 2 | `2B` | `BallTex_NTS-2B.png` |
+
+</details>
 
 <!-- ballskins:end -->
 

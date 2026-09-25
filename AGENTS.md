@@ -54,7 +54,7 @@
 4. `Assets/Materials/Generated/` はビルダーが無ければ作るマテリアル。Unity 生成物なのでコミットしてよい。
 5. 抽選結果 `result*.json` / `Output/` は生成物（git 管轄外）。
 6. **セッションの終わりに README のプレビューを撮り直してコミットする**（NTsMedalGame `AGENTS.md` 4 章と同じ運用）。LotoScene を Play して `Tools > NTsLoto > Capture Preview` → `docs/captures/preview_sieve.png` / `preview_towers.png` / `preview_tower.png`。README 冒頭がこの 3 枚を貼っていて、**GitHub を見れば最新の画面がいつでも分かる**状態を保つ。撮影は `Assets/Scripts/Editor/LotoCapture.cs`（`Camera.main` を RenderTexture に描くだけ。`Unity_Camera_Capture` は Play 中に失敗する）。
-7. **ボールテクスチャを足した回は `Tools > NTsLoto > Capture Ball Skins`**（BallViewScene を**開いた状態**で。別シーンを開くと確認ダイアログで MCP が止まるので、シーンを開くのは人／別コマンド）。貼り済みの球を 1 個ずつ `docs/captures/ball_<slot>_<Num_Badge>.png` に撮り、**README の `<!-- ballskins:start -->`〜`<!-- ballskins:end -->` の間に収録状況の表を書き戻す**（収録数・画像・ファイル名）。この表は手で書かない。マーカーを消すと更新が止まる。
+7. **ボールテクスチャを足した回は `Tools > NTsLoto > Capture Ball Skins`**（BallViewScene を**開いた状態**で。別シーンを開くと確認ダイアログで MCP が止まるので、シーンを開くのは人／別コマンド）。貼り済みの球を 1 個ずつ `docs/captures/ball_<slot>_<Num_Badge>.png`（正面・見下ろし 20°＝BallSkinViewer.DefaultPose。GIF・俯瞰と同じ寄りの画角）、`ball_<slot>_<Num_Badge>_top.png`（見下ろし 65° の寄り。顔と頭頂の番号デカールが 1 枚で分かる）と `ball_<slot>_<Num_Badge>.gif`（頭頂軸まわりに 1 周する回転 GIF・128px・36 コマ・1 球 150〜200KB。`Editor/GifWriter.cs` が書くので ffmpeg 不要）に撮り、**README の `<!-- ballskins:start -->`〜`<!-- ballskins:end -->` の間に収録状況の表を書き戻す**（収録数・正面・俯瞰・回転・ファイル名。区分（ロト / 別ボール）ごとに `<details>` で畳む）。この表は手で書かない。マーカーを消すと更新が止まる。
 8. **動画**は `Tools > NTsLoto > Play + Record`（Unity Recorder → `Recordings/*.mp4`・git 管轄外）。README に載せるのは GIF（GitHub は mp4 をインライン再生しない）: サンドボックスの ffmpeg で `trim`＋`concat` して 420px・10fps・2MB 台に落とし `docs/captures/preview.gif` へ。mp4 はコミットしない。
 9. **README はリポジトリ収録内容の窓口**。実装・確率・FBX・サブモジュールを増減したら、README の「抽選のしくみ」「リポジトリの中身」の表を**同じコミットで**直す。仕様の詳細は `docs/DESIGN.md`、進捗は `docs/HANDOFF.md` に置き、README には要約とリンクだけ書く（三重管理にしない）。
 
@@ -123,7 +123,7 @@
 - `Assets/Scripts/BallSkinTable.cs` … 全球のテクスチャ＋創作DBリンク（`Assets/Data/BallSkins.asset`）。`Assets/Scripts/CreationsDb.cs` … 創作DB ローダ。
 - `Assets/Scripts/Editor/LotoSceneBuilder.cs` … シーン生成（冪等）。FBX の配置・配管・カメラ・スキン表。
 - `Assets/Scripts/Editor/LotoMonteCarlo.cs` … `Tools > NTsLoto > Monte Carlo > Run/Stop`。静的フィールド（variant / trials / parallel / bowlRpm / entryR / entryHeight / entryTangential）を RunCommand で書き換えて実行。結果 `Output/mc_<variant>.json`。
-- `Assets/Scripts/Editor/LotoCapture.cs` … `Tools > NTsLoto > Capture Preview` / `Capture Ball Skins`。README 用の PNG を `docs/captures/` に書き、ボールテクスチャの収録状況表を README のマーカー間へ書き戻す（4 章 6〜9）。
+- `Assets/Scripts/Editor/LotoCapture.cs` … `Tools > NTsLoto > Capture Preview` / `Capture Ball Skins`。README 用の PNG と球の俯瞰 PNG・回転 GIF を `docs/captures/` に書き、ボールテクスチャの収録状況表（区分ごとに `<details>` で畳む）を README のマーカー間へ書き戻す（4 章 6〜9）。GIF のエンコードは `Assets/Scripts/Editor/GifWriter.cs`（依存なしの GIF89a・メディアンカット 256 色）。
 - `Assets/Scripts/Watch/` … 観賞ビルド NTsLotoWatch（7.5 章・`docs/WATCH.md`）。`WatchDirector`（進行・追従カメラ・HUD・FPS ログ）/ `WatchCoaster`（螺旋樋＋リフト）/ `WatchAudio`（RSC の物理音の移植）/ `WatchInput`（旧 Input Manager・Xbox 配列）/ `WatchBoot`（30FPS・Pi 用 URP）/ `TitleMenu`。
 - `Assets/Scripts/Editor/WatchSceneBuilder.cs` … `Tools > NTsLoto > Build Watch Scene` / `Build Title Scene`（冪等）＋ `Assets/Resources/Pi_RPAsset.asset` の生成。`WatchBuild.cs` … `Build Watch Linux x64 (RPi)` / `Build Watch Windows x64` / `Export Creations DB (StreamingAssets)`。
 - `BlenderSources/gen_coaster.py` … 観賞用コースターの螺旋樋 `Assets/Models/Coaster_Helix.fbx`（寸法は `WatchCoaster.cs` の定数と一致させる）。

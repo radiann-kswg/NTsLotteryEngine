@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace NTsLotteryEngine.EditorTools
     /// - `Tools &gt; NTsLoto &gt; Capture Preview` … LotoScene を **Play 中**に。篩・塔の弧・段数最大の塔の 3 枚。
     /// - `Tools &gt; NTsLoto &gt; Capture Ball Skins` … **BallViewScene を開いた状態**（Edit でよい）で。貼り済みの球を 1 枚ずつ撮り、
     ///   README のマーカー間にテクスチャ収録状況の表を書き戻す（GitHub から収録状況が常時見える）。
+    ///   正面の静止画 `ball_<slot>_<badge>.png` に加えて、顔と頭頂の番号が 1 枚で見える俯瞰 65° の `ball_<slot>_<badge>_top.png` と、
+    ///   頭頂軸まわりに 1 周する回転 GIF `ball_<slot>_<badge>.gif` も書く（GifWriter・ffmpeg 不要）。
+    ///   表は区分（ロト / 別ボール）ごとに `&lt;details&gt;` で畳む（球が増えても README が縦に伸びない）。
     /// 動画は `Tools &gt; NTsLoto &gt; Play + Record`（Unity Recorder → `Recordings/*.mp4`・git 管轄外）→ ffmpeg で GIF 化。
     /// </summary>
     public static class LotoCapture
@@ -85,6 +89,16 @@ namespace NTsLotteryEngine.EditorTools
             return true;
         }
 
+        // 回転 GIF: 36 コマ × 10° を 8cs（12.5fps・1 周 2.9 秒）。128px（表示 96px の Retina 相当・1 球 150〜200KB）。
+        const int SpinFrames = 36, SpinSize = 128, SpinDelayCs = 8;
+        // 俯瞰静止画: 頭頂の番号デカール（LotteryBall.fbx のローカル +Z 極）と顔（−Y）を 1 枚に収める。見下ろし角 [deg]（正面の静止画は 20°）。
+        const float TopLookDown = 65f;
+        const int StillSize = 320;
+        // 正面・俯瞰・GIF は 2 倍で描いて縮める（RT に MSAA が無いのでジャギ取り）。シーンのカメラの画角だと球が枠の半分しかなく
+        // 表の 96px 表示では小さいので、画角を tan 比で絞って球を枠いっぱいに寄せる（3 種とも同じ寄り。正面の姿勢は従来の見下ろし 20° のまま）。
+        const int Super = 2;
+        const float Zoom = 0.64f;
+
         [MenuItem("Tools/NTsLoto/Capture Ball Skins")]
         public static void BallSkins()
         {
@@ -97,24 +111,120 @@ namespace NTsLotteryEngine.EditorTools
             if (!viewer || !viewer.skins || !cam) { Debug.LogError("[LotoCapture] BallSkinViewer / BallSkinTable / Camera.main が揃っていない"); return; }
 
             int slot = (int)viewer.slot, number = viewer.number;   // 撮り終わったら戻す
-            var rows = new StringBuilder();
+            var ball = viewer.transform;
+            var pose = ball.rotation;
+            var topPose = Quaternion.Euler(TopLookDown - 90f, 180f, 0f);   // DefaultPose = Euler(-70,180,0) が見下ろし 20°
+            var rows = new Dictionary<BallSlot, StringBuilder>();
             var done = viewer.skins.skins.Where(s => s.texture).ToList();
-            foreach (var s in done)
+            try
             {
-                viewer.slot = s.slot; viewer.number = s.number; viewer.ApplySkin();
-                var badge = s.Badge;   // Num_Badge（DbNum とは別。別ボール 2 = バイナは 2B）
-                var file = $"ball_{s.slot}_{badge}.png";
-                Shot(cam, file, 320, 320);
-                var texFile = Path.GetFileName(AssetDatabase.GetAssetPath(s.texture));   // 実際に貼られているファイル（手貼りの上書きも正しく出る）
-                rows.AppendLine($"| <img src=\"{Dir}/{file}\" width=\"96\"> | {(s.slot == BallSlot.Drum ? "ロト" : "別ボール")} | {s.number} | `{badge}` | `{texFile}` |");
-            }
-            viewer.slot = (BallSlot)slot; viewer.number = number; viewer.ApplySkin();
+                for (int n = 0; n < done.Count; n++)
+                {
+                    var s = done[n];
+                    EditorUtility.DisplayProgressBar("Capture Ball Skins", $"{s.slot} #{s.number}", (float)n / done.Count);
+                    viewer.slot = s.slot; viewer.number = s.number; viewer.ApplySkin();
+                    var badge = s.Badge;   // Num_Badge（DbNum とは別。別ボール 2 = バイナは 2B）
 
-            WriteReadmeTable(done.Count, viewer.skins.skins.Count, rows.ToString());
+                    ball.rotation = pose;   // 正面（姿勢は従来どおり。GIF・俯瞰で回した姿勢を毎回戻してから撮る）
+                    var file = $"ball_{s.slot}_{badge}.png";
+                    StillShot(cam, file);
+
+                    ball.rotation = topPose;
+                    var top = $"ball_{s.slot}_{badge}_top.png";
+                    StillShot(cam, top);
+
+                    var gif = $"ball_{s.slot}_{badge}.gif";
+                    Spin(cam, ball, pose, gif);
+                    ball.rotation = pose;
+
+                    var texFile = Path.GetFileName(AssetDatabase.GetAssetPath(s.texture));   // 実際に貼られているファイル（手貼りの上書きも正しく出る）
+                    if (!rows.TryGetValue(s.slot, out var sb)) rows[s.slot] = sb = new StringBuilder();
+                    sb.AppendLine($"| <img src=\"{Dir}/{file}\" width=\"96\"> | <img src=\"{Dir}/{top}\" width=\"96\"> | <img src=\"{Dir}/{gif}\" width=\"96\"> | {s.number} | `{badge}` | `{texFile}` |");
+                }
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+                ball.rotation = pose;
+                viewer.slot = (BallSlot)slot; viewer.number = number; viewer.ApplySkin();
+            }
+
+            var totals = viewer.skins.skins.GroupBy(s => s.slot).ToDictionary(g => g.Key, g => g.Count());
+            WriteReadmeTable(done.Count, viewer.skins.skins.Count, totals, rows);
         }
 
-        /// <summary>README のマーカー間を収録状況の表で置き換える（マーカーが無ければ警告だけ。README の他の行は触らない）。</summary>
-        static void WriteReadmeTable(int done, int total, string rows)
+        /// <summary>今の姿勢のまま静止画（寄り・StillSize 四方）を PNG で書く。</summary>
+        static void StillShot(Camera cam, string file)
+        {
+            var tex = new Texture2D(StillSize, StillSize, TextureFormat.RGB24, false);
+            tex.SetPixels32(Grab(cam, StillSize)); tex.Apply();
+            var path = Path.Combine(Repo, Dir, file);
+            File.WriteAllBytes(path, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
+            Debug.Log($"[LotoCapture] {Dir}/{file} ({StillSize}x{StillSize})");
+        }
+
+        /// <summary>球を頭頂軸（LotteryBall.fbx のローカル +Z）まわりに 1 周させて GIF を書く。俯瞰角は pose のまま。</summary>
+        static void Spin(Camera cam, Transform ball, Quaternion pose, string file)
+        {
+            var frames = new List<Color32[]>(SpinFrames);
+            for (int i = 0; i < SpinFrames; i++)
+            {
+                ball.rotation = pose * Quaternion.AngleAxis(360f * i / SpinFrames, Vector3.forward);
+                frames.Add(FlipRows(Grab(cam, SpinSize), SpinSize));
+            }
+            var path = Path.Combine(Repo, Dir, file);
+            GifWriter.Write(path, frames, SpinSize, SpinSize, SpinDelayCs);
+            Debug.Log($"[LotoCapture] {Dir}/{file} ({SpinSize}x{SpinSize}, {SpinFrames} frames, {new FileInfo(path).Length / 1024} KB)");
+        }
+
+        /// <summary>画角を Zoom で絞り、size の Super 倍で描いて箱平均で縮めた画素を返す（ReadPixels と同じく下の行から）。</summary>
+        static Color32[] Grab(Camera cam, int size)
+        {
+            int w = size * Super;
+            var rt = new RenderTexture(w, w, 24);
+            var tex = new Texture2D(w, w, TextureFormat.RGB24, false);
+            var prevTarget = cam.targetTexture; var prevActive = RenderTexture.active;
+            float fov = cam.fieldOfView;
+            try
+            {
+                cam.fieldOfView = 2f * Mathf.Rad2Deg * Mathf.Atan(Mathf.Tan(fov * 0.5f * Mathf.Deg2Rad) * Zoom);
+                cam.targetTexture = rt; cam.Render();
+                RenderTexture.active = rt;
+                tex.ReadPixels(new Rect(0, 0, w, w), 0, 0);
+                var src = tex.GetPixels32();
+                var dst = new Color32[size * size]; int kk = Super * Super;
+                for (int y = 0; y < size; y++)
+                    for (int x = 0; x < size; x++)
+                    {
+                        int r = 0, g = 0, b = 0;
+                        for (int dy = 0; dy < Super; dy++)
+                            for (int dx = 0; dx < Super; dx++)
+                            { var c = src[(y * Super + dy) * w + x * Super + dx]; r += c.r; g += c.g; b += c.b; }
+                        dst[y * size + x] = new Color32((byte)(r / kk), (byte)(g / kk), (byte)(b / kk), 255);
+                    }
+                return dst;
+            }
+            finally
+            {
+                cam.fieldOfView = fov; cam.targetTexture = prevTarget; RenderTexture.active = prevActive;
+                Object.DestroyImmediate(tex); rt.Release(); Object.DestroyImmediate(rt);
+            }
+        }
+
+        /// <summary>行を上下反転（GIF は上の行から）。</summary>
+        static Color32[] FlipRows(Color32[] px, int w)
+        {
+            int h = px.Length / w; var dst = new Color32[px.Length];
+            for (int y = 0; y < h; y++) System.Array.Copy(px, y * w, dst, (h - 1 - y) * w, w);
+            return dst;
+        }
+
+        static string SlotName(BallSlot s) => s == BallSlot.Drum ? "ロト" : "別ボール";
+
+        /// <summary>README のマーカー間を収録状況の表で置き換える（マーカーが無ければ警告だけ。README の他の行は触らない）。
+        /// 表は区分ごとに &lt;details&gt; で畳む（GitHub / VS Code のプレビューで開閉できる）。</summary>
+        static void WriteReadmeTable(int done, int total, Dictionary<BallSlot, int> totals, Dictionary<BallSlot, StringBuilder> rows)
         {
             var path = Path.Combine(Repo, Readme);
             var text = File.ReadAllText(path);
@@ -124,16 +234,27 @@ namespace NTsLotteryEngine.EditorTools
             var body = new StringBuilder();
             body.AppendLine(Begin);
             body.AppendLine();
-            body.AppendLine($"**収録 {done} / {total} 球**（{System.DateTime.Now:yyyy-MM-dd} 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）");
+            body.AppendLine($"**収録 {done} / {total} 球**（{System.DateTime.Now:yyyy-MM-dd} 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）。区分名をクリックで一覧を開閉。");
             body.AppendLine();
             if (done > 0)
             {
-                body.AppendLine("| | 区分 | 番号 | Num_Badge | ファイル |");
-                body.AppendLine("| --- | --- | --- | --- | --- |");
-                body.Append(rows);
+                foreach (BallSlot slot in System.Enum.GetValues(typeof(BallSlot)))
+                {
+                    if (!rows.TryGetValue(slot, out var sb)) continue;
+                    int n = sb.ToString().Split('\n').Count(l => l.StartsWith("|"));
+                    totals.TryGetValue(slot, out var t);
+                    body.AppendLine("<details>");
+                    body.AppendLine($"<summary><b>{SlotName(slot)}</b>（{n} / {t} 球）</summary>");
+                    body.AppendLine();
+                    body.AppendLine("| 正面 | 俯瞰 | 回転 | 番号 | Num_Badge | ファイル |");
+                    body.AppendLine("| --- | --- | --- | --- | --- | --- |");
+                    body.Append(sb);
+                    body.AppendLine();
+                    body.AppendLine("</details>");
+                    body.AppendLine();
+                }
             }
-            else body.AppendLine("> まだ 1 球も貼られていない。");
-            body.AppendLine();
+            else { body.AppendLine("> まだ 1 球も貼られていない。"); body.AppendLine(); }
             body.Append(End);
 
             File.WriteAllText(path, text.Substring(0, a) + body + text.Substring(b + End.Length));
