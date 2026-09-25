@@ -1,17 +1,17 @@
-# WATCH.md — 観賞ビルド「NTsLotoWatch」要件定義（2026-09-20）
+# WATCH.md — 観賞ビルド「NTsLotoWatch」要件定義（2026-09-25）
 
 > NTsSphereChaser（RSC のコースターを Pi で流す試み）で分かった課題（重い・パッド無反応・スキン左右反転・原因不明が残る）を受け、
 > **NTsLotteryEngine の中だけで完結する**観賞用ビルドを作る。抽選ビルド（`LotoScene` / `LotoBuild`）と MC には影響させない。
-> 実装は `Assets/Scripts/Watch/`・`Assets/Scripts/Editor/Watch*.cs`・`BlenderSources/gen_coaster.py`。運用は `AGENTS.md` 11 章。
+> 実装は `Assets/Scripts/Watch/`・`Assets/Scripts/Editor/Watch*.cs`・`BlenderSources/gen_coaster.py` / `gen_gumball.py`。運用は `AGENTS.md` 7.5 章。
 
 ## 1. MUST（最小仕様）
 
 | # | 要件 | 受け入れ条件 |
 | --- | --- | --- |
 | M1 | **スキン切替**: `Assets/Data/BallSkins.asset` の `texture != null` の行（2026-09-20 時点 8 球・将来 105/106 球）を ◀ ▶ で切り替えられる | PNG を `Assets/Textures/BallSkins/` に足して `Tools > NTsLoto > Build Ball View Scene` を回すだけで一覧に増える（コード変更なし） |
-| M2 | **球面全体が見える動き**: 選んだ 1 球を物理で転がし、追従カメラで見られる。2 つの機械を切り替えられる — (a) **塔**: Loto のクルーン塔 1 本（`LotoSceneBuilder.BuildTower` を流用・当落は物理のまま）、(b) **コースター**: DinDon（神戸ハーバーランド umie のボールマシン）を思わせる螺旋樋＋リフトの新規メッシュ（`gen_coaster.py`。RSC の抽選機構造の簡略版） | 両モードで球が止まらずに周回し、落ちきったら同じ球を再投入する。**自動送り**（設定 On/Off・PlayerPrefs）が On なら落ちきるたびに次のスキンへ進む |
+| M2 | **球面全体が見える動き**: 選んだ1球を物理で転がし、追従カメラで見る。(a) **塔**: 既存のクルーン塔、(b) **ガムボール機**: 登録スキン入りのコアフォルダ風タンクから1球ずつ排出し、既存の螺旋樋を下る（`gen_gumball.py` + `gen_coaster.py`） | 両モードで周回する。自動送りOnなら受け皿到達後に次のスキンへ。Offなら同じ球。排出待機中は筐体全景、転がり中は追従カメラ |
 | M3 | **性能**: `RasPiOS_UnityConsole`（Pi 4B 4GB・box64・Mesa OpenGLCore）で 1280×720・**30FPS を維持** | `Player.log` に 10 秒ごとの `[Watch] fps avg/min` を出し、avg ≥ 30・min ≥ 20。物理で動く Rigidbody は常時 1 個、Pi 用 URP アセット（影なし・HDR なし・MSAA なし・深度/不透明テクスチャなし・ポスト無し）、`targetFrameRate=30`・vSync 0 |
-| M4 | **音**: RSC の効果音（`Hit_1..4` の「コトッ」＋ `Lift_Loop`）を RSC と同じ鳴らし方・同じ既定音量で | Pi の HDMI から途切れず出る（OS 側 `1548480` で既定シンクは HDMI 済み）。BGM は入れない（RSC 側の PD 曲は今回は対象外） |
+| M4 | **音**: RSCの衝突音`Hit_1..4`を従来と同じ鳴らし方・音量で。ガムボール機にはリフトがないので常時`Lift_Loop`は鳴らさない | PiのHDMIから途切れず出る（OS側`1548480`で既定シンクはHDMI済み）。BGMは入れない |
 | M5 | **入力**: キーボード＋ゲームパッド。マウス不要。RSC の割当に揃える（LB/RB=球・X=機械切替・Y=音 All/SFX/Mute・Select=ヘルプ・Start/Esc=終了 or 戻る）。独自操作は A=自動送り On/Off | 旧 Input Manager（`activeInputHandler=0` のまま・パッケージ追加なし）。Pi では `ucon-run-app` の `SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS=1`（OS 側 `3c4a8ea`）が前提 |
 | M6 | **NTsLotteryEngine 内で完結** | 新規 Unity プロジェクト・新規サブモジュールを作らない。RSC は音源（CC BY 4.0）を `Assets/Resources/SFX/` にコピーするだけ（`LICENSE.md` に表示） |
 
@@ -30,9 +30,21 @@
 
 ## 4. 検証手順
 
-1. エディタ: `Tools > NTsLoto > Build Watch Scene`（冪等）→ Play で両モード・自動送り・音。`recompile_status` の errors 0。
-2. `Tools > NTsLoto > Build Watch Linux x64 (RPi)` → `Builds/Watch/NTsLotoWatch.x86_64`（OpenGLCore 固定・Mono）。
-3. `F:\UnityGames\NTsLotoWatch\` にビルド一式＋`game.json`＋`icon.png` を置く（`*_BackUpThisFolder_ButDontShipItWithYourGame` は除外）→ Pi に挿す → User が起動して FPS ログ・音・パッドを報告。
+1. Blender MCP: `REPO`をチェックアウト絶対パスに設定し、`BlenderSources/gen_gumball.py`を実行。専用の`Gumball`シーンだけを再生成し、`Gumball.blend`と2つのFBXを出力する。既存の`Coaster_Helix.fbx`は変更不要。
+2. エディタ: `Tools > NTsLoto > Build Watch Scene`（冪等）→ `Validate Gumball`（Editモード）→ Playで両モード・自動送り・音を確認。`Capture Gumball Preview`でREADME画像を更新。ConsoleのError/Warningに加え`error CS`も確認。
+3. `Tools > NTsLoto > Build Watch Linux x64 (RPi)` → `Builds/Watch/NTsLotoWatch.x86_64`（OpenGLCore固定・Mono、Pi 4B/5ではbox64経由）。
+4. `F:\UnityGames\NTsLotoWatch\` にビルド一式＋`game.json`＋`icon.png` を置く（`*_BackUpThisFolder_ButDontShipItWithYourGame` は除外）→ Pi に挿す → User が起動してFPSログ・音・パッドを報告。
+
+### ガムボール機の構成（2026-09-25）
+
+- 形状参考: [大型スパイラルガムボールマシン](https://jp.made-in-china.com/co_cnfordga/product_Large-Spiral-Toy-Vending-Machine_eoggunsuy.html)。商品画像・メッシュは取り込まない。コアフォルダの丸い体・獣耳・尻尾は創作DBの既存画像を形状参考にしたもの。新しいキャラクター設定は付与しない。
+- `Gumball_Cabinet.fbx`: 2,942三角形・6メッシュ。筐体、金色の縁、目、透明タンク、排出管、スライドゲート。衝突判定は排出管・既存樋・受け皿だけ。高い透明外筒を省き、重なり描画を抑える。
+- `Gumball_FillBall.fbx`: LotteryBallKitの球本体をUV維持で260三角形へ簡略化。123球を起動時にスキン別結合（現在9描画メッシュ）、Simple Lit、影なし、Collider/Rigidbodyなし。合計31,980三角形。`Read/Write`はビルダーが有効化し、結合後のCPU側頂点データは解放する。
+- `BallSkins.asset`の`texture != null`の全行を順に繰り返し充填。現在9スキン、既存の106行まで同時表示できる。将来123スキンを超える場合は充填配置を拡張する。キャラクター名の公開制限は従来の`CreationsDb`に従う。
+- 充填球は観賞用の固定表示。群全体の物理や在庫の減少はシミュレーションしない。選択球1個を不透明なカラー内に戻し、排出管へ送ってゲートを開けた後は重力で転がす。周回中の生成・破棄はない。
+- 既存の`Machine.Coaster=1`とPlayerPrefsは維持。表示名のみ`Gumball`へ。待機2秒・ゲート開放0.35秒・入口初速0.4m/s・減衰0.5・受け皿待機3秒。外側リフトと常時リフト音は撤去し、衝突音を維持。
+- `Validate Gumball`はインポートした排出管の座標、樋入口の高さ・法線、メッシュ上限、実際の球の受け皿到達を検証する。排出管下端はy=1.64（1.57だと樋上の球を止める）。
+- Piの30FPS目標は実機で再計測が必要。過去の測定（下記）は旧コースターの値であり、この筐体の測定値ではない。
 
 ## 5. 実機での所見（2026-09-20・Pi 4B / RasPiOS_UnityConsole）
 

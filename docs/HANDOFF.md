@@ -4,7 +4,19 @@
 
 ## 環境追記（2026-09-25）
 
-Codex用チェックアウトで `develop` から `develop-codex` を作成・切り替えた。運用の正本は `AGENTS.md` 2章・3.1節。Codexのユーザー設定に既存Blender Lab MCPを登録し、STDIOのツール一覧取得とBlender 5.2.2 LTSへの読み取りを確認済み。Codexアプリ再起動後のツール読み込みが次の手順。モデル・ゲーム処理は変更していない。
+Codexの作業ブランチは`develop-codex`。運用の正本は`AGENTS.md` 2章・3.1節。
+Blender Lab MCP（5.2.2 LTS）とUnity公式リレーMCP（6000.6.2f1）の両方で生成・動作検証済み。
+`unityMCP`側はインスタンス0件だったため、既存の`C:\Users\s-chi\.unity\relay\relay_win.exe --mcp --project-path <Codexチェックアウト>`へ接続した。
+Claude用チェックアウトのエディタも開いているので、必ずプロジェクトパスを指定する。設定ファイルは変更していない。
+
+### ガムボール観賞モード
+
+- 2つ目のモードをコアフォルダ風タンク付きのスパイラルガムボール機に変更。原本は`BlenderSources/gen_gumball.py` / `Gumball.blend`。再生成手順・軽量化の内訳・制限は`docs/WATCH.md` 4章。
+- 既存の螺旋樋・塔・入力割当・PlayerPrefsを維持。充填球123個は9スキン別の描画専用メッシュに結合、排出する物理球は1個。筐体2,942三角形、充填球合計31,980三角形。
+- `Tools > NTsLoto > Validate Gumball`: PASS。入口の床y=1.492、上向き法線を確認、排出口から受け皿まで約14.7秒（待機3秒込み）。追加した排出管は下端y=1.64が必要（1.57では球を止める）。
+- Playで自動送り18周完走、塔との切替・排出待機中の中断復帰後も自動送りOffで完走し、合計24周・FaultCount=0。観賞Play検証終了時のConsoleはError/Warning=0。全9スキンの充填、アクティブRigidbody=1も確認。
+- `Capture Gumball Preview`で`docs/captures/preview_gumball.png`を生成し、READMEに掲載。Linux x64/Mono/OpenGLCoreビルドはSucceeded（133MB、`Builds/Watch/`）。ビルド時に既存のAI Inference/Sentisシェーダー・Pipelineランタイム設定なし・衝突メッシュ事前ベイクの警告あり（排出管Chuteも事前ベイク警告の対象、現バージョンはビルド時に自動ベイク）。Pi 4B/5実機でのFPS・音・パッドの再測定と配布先への転送は未実施。
+- 開始時からの`ProjectSettings/UnityConnectSettings.asset`の変更は今回の対象外。
 
 ## 0. 制作その４でわかったこと（最重要）
 

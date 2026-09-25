@@ -24,6 +24,11 @@ namespace NTsLotteryEngine.EditorTools
         [MenuItem("Tools/NTsLoto/Build Watch Scene")]
         public static void BuildWatch()
         {
+            var fillImporter = AssetImporter.GetAtPath("Assets/Models/Gumball_FillBall.fbx") as ModelImporter;
+            if (fillImporter && !fillImporter.isReadable) { fillImporter.isReadable = true; fillImporter.SaveAndReimport(); }
+            var cabinetPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Gumball_Cabinet.fbx");
+            var fillPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Gumball_FillBall.fbx");
+            if (!cabinetPrefab || !fillPrefab) throw new System.InvalidOperationException("Run BlenderSources/gen_gumball.py before building WatchScene");
             PiPipeline();
             var scene = Open(TitleMenu.Watch);
             var frame = LotoSceneBuilder.Mat("Frame", new Color(0.18f, 0.18f, 0.20f));
@@ -33,7 +38,7 @@ namespace NTsLotteryEngine.EditorTools
             var slick = LotoSceneBuilder.Slick();
 
             var root = new GameObject("Watch").transform;
-            LotoSceneBuilder.Box(root, "Ground", new Vector3(0, -0.05f, 0), new Vector3(12, 0.1f, 12), frame);
+            LotoSceneBuilder.Box(root, "Ground", new Vector3(0, -0.23f, 0), new Vector3(12, 0.1f, 12), frame);
 
             // ---- 塔 ----
             var towerRoot = new GameObject("TowerRoot").transform; towerRoot.SetParent(root, false);
@@ -48,21 +53,37 @@ namespace NTsLotteryEngine.EditorTools
             var helix = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Coaster_Helix.fbx");
             if (!helix) Debug.LogError("Coaster_Helix.fbx が無い（Blender で BlenderSources/gen_coaster.py を実行）");
             else LotoSceneBuilder.Fbx(helix, coasterRoot, "Helix", Vector3.zero, rail);
-            LotoSceneBuilder.Cylinder(coasterRoot, "Column", WatchCoaster.ColumnLocal + Vector3.up * (WatchCoaster.ZTop + 0.45f) / 2, 0.05f, WatchCoaster.ZTop + 0.45f, frame);
+            var cabinet = (GameObject)PrefabUtility.InstantiatePrefab(cabinetPrefab, coasterRoot);
+            var enamel = LotoSceneBuilder.Mat("GumballEnamel", new Color(.035f, .21f, .28f));
+            var gold = LotoSceneBuilder.Mat("GumballTrim", new Color(.92f, .62f, .24f));
+            var clear = LotoSceneBuilder.Mat("GumballGlass", new Color(.65f, .90f, 1f, .10f), true);
+            foreach (var mf in cabinet.GetComponentsInChildren<MeshFilter>())
+            {
+                var r = mf.GetComponent<MeshRenderer>();
+                r.sharedMaterial = mf.name == "Glass" || mf.name == "Chute" ? clear : mf.name == "Trim" || mf.name == "Gate" ? gold : mf.name == "Face" ? frame : enamel;
+                r.shadowCastingMode = ShadowCastingMode.Off; r.receiveShadows = false;
+                if (mf.name == "Gate") coaster.gate = mf.transform;
+                if (mf.name == "Chute") { var col = mf.gameObject.AddComponent<MeshCollider>(); col.sharedMesh = mf.sharedMesh; col.sharedMaterial = slick; }
+            }
+            coaster.fillMesh = fillPrefab.GetComponentInChildren<MeshFilter>().sharedMesh;
+            const string fillMatPath = "Assets/Materials/Generated/GumballFill.mat";
+            var fillMat = AssetDatabase.LoadAssetAtPath<Material>(fillMatPath);
+            if (!fillMat) { fillMat = new Material(Shader.Find("Universal Render Pipeline/Simple Lit")); AssetDatabase.CreateAsset(fillMat, fillMatPath); }
+            fillMat.SetColor("_BaseColor", Color.white); fillMat.SetFloat("_Smoothness", .15f);
+            coaster.fillMaterial = fillMat;
             var tray = new GameObject("Tray").transform; tray.SetParent(coasterRoot, false); tray.localPosition = WatchCoaster.TrayLocal;
             tray.localRotation = Quaternion.LookRotation(WatchCoaster.Tangent(WatchCoaster.EndDeg));   // 出口の接線を向く。手前（−z）の壁は無し＝球が入れる
             LotoSceneBuilder.Box(tray, "TrayFloor", Vector3.zero, new Vector3(0.6f, 0.02f, 0.6f), rail);
             foreach (var (n, p, sz) in new[] { ("W0", new Vector3(0, 0.1f, 0.3f), new Vector3(0.62f, 0.2f, 0.02f)),
                                                ("W2", new Vector3(0.3f, 0.1f, 0), new Vector3(0.02f, 0.2f, 0.62f)), ("W3", new Vector3(-0.3f, 0.1f, 0), new Vector3(0.02f, 0.2f, 0.62f)) })
                 LotoSceneBuilder.Box(tray, n, p, sz, glass).GetComponent<Collider>().sharedMaterial = slick;   // 反発 0: 出口から来た球を跳ね返さない
-            var lift = WatchAudio.Make3D(coasterRoot.gameObject, AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Resources/SFX/Lift_Loop.wav"), true);
-            lift.playOnAwake = true; lift.volume = WatchAudio.LiftVolume;
 
             // ---- カメラ・照明・進行役 ----
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var cam = camGo.AddComponent<Camera>();
             cam.nearClipPlane = 0.02f; cam.clearFlags = CameraClearFlags.SolidColor; cam.backgroundColor = new Color(0.09f, 0.09f, 0.11f);
-            camGo.transform.position = new Vector3(0, 1f, -2f);
+            camGo.transform.position = new Vector3(2.9f, 2.6f, -4.8f);
+            camGo.transform.LookAt(new Vector3(0, 1.48f, 0));
             var lightGo = new GameObject("Directional Light");
             var light = lightGo.AddComponent<Light>(); light.type = LightType.Directional; light.intensity = 1.2f; light.shadows = LightShadows.None;
             lightGo.transform.rotation = Quaternion.Euler(50, -30, 0);
@@ -76,7 +97,7 @@ namespace NTsLotteryEngine.EditorTools
 
             Physics.SyncTransforms();
             // 入口の樋の床を実測して FBX の角度規約（Unity 角 = Blender θ + 180°）を確かめる。期待 ≈ ZTop − Pitch·8/360 = 1.492
-            var probe = WatchCoaster.Pt(8f, WatchCoaster.R, WatchCoaster.ZTop + 0.5f);
+            var probe = WatchCoaster.Pt(8f, WatchCoaster.R, WatchCoaster.ZTop + 0.06f);
             if (Physics.Raycast(probe, Vector3.down, out var hit, 2f)) Debug.Log($"[WatchSceneBuilder] coaster entry floor y={hit.point.y:F3} (expect ≈{WatchCoaster.ZTop - WatchCoaster.Pitch * 8f / 360f:F3}) on {hit.collider.name}");
             else Debug.LogWarning("[WatchSceneBuilder] coaster entry probe missed the helix — check gen_coaster.py / Pt()");
 

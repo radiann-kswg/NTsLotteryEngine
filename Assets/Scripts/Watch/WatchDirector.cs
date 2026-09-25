@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NTsLotteryEngine.Watch
 {
     /// <summary>
-    /// 観賞シーンの進行役（docs/WATCH.md）。球は常に 1 個。塔（KuruunTower）かコースター（WatchCoaster）で転がし、追従カメラで見る。
+    /// 観賞シーンの進行役（docs/WATCH.md）。動く球は常に 1 個。塔かガムボール機で転がし、追従カメラで見る。
     /// 落ちきったら同じ球を再投入、自動送りなら次のスキンへ。シーンは Tools > NTsLoto > Build Watch Scene が作る。
     /// </summary>
     public class WatchDirector : MonoBehaviour
@@ -42,6 +42,7 @@ namespace NTsLotteryEngine.Watch
         {
             foreach (var s in skins.skins) if (s.texture) rows.Add(s);   // 貼り済みだけ
             if (rows.Count == 0) { Debug.LogError("[Watch] BallSkins.asset にテクスチャ付きの球が無い"); enabled = false; return; }
+            coaster.Fill(rows);
             ball = Instantiate(ballPrefab); ball.name = "Ball";
             rb = BallUtil.Prepare(ball);
             ball.gameObject.AddComponent<WatchAudio>();
@@ -74,6 +75,7 @@ namespace NTsLotteryEngine.Watch
 
         void Update()
         {
+            if (rows.Count == 0) return;
             if (WatchInput.Prev) { idx = (idx + rows.Count - 1) % rows.Count; Restart(); }
             if (WatchInput.Next) { idx = (idx + 1) % rows.Count; Restart(); }
             if (WatchInput.Machine) { Current = Current == Machine.Tower ? Machine.Coaster : Machine.Tower; Restart(); }
@@ -90,6 +92,14 @@ namespace NTsLotteryEngine.Watch
         {
             if (!ball) return;
             bool t = Current == Machine.Tower;
+            if (!t && coaster.Dispensing)
+            {
+                var look = coaster.transform.TransformPoint(new Vector3(0, 1.48f, 0));
+                var eye = coaster.transform.TransformPoint(new Vector3(2.9f, 2.6f, -4.8f));
+                cam.transform.position = Vector3.Lerp(cam.transform.position, eye, 1f - Mathf.Exp(-camLerp * Time.deltaTime));
+                cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.LookRotation(look - cam.transform.position), 1f - Mathf.Exp(-camLerp * Time.deltaTime));
+                return;
+            }
             var center = (t ? tower.transform : coaster.transform).position;
             var p = rb.position;
             var d = new Vector3(p.x - center.x, 0, p.z - center.z);
@@ -107,11 +117,12 @@ namespace NTsLotteryEngine.Watch
 
         void OnGUI()
         {
+            if (rows.Count == 0) return;
             int fs = Mathf.Max(10, Screen.height / 36);
             if (label == null || fontSize != fs) { fontSize = fs; label = new GUIStyle(GUI.skin.label) { font = hudFont ? hudFont : GUI.skin.label.font, fontSize = fs, richText = true }; }
             float pad = Screen.height * 0.02f;
-            string text = $"<b>{Label(rows[idx])}</b>  ({idx + 1}/{rows.Count})\n{Current}   auto {(Auto ? "on" : "off")}   sfx {(WatchAudio.Muted ? "off" : "on")}";
-            if (help) text += "\n\nLB/RB  < >   ball\nX  C   tower / coaster\nA  Space   auto advance\nY  M   sound on/off\nSelect  H   this help\nStart/B  Esc   title";
+            string text = $"<b>{Label(rows[idx])}</b>  ({idx + 1}/{rows.Count})\n{(Current == Machine.Tower ? "Tower" : "Gumball")}   auto {(Auto ? "on" : "off")}   sfx {(WatchAudio.Muted ? "off" : "on")}";
+            if (help) text += "\n\nLB/RB  < >   ball\nX  C   tower / gumball\nA  Space   auto advance\nY  M   sound on/off\nSelect  H   this help\nStart/B  Esc   title";
             var size = label.CalcSize(new GUIContent(text));
             GUI.Box(new Rect(pad, pad, size.x + pad * 2, size.y + pad * 2), GUIContent.none);
             GUI.Label(new Rect(pad * 2, pad * 2, size.x, size.y), text, label);

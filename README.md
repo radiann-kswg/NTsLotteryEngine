@@ -24,6 +24,15 @@
 
 <br clear="right">
 
+### 観賞モード：ガムボールマシン
+
+![ガムボール観賞機](docs/captures/preview_gumball.png)
+
+2つ目の観賞モードは、コアフォルダ風の透明タンクから1球ずつ排出するスパイラル式ガムボールマシン。
+登録済みスキンを充填し、既存の螺旋樋を物理で転がって受け皿へ。自動送り・球選択・塔への切替は従来どおり。
+筐体はBlender製の2,942三角形、充填球は260三角形×123個をスキン別に結合し、動的Rigidbodyは1個だけ。
+生成・検証とLinux/Piの条件は [docs/WATCH.md](docs/WATCH.md)。
+
 ## 抽選のしくみ
 
 ### 篩型ロトマシーン（`SieveMachine`）
@@ -94,14 +103,14 @@ Assets/Scripts/            LotoRules（確率の正本）/ LotoDirector（進行
 Assets/Scripts/Watch/      観賞ビルド NTsLotoWatch（docs/WATCH.md）: WatchDirector / WatchCoaster / WatchAudio / WatchInput / WatchBoot / TitleMenu
 Assets/Scripts/Editor/     LotoSceneBuilder（シーン生成・冪等）/ BallViewSceneBuilder / WatchSceneBuilder / LotoMonteCarlo /
                            LotoPlay（+LotoPlayLoop）/ LotoRecord / LotoCapture / LotoBuild / WatchBuild / GitTools
-Assets/Models/             Kuruun_Bowl / Kuruun_Collector_{p10,p18,p32,p50,p53,p6of88} / Sieve_Dish_{U,L} / Coaster_Helix（Blender 生成 FBX）
+Assets/Models/             Kuruun_Bowl / Kuruun_Collector_{p10,p18,p32,p50,p53,p6of88} / Sieve_Dish_{U,L} / Coaster_Helix / Gumball_Cabinet / Gumball_FillBall（Blender 生成 FBX）
 Assets/Scenes/             LotoScene（抽選本体）/ BallViewScene（ボールテクスチャ確認）/ TitleScene + WatchScene（観賞ビルド）
 Assets/Resources/          SFX/（RSC の効果音・CC BY 4.0）/ Pi_RPAsset（Raspberry Pi 用 URP 設定）
 Assets/Data/               BallSkins.asset（球ごとのテクスチャ + 創作DBリンク）
 Assets/Textures/BallSkins/ ボールテクスチャ PNG（CC BY-NC 4.0）
 Assets/Materials/Generated/ ビルダーが生成するマテリアル（Glass / Frame / Rail / Bowl / Slick）
 Assets/Fonts/              PenchantManufacture.otf（HUD 用・サブモジュールから同期コピー。CJK 未収録）
-BlenderSources/            gen_kuruun.py + kuruun_params.json（抽選機メッシュの原本）/ gen_coaster.py（観賞用コースター）/ Kuruun.blend
+BlenderSources/            gen_kuruun.py + kuruun_params.json / Kuruun.blend（抽選機）/ gen_coaster.py（螺旋樋）/ gen_gumball.py + Gumball.blend（観賞用ガムボール筐体・充填球）
 docs/                      DESIGN.md（仕様・機構の正本）/ HANDOFF.md（いまの状態）/ WATCH.md（観賞ビルドの要件）/ raspberrypi-handoff.md / captures/
 scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
 ```

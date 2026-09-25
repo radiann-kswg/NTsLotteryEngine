@@ -15,6 +15,7 @@
 以下は同作者（RadianN_kswg / ラジアン（柏木主税））による **CC BY 4.0** の素材で、本リポジトリの NC 条件は適用されません。
 
 - **LotteryBallKit**（番号ボール: モデル・番号アトラス・`NumberBall.cs`）… サブモジュール `LotteryBallKit/`（https://github.com/radiann-kswg/LotteryBallKit ）を UPM `file:` 依存で取り込み。番号アトラスの書体は PenchantManufacture 由来。
+  `Assets/Models/Gumball_FillBall.fbx` は同キットの球本体から番号デカールを除き、UVを保って260三角形へ簡略化した派生メッシュ（CC BY 4.0）。適用するキャラクターテクスチャは上記のCC BY-NC 4.0。
   クレジット例: `LotteryBallKit by RadianN_kswg / ラジアン（柏木主税） — CC BY 4.0`
 - **RouletteSphereChaser**（https://github.com/radiann-kswg/RouletteSphereChaser ）… クルーンのボウル形状（`KuruunBowl` の既定寸法）と設計知見（`AGENTS.md` 3章の罠）を参考にした。メッシュ資産そのものは同梱していない（回転体を `ProcMesh.Bowl` で生成）。
   観賞ビルドの効果音 `Assets/Resources/SFX/`（`Hit_1..4.wav` / `Lift_Loop.wav`）は同リポジトリ `Assets/Resources/SFX/` のコピー（CC BY 4.0）。
