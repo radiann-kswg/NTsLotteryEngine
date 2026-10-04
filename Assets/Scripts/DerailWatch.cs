@@ -20,7 +20,7 @@ namespace NTsLotteryEngine
 
         void FixedUpdate()
         {
-            if (Time.time > nextScan) { balls = FindObjectsByType<NumberBall>(); nextScan = Time.time + 2f; }
+            if (Time.time > nextScan) { balls = FindObjectsByType<NumberBall>(FindObjectsSortMode.None); nextScan = Time.time + 2f; }
             if (balls == null) return;
             foreach (var b in balls)
             {
