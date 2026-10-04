@@ -140,7 +140,7 @@ scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
 
 ## 動作環境
 
-- Unity **6000.6.0f1**（URP 17.6）
+- Unity **6000.3.25f1**（6.3 LTS・URP 17.3）
 - 抽選機の形状は Blender 生成（`BlenderSources/gen_kuruun.py`）。配管（漏斗・シュート・筒・レール）は `ProcMesh` で順次 Blender 化中
 - 対応プラットフォーム: Windows x64 / **Linux x64**（Raspberry Pi 4B は box64 経由。[docs/raspberrypi-handoff.md](docs/raspberrypi-handoff.md)）
 
