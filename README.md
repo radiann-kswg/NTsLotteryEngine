@@ -78,7 +78,7 @@ PNG を置いて `Tools > NTsLoto > Build Ball View Scene` を回すとファイ
 
 <!-- ballskins:start -->
 
-**収録 10 / 106 球**（2026-11-13 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）。区分名をクリックで一覧を開閉。
+**収録 10 / 106 球**（2026-11-21 時点。`Tools > NTsLoto > Capture Ball Skins` が自動更新）。区分名をクリックで一覧を開閉。
 
 <details>
 <summary><b>ロト</b>（9 / 99 球）</summary>

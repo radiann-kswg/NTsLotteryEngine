@@ -10,6 +10,8 @@
 
 `develop-codex` に `develop` の Unity 6000.3.25f1 LTS 対応を統合。4シーンの Play で `0`・`⁰`・`₀` の描画と、球プレハブが更新済みの番号画像を参照することを確認した。
 
+収録済みスキンで番号に 0 を含むのは 50(ナカバ) だけなので、見た目が変わったのは `BallTex_NTS-50` の球の頭頂デカール（`50` の `0` が numeral 形になった。テクスチャ PNG 自体は変更なし）。`Tools > NTsLoto > Capture Ball Skins` で撮り直し、差分は `docs/captures/ball_Drum_50.png` / `_top.png` / `.gif` と README の収録状況の日付だけ（他の球の画像はバイト一致）。今後 10 の倍数（10・20…・90）や `000` のスキンを足したときも、撮影結果は numeral 形になる。
+
 ## 環境追記（2026-09-25）
 
 Codexの作業ブランチは`develop-codex`。運用の正本は`AGENTS.md` 2章・3.1節。
