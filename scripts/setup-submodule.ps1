@@ -29,6 +29,6 @@ git submodule update --init --depth 1 PenchantManufacture_ImageAssets
 Set-Location PenchantManufacture_ImageAssets
 git sparse-checkout set --no-cone '/*.md' '/LICENSE' '/assets/fonts/**'
 Set-Location ..
-Copy-Item PenchantManufacture_ImageAssets/assets/fonts/PenchantManufacture.otf Assets/Fonts/PenchantManufacture.otf -Force
+Copy-Item PenchantManufacture_ImageAssets/assets/fonts/PenchantManufacture-zero-numeral.otf Assets/Fonts/PenchantManufacture.otf -Force
 Copy-Item PenchantManufacture_ImageAssets/LICENSE Assets/Fonts/PenchantManufacture_LICENSE.txt -Force
 Write-Host "OK: PenchantManufacture.otf synced to Assets/Fonts (HUD 用)"

@@ -62,7 +62,7 @@
 
 | パス | リポジトリ | 追跡ブランチ | 用途 |
 | --- | --- | --- | --- |
-| `LotteryBallKit/` | `radiann-kswg/LotteryBallKit` | `main` | 球。`Packages/manifest.json` が `file:../LotteryBallKit/Assets/LotteryBallKit` で UPM パッケージとして読む（Unity は `Assets/` 外なので直接はインポートしない） |
+| `LotteryBallKit/` | `radiann-kswg/LotteryBallKit` | `codex/numeral-zero` | 球面番号に numeral 形を使う球。`Packages/manifest.json` が `file:../LotteryBallKit/Assets/LotteryBallKit` で UPM パッケージとして読む（Unity は `Assets/` 外なので直接はインポートしない） |
 | `100BeautiesLab_CreationsDB/` | `radiann-kswg/100BeautiesLab_CreationsDB` | `develop` | 創作DB（球のキャラスキン・表示用に将来使う）。sparse: `DataBases` / `Dictionaries` / `Images/*/corefolder` / `RoleplayPrompts` |
 | `PenchantManufacture_ImageAssets/` | `radiann-kswg/PenchantManufacture_ImageAssets` | `main` | HUD フォント。sparse: `assets/fonts`。正はサブモジュールで、`Assets/Fonts/PenchantManufacture.otf` は setup スクリプトの同期コピー（CJK 未収録。HUD 文字列は英数字のみ） |
 

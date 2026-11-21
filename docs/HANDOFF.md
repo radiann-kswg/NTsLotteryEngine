@@ -2,6 +2,12 @@
 
 > 読む順: `AGENTS.md`（運用・罠）→ `docs/DESIGN.md`（仕様・機構）→ 本ファイル（いまの状態と次にやること）。
 
+## HUD と球面番号のフォント（2026-11-21）
+
+抽選・ボール確認・タイトル・観賞の4シーンで `PenchantManufacture-zero-numeral.otf` を使用。`scripts/setup-submodule.ps1` と `.sh` はこのバリアントを既存の `Assets/Fonts/PenchantManufacture.otf` へ同期する。
+
+球面には `LotteryBallKit` の `NumberAtlas.png` を使う。番号 0 と 10 の倍数には同じ numeral 形を焼き込んである。
+
 ## 環境追記（2026-09-25）
 
 Codexの作業ブランチは`develop-codex`。運用の正本は`AGENTS.md` 2章・3.1節。

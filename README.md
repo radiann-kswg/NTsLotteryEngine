@@ -109,7 +109,7 @@ Assets/Resources/          SFX/（RSC の効果音・CC BY 4.0）/ Pi_RPAsset（
 Assets/Data/               BallSkins.asset（球ごとのテクスチャ + 創作DBリンク）
 Assets/Textures/BallSkins/ ボールテクスチャ PNG（CC BY-NC 4.0）
 Assets/Materials/Generated/ ビルダーが生成するマテリアル（Glass / Frame / Rail / Bowl / Slick）
-Assets/Fonts/              PenchantManufacture.otf（HUD 用・サブモジュールから同期コピー。CJK 未収録）
+Assets/Fonts/              PenchantManufacture.otf（HUD 用。サブモジュールの PenchantManufacture-zero-numeral.otf から同期。CJK 未収録）
 BlenderSources/            gen_kuruun.py + kuruun_params.json / Kuruun.blend（抽選機）/ gen_coaster.py（螺旋樋）/ gen_gumball.py + Gumball.blend（観賞用ガムボール筐体・充填球）
 docs/                      DESIGN.md（仕様・機構の正本）/ HANDOFF.md（いまの状態）/ WATCH.md（観賞ビルドの要件）/ raspberrypi-handoff.md / captures/
 scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
@@ -121,7 +121,7 @@ scripts/                   setup-submodule.ps1 / .sh、rpi/run-loto.sh
 
 | パス | リポジトリ | 用途 |
 | --- | --- | --- |
-| `LotteryBallKit/` | [radiann-kswg/LotteryBallKit](https://github.com/radiann-kswg/LotteryBallKit) | 球（`NumberBall`）。`Packages/manifest.json` が `file:` で UPM 参照。CC BY 4.0 |
+| `LotteryBallKit/` | [radiann-kswg/LotteryBallKit](https://github.com/radiann-kswg/LotteryBallKit) | 球（`NumberBall`）と numeral 形を焼いた球面番号。`Packages/manifest.json` が `file:` で UPM 参照。CC BY 4.0 |
 | `100BeautiesLab_CreationsDB/` | radiann-kswg/100BeautiesLab_CreationsDB | 創作DB（球のキャラ名・ロールプレイ正典）。非公開レコードは表示しない |
 | `PenchantManufacture_ImageAssets/` | radiann-kswg/PenchantManufacture_ImageAssets | HUD フォント |
 

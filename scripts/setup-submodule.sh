@@ -29,6 +29,6 @@ echo "OK: 100BeautiesLab_CreationsDB (sparse: DataBases + corefolder images + Ro
 # PenchantManufacture_ImageAssets（フォント。正はサブモジュール。Assets/Fonts の .otf は同期コピー）
 git submodule update --init --depth 1 PenchantManufacture_ImageAssets
 ( cd PenchantManufacture_ImageAssets && git sparse-checkout set --no-cone '/*.md' '/LICENSE' '/assets/fonts/**' )
-cp -f PenchantManufacture_ImageAssets/assets/fonts/PenchantManufacture.otf Assets/Fonts/PenchantManufacture.otf
+cp -f PenchantManufacture_ImageAssets/assets/fonts/PenchantManufacture-zero-numeral.otf Assets/Fonts/PenchantManufacture.otf
 cp -f PenchantManufacture_ImageAssets/LICENSE Assets/Fonts/PenchantManufacture_LICENSE.txt
 echo "OK: PenchantManufacture.otf synced to Assets/Fonts (HUD 用)"
